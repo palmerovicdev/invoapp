@@ -57,6 +57,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       final token = await _loginService.login(event.email, event.password);
       final user = await _loginService.getCurrentUser();
+      emit(state.copyWith(status: AuthStatus.initial, token: token, user: user, errorMessage: null, isCheck: false));
+      await Future.delayed(const Duration(milliseconds: 500));
       emit(state.copyWith(status: AuthStatus.authenticated, token: token, user: user, errorMessage: null));
     } catch (e) {
       String message = 'UNEXPECTED_ERROR';

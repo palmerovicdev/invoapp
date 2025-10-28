@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:invoapp/core/route/router_observer.dart';
 import 'package:invoapp/core/route/routes.dart';
+import 'package:invoapp/presentation/state/login/login_bloc.dart';
 
 import '../../presentation/page/home_page.dart';
 import '../../presentation/page/login_page.dart';
@@ -50,10 +52,16 @@ GoRouter createRouter() {
       GoRoute(
         path: Routes.splash.path,
         name: Routes.splash.name,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const SplashPage(),
-        ),
+        pageBuilder: (context, state) {
+          final loginState = context.read<LoginBloc>().state;
+          final extra = loginState.isCheck;
+          return MaterialPage(
+            key: state.pageKey,
+            child: SplashPage(
+              isAuthentication: extra,
+            ),
+          );
+        },
       ),
       GoRoute(
         path: Routes.login.path,

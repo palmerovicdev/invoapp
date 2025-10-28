@@ -289,6 +289,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Verificando autenticación...'**
   String get checkingAuth;
+
+  /// No description provided for @loading.
+  ///
+  /// In es, this message translates to:
+  /// **'Cargando...'**
+  String get loading;
 }
 
 class _AppLocalizationsDelegate

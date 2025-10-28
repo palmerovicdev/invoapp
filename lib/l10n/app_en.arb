@@ -31,5 +31,6 @@
   "networkError": "Network error",
   "unexpectedError": "Unexpected error",
   "authenticationError": "Authentication error",
-  "checkingAuth": "Checking authentication..."
+  "checkingAuth": "Checking authentication...",
+  "loading": "Loading..."
 }

@@ -104,4 +104,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get checkingAuth => 'Checking authentication...';
+
+  @override
+  String get loading => 'Loading...';
 }

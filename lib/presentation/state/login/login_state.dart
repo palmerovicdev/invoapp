@@ -6,12 +6,14 @@ class LoginState extends Equatable {
     this.errorMessage,
     this.user,
     this.token,
+    this.isCheck = true,
   });
 
   final AuthStatus status;
   final String? errorMessage;
   final User? user;
   final Token? token;
+  final bool isCheck;
 
   @override
   List<Object?> get props => [status, errorMessage];
@@ -31,12 +33,14 @@ class LoginState extends Equatable {
     String? errorMessage,
     User? user,
     Token? token,
+    bool? isCheck,
   }) {
     return LoginState(
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
       user: user ?? this.user,
       token: token ?? this.token,
+      isCheck: isCheck ?? this.isCheck,
     );
   }
 
@@ -46,6 +50,7 @@ class LoginState extends Equatable {
       errorMessage: null,
       user: user,
       token: token,
+      isCheck: true,
     );
   }
 }
