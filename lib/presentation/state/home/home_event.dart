@@ -19,10 +19,26 @@ class HomeSelectInvoice extends HomeEvent {
 }
 
 class HomeLoadInvoices extends HomeEvent {
-  final List<Invoice> invoices;
+  final DateTime? issuedAtGteq;
+  final DateTime? issuedAtLteq;
+  final InvoiceState? state;
+  final String? searchQuery;
+  final int? page;
 
-  const HomeLoadInvoices(this.invoices);
+  const HomeLoadInvoices({
+    this.issuedAtGteq,
+    this.issuedAtLteq,
+    this.state,
+    this.searchQuery,
+    this.page,
+  });
 
   @override
-  List<Object?> get props => [invoices];
+  List<Object?> get props => [
+    issuedAtGteq,
+    issuedAtLteq,
+    state,
+    searchQuery,
+    page,
+  ];
 }

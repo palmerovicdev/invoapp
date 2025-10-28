@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:invoapp/domain/entity/token.dart';
+import 'package:invoapp/service/invoice_service.dart';
 
 import '../../../core/auth_status.dart';
+import '../../../core/locator.dart';
 import '../../../domain/entity/user.dart';
 import '../../../service/login_service.dart';
 
@@ -37,6 +39,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
 
       final user = await _loginService.getCurrentUser();
+      await locator.get<InvoiceService>().getInvoices(
+        page: 1,
+        token: token.token,
+      );
       emit(state.copyWith(status: AuthStatus.authenticated, token: token, user: user));
     } catch (e) {
       emit(
@@ -58,7 +64,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final token = await _loginService.login(event.email, event.password);
       final user = await _loginService.getCurrentUser();
       emit(state.copyWith(status: AuthStatus.initial, token: token, user: user, errorMessage: null, isCheck: false));
-      await Future.delayed(const Duration(milliseconds: 500));
+      await locator.get<InvoiceService>().getInvoices(
+        page: 0,
+        token: token.token,
+      );
       emit(state.copyWith(status: AuthStatus.authenticated, token: token, user: user, errorMessage: null));
     } catch (e) {
       String message = 'UNEXPECTED_ERROR';

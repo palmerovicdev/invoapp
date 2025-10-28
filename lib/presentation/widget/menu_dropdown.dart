@@ -1,4 +1,3 @@
-import 'package:consts/constants/app_font_sizes.dart';
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:invoapp/core/theme/theme.dart' as app_theme;
@@ -65,8 +64,8 @@ class MenuDropdown extends StatelessWidget {
                 style: TextStyle(
                   color: theme.text,
                   fontSize: context.getResponsiveFontSize(
-                smallest: Consts.fontSizes.device.mobile.bodySmall,
-              ),
+                    smallest: Consts.fontSizes.device.mobile.bodySmall,
+                  ),
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -84,8 +83,8 @@ class MenuDropdown extends StatelessWidget {
                 style: TextStyle(
                   color: theme.text,
                   fontSize: context.getResponsiveFontSize(
-                smallest: Consts.fontSizes.device.mobile.bodySmall,
-              ),
+                    smallest: Consts.fontSizes.device.mobile.bodySmall,
+                  ),
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -104,8 +103,8 @@ class MenuDropdown extends StatelessWidget {
                 style: TextStyle(
                   color: theme.danger,
                   fontSize: context.getResponsiveFontSize(
-                smallest: Consts.fontSizes.device.mobile.bodySmall,
-              ),
+                    smallest: Consts.fontSizes.device.mobile.bodySmall,
+                  ),
                   fontWeight: FontWeight.w500,
                 ),
               ),

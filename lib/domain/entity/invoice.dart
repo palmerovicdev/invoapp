@@ -101,7 +101,7 @@ class Contact {
   final String companyNumber;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final ContactLogo? logo;
+  final String? logo;
 
   Contact({
     required this.id,
@@ -129,21 +129,7 @@ class Contact {
       companyNumber: json['company_number'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
-      logo: json['logo'] != null
-          ? ContactLogo.fromJson(json['logo'] as Map<String, dynamic>)
-          : null,
-    );
-  }
-}
-
-class ContactLogo {
-  final String url;
-
-  ContactLogo({required this.url});
-
-  factory ContactLogo.fromJson(Map<String, dynamic> json) {
-    return ContactLogo(
-      url: json['url'] as String,
+      logo: json['logo'],
     );
   }
 }

@@ -33,47 +33,51 @@ class _BlocWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => HomeBloc(),
-        ),
-        BlocProvider(
-          create: (context) =>
-              LoginBloc(loginService)..add(LoginCheckSession()),
-        ),
-      ],
-      child: BlocListener<LoginBloc, LoginState>(
-        listener: (context, state) {
-          router.authStateNotifier.value = state.status;
-        },
-        child: BlocBuilder<HomeBloc, HomeState>(
-          buildWhen: (previous, current) =>
-              previous.theme != current.theme ||
-              previous.locale != current.locale,
-          builder: (context, homeState) => MaterialApp.router(
-            title: 'InvoApp',
-            debugShowCheckedModeBanner: false,
-            routerConfig: router.router,
-            locale: homeState.locale,
-            theme: ThemeData(
-              useMaterial3: true,
-              appBarTheme: const AppBarTheme(
-                systemOverlayStyle: SystemUiOverlayStyle.light,
+    return BlocProvider(
+      create: (context) => LoginBloc(loginService)..add(LoginCheckSession()),
+      child: Builder(
+        builder: (context) {
+          final loginBloc = context.read<LoginBloc>();
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => HomeBloc(invoiceService, loginBloc),
+              ),
+            ],
+            child: BlocListener<LoginBloc, LoginState>(
+              listener: (context, state) {
+                router.authStateNotifier.value = state.status;
+              },
+              child: BlocBuilder<HomeBloc, HomeState>(
+                buildWhen: (previous, current) =>
+                    previous.theme != current.theme ||
+                    previous.locale != current.locale,
+                builder: (context, homeState) => MaterialApp.router(
+                  title: 'InvoApp',
+                  debugShowCheckedModeBanner: false,
+                  routerConfig: router.router,
+                  locale: homeState.locale,
+                  theme: ThemeData(
+                    useMaterial3: true,
+                    appBarTheme: const AppBarTheme(
+                      systemOverlayStyle: SystemUiOverlayStyle.light,
+                    ),
+                  ),
+                  supportedLocales: const [
+                    Locale('en'),
+                    Locale('es'),
+                  ],
+                  localizationsDelegates: const [
+                    AppLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                ),
               ),
             ),
-            supportedLocales: const [
-              Locale('en'),
-              Locale('es'),
-            ],
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-          ),
-        ),
+          );
+        },
       ),
     );
   }

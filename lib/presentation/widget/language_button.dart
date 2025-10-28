@@ -1,4 +1,3 @@
-import 'package:consts/constants/app_font_sizes.dart';
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:invoapp/core/theme/theme.dart' as app_theme;

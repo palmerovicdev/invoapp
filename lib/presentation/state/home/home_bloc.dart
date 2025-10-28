@@ -3,12 +3,17 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:invoapp/core/theme/theme.dart' as app_theme;
 import 'package:invoapp/domain/entity/invoice.dart';
+import 'package:invoapp/presentation/state/login/login_bloc.dart';
+import 'package:invoapp/service/invoice_service.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc()
+  final InvoiceService _invoiceService;
+  final LoginBloc _loginBloc;
+
+  HomeBloc(this._invoiceService, this._loginBloc)
     : super(
         HomeState(
           theme: app_theme.Theme.themes[app_theme.Theme.currentThemeIndex],
@@ -32,7 +37,63 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
-  void _onLoadInvoices(HomeLoadInvoices event, Emitter<HomeState> emit) {
-    emit(state.copyWith(invoices: event.invoices, selectedInvoiceIndex: 0));
+  Future<void> _onLoadInvoices(
+    HomeLoadInvoices event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(state.copyWith(loadingStatus: InvoiceLoadingStatus.loading));
+
+    try {
+      final token = _loginBloc.state.token?.token;
+
+      if (token == null) {
+        emit(
+          state.copyWith(
+            loadingStatus: InvoiceLoadingStatus.error,
+            errorMessage: 'No authentication token available',
+          ),
+        );
+        return;
+      }
+
+      final invoices = await _invoiceService.getInvoices(
+        token: token,
+        issuedAtGteq: event.issuedAtGteq,
+        issuedAtLteq: event.issuedAtLteq,
+        state: event.state,
+        searchQuery: event.searchQuery,
+        page: event.page,
+      );
+
+      emit(
+        state.copyWith(
+          invoices: invoices,
+          loadingStatus: InvoiceLoadingStatus.loaded,
+          selectedInvoiceIndex: 0,
+        ),
+      );
+    } catch (e) {
+      String message = 'UNEXPECTED_ERROR';
+      final error = e.toString();
+
+      if (error.contains('UNAUTHORIZED')) {
+        message = 'UNAUTHORIZED';
+      } else if (error.contains('FORBIDDEN')) {
+        message = 'FORBIDDEN';
+      } else if (error.contains('NOT_FOUND')) {
+        message = 'NOT_FOUND';
+      } else if (error.contains('SERVER_ERROR')) {
+        message = 'SERVER_ERROR';
+      } else if (error.contains('NETWORK_ERROR')) {
+        message = 'NETWORK_ERROR';
+      }
+
+      emit(
+        state.copyWith(
+          loadingStatus: InvoiceLoadingStatus.error,
+          errorMessage: message,
+        ),
+      );
+    }
   }
 }
