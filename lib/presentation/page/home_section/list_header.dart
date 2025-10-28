@@ -68,39 +68,24 @@ class ListHeader extends StatelessWidget {
               StateFilterDropdown(
                 theme: theme,
                 currentState: filterState,
-                onStateSelected: (state, clear) {
+                onStateSelected: (state) {
                   context.read<HomeBloc>().add(
                     HomeLoadInvoices(
                       state: state,
+                      clearState: state == null,
                       page: 1,
-                      clearFilters: clear,
                     ),
                   );
                 },
               ),
               Consts.spacing.gapHorizontal.sm,
               GestureDetector(
-                onTap: () async {
+                onTap: () {
                   click(null);
-                  final result = await showDialog<Map<String, DateTime?>>(
+                  showDialog(
                     context: context,
-                    builder: (context) => DateFilterDialog(
-                      theme: theme,
-                      initialStartDate: startDate,
-                      initialEndDate: endDate,
-                    ),
+                    builder: (context) => DateFilterDialog(theme: theme),
                   );
-
-                  if (result != null && context.mounted) {
-                    final homeBloc = context.read<HomeBloc>();
-                    homeBloc.add(
-                      HomeLoadInvoices(
-                        issuedAtGteq: result['startDate'],
-                        issuedAtLteq: result['endDate'],
-                        page: 1,
-                      ),
-                    );
-                  }
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(

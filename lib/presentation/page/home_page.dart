@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:invoapp/core/localization/app_locale.dart';
 import 'package:invoapp/core/util/feedback.dart';
 import 'package:invoapp/presentation/page/home_section/empty_invoices_state.dart';
 import 'package:invoapp/presentation/page/home_section/home_header.dart';
@@ -49,9 +50,24 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocListener<HomeBloc, HomeState>(
       listener: (context, state) {
+        if (state.errorMessage != null && state.errorMessage != 'UNEXPECTED_ERROR') {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                _getErrorMessage(state.errorMessage, context),
+                style: TextStyle(
+                  color: state.theme.bgDark,
+                  fontWeight: FontWeight.w600,
+                  fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.body),
+                ),
+              ),
+              backgroundColor: state.theme.primary,
+              duration: Consts.durations.base.md,
+            ),
+          );
+        }
         if (_pageController.hasClients) {
-          final currentPage =
-              (_pageController.page ?? _pageController.initialPage).round();
+          final currentPage = (_pageController.page ?? _pageController.initialPage).round();
           if (currentPage != state.selectedInvoiceIndex) {
             _pageController.animateToPage(
               state.selectedInvoiceIndex,
@@ -81,8 +97,7 @@ class _HomePageState extends State<HomePage> {
                               Expanded(
                                 flex: 7,
                                 child: GestureDetector(
-                                  onHorizontalDragDown: (_) =>
-                                      _isPageChange = true,
+                                  onHorizontalDragDown: (_) => _isPageChange = true,
                                   child: PageView.builder(
                                     controller: _pageController,
                                     itemCount: state.invoices.length,
@@ -106,10 +121,8 @@ class _HomePageState extends State<HomePage> {
                                 flex: 2,
                                 child: NavigationAndSearch(
                                   state: state,
-                                  scrollToNext: () =>
-                                      click(() => _scrollToNext(state)),
-                                  scrollToPrevious: () =>
-                                      click(() => _scrollToPrevious(state)),
+                                  scrollToNext: () => click(() => _scrollToNext(state)),
+                                  scrollToPrevious: () => click(() => _scrollToPrevious(state)),
                                 ),
                               ),
                               ListHeader(
@@ -121,9 +134,7 @@ class _HomePageState extends State<HomePage> {
                               Consts.spacing.gap.sm,
                               Expanded(
                                 flex: 12,
-                                child:
-                                    state.loadingStatus ==
-                                        InvoiceLoadingStatus.loading
+                                child: state.loadingStatus == InvoiceLoadingStatus.loading
                                     ? Center(
                                         child: ZoomIn(
                                           duration: Consts.durations.base.xl,
@@ -143,10 +154,8 @@ class _HomePageState extends State<HomePage> {
                                         itemBuilder: (context, index) {
                                           return MeasureSize(
                                             onChange: (size) {
-                                              if (_itemHeights[index] !=
-                                                  size.height) {
-                                                _itemHeights[index] =
-                                                    size.height;
+                                              if (_itemHeights[index] != size.height) {
+                                                _itemHeights[index] = size.height;
                                               }
                                             },
                                             child: ZoomIn(
@@ -156,9 +165,7 @@ class _HomePageState extends State<HomePage> {
                                               child: InvoiceListItem(
                                                 invoice: state.invoices[index],
                                                 theme: theme,
-                                                isSelected:
-                                                    index ==
-                                                    state.selectedInvoiceIndex,
+                                                isSelected: index == state.selectedInvoiceIndex,
                                                 onTap: () {
                                                   select(null);
                                                   _isPageChange = false;
@@ -208,6 +215,23 @@ class _HomePageState extends State<HomePage> {
       final prev = s.selectedInvoiceIndex - 1;
       context.read<HomeBloc>().add(HomeSelectInvoice(prev));
       _animateToIndex(prev, s);
+    }
+  }
+
+  String _getErrorMessage(String? errorMessage, BuildContext context) {
+    if (errorMessage == null) return context.l10n.authenticationFailed;
+
+    switch (errorMessage) {
+      case 'INVALID_CREDENTIALS':
+        return context.l10n.invalidCredentials;
+      case 'SERVER_ERROR':
+        return context.l10n.serverError;
+      case 'NETWORK_ERROR':
+        return context.l10n.networkError;
+      case 'UNEXPECTED_ERROR':
+        return context.l10n.unexpectedError;
+      default:
+        return context.l10n.authenticationFailed;
     }
   }
 

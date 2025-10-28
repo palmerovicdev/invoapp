@@ -65,6 +65,7 @@ class SplashPage extends StatelessWidget {
                   animatedTexts: [
                     TypewriterAnimatedText(
                       isAuthentication ? context.l10n.checkingAuth : context.l10n.loading,
+                      textAlign: TextAlign.center,
                       textStyle: TextStyle(
                         fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.paragraphTitle, largest: Consts.fontSizes.device.mobile.header),
                         color: theme.textMuted,

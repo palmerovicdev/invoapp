@@ -27,9 +27,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   void _onToggleLocale(HomeToggleLocale event, Emitter<HomeState> emit) {
-    final newLocale = state.locale.languageCode == 'en'
-        ? const Locale('es')
-        : const Locale('en');
+    final newLocale = state.locale.languageCode == 'en' ? const Locale('es') : const Locale('en');
     emit(state.copyWith(locale: newLocale));
   }
 
@@ -57,17 +55,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return;
       }
 
+      final isStateFilterChange = event.page == 1 && event.clearFilters == false && event.issuedAtGteq == null && event.issuedAtLteq == null && event.searchQuery == null;
+
+      final effectiveIssuedAtGteq = event.clearDates || event.clearFilters ? null : (event.issuedAtGteq ?? state.issuedAtGteq);
+      final effectiveIssuedAtLteq = event.clearDates || event.clearFilters ? null : (event.issuedAtLteq ?? state.issuedAtLteq);
+      final effectiveState = event.clearState || event.clearFilters ? null : (isStateFilterChange ? event.state : (event.state ?? state.filterState));
+      final effectiveSearchQuery = event.searchQuery;
+      final effectivePage = event.resetPage ? 1 : (event.page ?? state.page);
+
       final invoices = await _invoiceService.getInvoices(
         token: token,
-        issuedAtGteq: event.clearFilters
-            ? null
-            : (event.issuedAtGteq ?? state.issuedAtGteq),
-        issuedAtLteq: event.clearFilters
-            ? null
-            : (event.issuedAtLteq ?? state.issuedAtLteq),
-        state: event.clearFilters ? null : (event.state ?? state.filterState),
-        searchQuery: event.searchQuery,
-        page: event.page ?? state.page,
+        issuedAtGteq: effectiveIssuedAtGteq,
+        issuedAtLteq: effectiveIssuedAtLteq,
+        state: effectiveState,
+        searchQuery: effectiveSearchQuery,
+        page: effectivePage,
       );
 
       emit(
@@ -76,12 +78,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           loadingStatus: InvoiceLoadingStatus.loaded,
           selectedInvoiceIndex: 0,
           page: event.page ?? state.page,
-          issuedAtGteq: event.issuedAtGteq,
-          issuedAtLteq: event.issuedAtLteq,
-          filterState: event.state,
-          clearIssuedAtGteq: event.clearFilters,
-          clearIssuedAtLteq: event.clearFilters,
-          clearFilterState: event.clearFilters,
+          issuedAtGteq: effectiveIssuedAtGteq,
+          issuedAtLteq: effectiveIssuedAtLteq,
+          filterState: effectiveState,
+          clearIssuedAtGteq: event.clearFilters || event.clearDates,
+          clearIssuedAtLteq: event.clearFilters || event.clearDates,
+          clearFilterState: event.clearFilters || (isStateFilterChange && event.state == null) || event.clearState,
           clearErrorMessage: true,
         ),
       );

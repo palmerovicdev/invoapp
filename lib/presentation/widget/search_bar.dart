@@ -25,8 +25,7 @@ class CustomSearchBar extends StatefulWidget {
   State<CustomSearchBar> createState() => _CustomSearchBarState();
 }
 
-class _CustomSearchBarState extends State<CustomSearchBar>
-    with SingleTickerProviderStateMixin {
+class _CustomSearchBarState extends State<CustomSearchBar> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   final FocusNode _focusNode = FocusNode();
   Timer? _debounceTimer;
@@ -39,7 +38,6 @@ class _CustomSearchBarState extends State<CustomSearchBar>
       duration: Consts.durations.base.md,
     )..forward();
 
-    // Listen to text changes with debounce
     widget.searchController?.addListener(_onSearchChanged);
   }
 
@@ -53,10 +51,9 @@ class _CustomSearchBarState extends State<CustomSearchBar>
   }
 
   void _onSearchChanged() {
-    // Cancel previous timer
+    if (widget.searchController?.text == null || (widget.searchController?.text.isEmpty ?? true)) return;
     _debounceTimer?.cancel();
 
-    // Create new timer
     _debounceTimer = Timer(const Duration(milliseconds: 500), () {
       if (mounted) {
         final query = widget.searchController?.text ?? '';
@@ -140,7 +137,6 @@ class _CustomSearchBarState extends State<CustomSearchBar>
                       _focusNode.unfocus();
                       _animationController.reverse(from: 1).then((value) {
                         widget.onNotShow?.call();
-                        // Reset search when closing
                         context.read<HomeBloc>().add(
                           const HomeLoadInvoices(
                             searchQuery: null,

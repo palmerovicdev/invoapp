@@ -34,11 +34,7 @@ class ListPagination extends StatelessWidget {
                     click(null);
                     context.read<HomeBloc>().add(
                       HomeLoadInvoices(
-                        searchQuery: searchController.text.trim(),
                         page: state.page - 1,
-                        state: state.filterState,
-                        issuedAtGteq: state.issuedAtGteq,
-                        issuedAtLteq: state.issuedAtLteq,
                       ),
                     );
                   }
@@ -71,11 +67,7 @@ class ListPagination extends StatelessWidget {
               click(null);
               context.read<HomeBloc>().add(
                 HomeLoadInvoices(
-                  searchQuery: searchController.text.trim(),
                   page: state.page + 1,
-                  state: state.filterState,
-                  issuedAtGteq: state.issuedAtGteq,
-                  issuedAtLteq: state.issuedAtLteq,
                 ),
               );
             },

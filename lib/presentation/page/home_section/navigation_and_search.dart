@@ -74,9 +74,12 @@ class _NavigationAndSearchState extends State<NavigationAndSearch> with TickerPr
           CircleButton(
             icon: Icons.saved_search_sharp,
             size: Consts.sizes.base.xxxl,
-            onTap: () => click(()=>setState(() {
-              _showSearch = true;
-            })),
+            onTap: () {
+              click(null);
+              setState(() {
+                _showSearch = true;
+              });
+            },
             enabled: true,
           ),
           Consts.spacing.gapHorizontal.lg,

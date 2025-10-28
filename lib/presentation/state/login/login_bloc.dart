@@ -30,10 +30,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     await Future.delayed(const Duration(seconds: 1));
     try {
       final token = await _loginService.checkSession();
-
-      var isInvalidToken = token == null || !token.isValid;
-
-      if (isInvalidToken) {
+      if (token == null || !token.isValid) {
         emit(state.copyWith(status: AuthStatus.unauthenticated));
         return;
       }
@@ -43,7 +40,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         page: 1,
         token: token.token,
       );
-      emit(state.copyWith(status: AuthStatus.authenticated, token: token, user: user));
+      emit(
+        state.copyWith(
+          status: AuthStatus.authenticated,
+          token: token,
+          user: user,
+        ),
+      );
     } catch (e) {
       emit(
         state.copyWith(
@@ -63,25 +66,32 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       final token = await _loginService.login(event.email, event.password);
       final user = await _loginService.getCurrentUser();
-      emit(state.copyWith(status: AuthStatus.initial, token: token, user: user, errorMessage: null, isCheck: false));
       await locator.get<InvoiceService>().getInvoices(
         page: 1,
         token: token.token,
       );
-      emit(state.copyWith(status: AuthStatus.authenticated, token: token, user: user, errorMessage: null));
+      emit(
+        state.copyWith(
+          status: AuthStatus.authenticated,
+          token: token,
+          user: user,
+          clearError: true,
+        ),
+      );
     } catch (e) {
-      String message = 'UNEXPECTED_ERROR';
-      final error = e.toString();
+      final errorMap = {
+        'INVALID_CREDENTIALS': 'INVALID_CREDENTIALS',
+        'SERVER_ERROR': 'SERVER_ERROR',
+        'NETWORK_ERROR': 'NETWORK_ERROR',
+      };
 
-      if (error.contains('INVALID_CREDENTIALS')) {
-        message = 'INVALID_CREDENTIALS';
-      } else if (error.contains('SERVER_ERROR')) {
-        message = 'SERVER_ERROR';
-      } else if (error.contains('NETWORK_ERROR')) {
-        message = 'NETWORK_ERROR';
-      } else if (error.contains('UNEXPECTED_ERROR')) {
-        message = 'UNEXPECTED_ERROR';
-      }
+      final error = e.toString();
+      final message = errorMap.entries
+          .firstWhere(
+            (entry) => error.contains(entry.key),
+            orElse: () => const MapEntry('', 'UNEXPECTED_ERROR'),
+          )
+          .value;
 
       emit(
         state.copyWith(
@@ -115,6 +125,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginClearError event,
     Emitter<LoginState> emit,
   ) async {
-    emit(state.clearError());
+    emit(
+      state.copyWith(
+        status: AuthStatus.unauthenticated,
+        clearError: true,
+      ),
+    );
   }
 }

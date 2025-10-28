@@ -13,7 +13,7 @@ class StateFilterDropdown extends StatelessWidget {
 
   final app_theme.Theme theme;
   final InvoiceState? currentState;
-  final Function(InvoiceState?, bool clear) onStateSelected;
+  final Function(InvoiceState?) onStateSelected;
 
   String _getStateLabel(InvoiceState? state) {
     if (state == null) return 'Todos';
@@ -71,9 +71,7 @@ class StateFilterDropdown extends StatelessWidget {
     final hasFilter = currentState != null;
 
     return PopupMenuButton<InvoiceState?>(
-      onSelected: (value) {
-        onStateSelected(value, false);
-      },
+      onSelected: (state) => onStateSelected(state),
       offset: Offset(0, Consts.sizes.base.xl),
       color: theme.bgLight,
       shape: RoundedRectangleBorder(
@@ -91,9 +89,7 @@ class StateFilterDropdown extends StatelessWidget {
           vertical: Consts.spacing.base.xxs,
         ),
         decoration: BoxDecoration(
-          color: hasFilter
-              ? _getStateColor(currentState!).withValues(alpha: 0.15)
-              : theme.bg,
+          color: hasFilter ? _getStateColor(currentState!).withValues(alpha: 0.15) : theme.bg,
           borderRadius: Consts.radius.containers.sm,
           border: Border.all(
             color: hasFilter
@@ -117,9 +113,7 @@ class StateFilterDropdown extends StatelessWidget {
       ),
       itemBuilder: (BuildContext context) => [
         PopupMenuItem<InvoiceState?>(
-          onTap: () {
-            onStateSelected(null, true);
-          },
+          onTap: () => onStateSelected(null),
           value: null,
           child: Row(
             children: [
@@ -136,9 +130,7 @@ class StateFilterDropdown extends StatelessWidget {
                   fontSize: context.getResponsiveFontSize(
                     smallest: Consts.fontSizes.device.mobile.bodySmall,
                   ),
-                  fontWeight: currentState == null
-                      ? FontWeight.w600
-                      : FontWeight.w400,
+                  fontWeight: currentState == null ? FontWeight.w600 : FontWeight.w400,
                 ),
               ),
               if (currentState == null) ...[

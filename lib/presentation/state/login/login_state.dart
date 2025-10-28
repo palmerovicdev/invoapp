@@ -6,51 +6,33 @@ class LoginState extends Equatable {
     this.errorMessage,
     this.user,
     this.token,
-    this.isCheck = true,
   });
 
   final AuthStatus status;
   final String? errorMessage;
   final User? user;
   final Token? token;
-  final bool isCheck;
 
   @override
-  List<Object?> get props => [status, errorMessage];
+  List<Object?> get props => [status, errorMessage, user, token];
 
   bool get isAuthenticated => status == AuthStatus.authenticated;
-
   bool get isUnauthenticated => status == AuthStatus.unauthenticated;
-
   bool get isChecking => status == AuthStatus.checking;
-
   bool get hasError => status == AuthStatus.error;
-
-  bool get hasFailed => status == AuthStatus.failed;
 
   LoginState copyWith({
     AuthStatus? status,
     String? errorMessage,
     User? user,
     Token? token,
-    bool? isCheck,
+    bool clearError = false,
   }) {
     return LoginState(
       status: status ?? this.status,
-      errorMessage: errorMessage ?? this.errorMessage,
+      errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
       user: user ?? this.user,
       token: token ?? this.token,
-      isCheck: isCheck ?? this.isCheck,
-    );
-  }
-
-  LoginState clearError() {
-    return LoginState(
-      status: AuthStatus.unauthenticated,
-      errorMessage: null,
-      user: user,
-      token: token,
-      isCheck: true,
     );
   }
 }

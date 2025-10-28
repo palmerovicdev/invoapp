@@ -33,7 +33,9 @@ class HomeState extends Equatable {
   final InvoiceState? filterState;
 
   bool get isLoading => loadingStatus == InvoiceLoadingStatus.loading;
+
   bool get hasError => loadingStatus == InvoiceLoadingStatus.error;
+
   bool get isLoaded => loadingStatus == InvoiceLoadingStatus.loaded;
 
   @override
@@ -72,16 +74,10 @@ class HomeState extends Equatable {
       invoices: invoices ?? this.invoices,
       selectedInvoiceIndex: selectedInvoiceIndex ?? this.selectedInvoiceIndex,
       loadingStatus: loadingStatus ?? this.loadingStatus,
-      errorMessage: clearErrorMessage
-          ? null
-          : (errorMessage ?? this.errorMessage),
+      errorMessage: clearErrorMessage ? null : (errorMessage ?? this.errorMessage),
       page: page ?? this.page,
-      issuedAtGteq: clearIssuedAtGteq
-          ? null
-          : (issuedAtGteq ?? this.issuedAtGteq),
-      issuedAtLteq: clearIssuedAtLteq
-          ? null
-          : (issuedAtLteq ?? this.issuedAtLteq),
+      issuedAtGteq: clearIssuedAtGteq ? null : (issuedAtGteq ?? this.issuedAtGteq),
+      issuedAtLteq: clearIssuedAtLteq ? null : (issuedAtLteq ?? this.issuedAtLteq),
       filterState: clearFilterState ? null : (filterState ?? this.filterState),
     );
   }

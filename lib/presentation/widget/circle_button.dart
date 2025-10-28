@@ -20,7 +20,7 @@ class CircleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = app_theme.Theme.themes[app_theme.Theme.currentThemeIndex];
     return GestureDetector(
-      onTap: enabled ? onTap : null,
+      onTap: enabled ? () => onTap.call() : null,
       child: Container(
         width: size + Consts.sizes.base.mdl,
         height: size + Consts.sizes.base.mdl,

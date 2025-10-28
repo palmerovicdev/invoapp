@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:invoapp/core/auth_status.dart';
 import 'package:invoapp/core/route/router_observer.dart';
 import 'package:invoapp/core/route/routes.dart';
-import 'package:invoapp/presentation/state/login/login_bloc.dart';
-
-import '../../presentation/page/home_page.dart';
-import '../../presentation/page/login_page.dart';
-import '../../presentation/page/splash_page.dart';
-import '../auth_status.dart';
+import 'package:invoapp/presentation/page/home_page.dart';
+import 'package:invoapp/presentation/page/login_page.dart';
+import 'package:invoapp/presentation/page/splash_page.dart';
 
 final rootNavigationKey = GlobalKey<NavigatorState>();
 
@@ -28,7 +25,8 @@ GoRouter createRouter() {
       final isLogin = state.matchedLocation == Routes.login.path;
       final isAuthenticated = authStatus == AuthStatus.authenticated;
       final isUnauthenticated = authStatus == AuthStatus.unauthenticated;
-      final isChecking = authStatus == AuthStatus.checking || authStatus == AuthStatus.initial;
+      final isChecking =
+          authStatus == AuthStatus.checking || authStatus == AuthStatus.initial;
 
       if (authStatus == AuthStatus.initial && !isSplash) {
         return Routes.splash.path;
@@ -52,16 +50,10 @@ GoRouter createRouter() {
       GoRoute(
         path: Routes.splash.path,
         name: Routes.splash.name,
-        pageBuilder: (context, state) {
-          final loginState = context.read<LoginBloc>().state;
-          final extra = loginState.isCheck;
-          return MaterialPage(
-            key: state.pageKey,
-            child: SplashPage(
-              isAuthentication: extra,
-            ),
-          );
-        },
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const SplashPage(isAuthentication: true),
+        ),
       ),
       GoRoute(
         path: Routes.login.path,
