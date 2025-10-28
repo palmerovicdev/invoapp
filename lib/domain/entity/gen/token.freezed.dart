@@ -15,44 +15,47 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Token {
 
- String get token; DateTime? get expiresAt;
-/// Create a copy of Token
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$TokenCopyWith<Token> get copyWith => _$TokenCopyWithImpl<Token>(this as Token, _$identity);
+  String get token;
+
+  DateTime? get expiresAt;
+
+  /// Create a copy of Token
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $TokenCopyWith<Token> get copyWith => _$TokenCopyWithImpl<Token>(this as Token, _$identity);
 
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType && other is Token && (identical(other.token, token) || other.token == token) &&
+        (identical(other.expiresAt, expiresAt) || other.expiresAt == expiresAt));
+  }
 
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Token&&(identical(other.token, token) || other.token == token)&&(identical(other.expiresAt, expiresAt) || other.expiresAt == expiresAt));
-}
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, token, expiresAt);
 
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,token,expiresAt);
-
-@override
-String toString() {
-  return 'Token(token: $token, expiresAt: $expiresAt)';
-}
+  @override
+  String toString() {
+    return 'Token(token: $token, expiresAt: $expiresAt)';
+  }
 
 
 }
 
 /// @nodoc
-abstract mixin class $TokenCopyWith<$Res>  {
+abstract mixin class $TokenCopyWith<$Res> {
   factory $TokenCopyWith(Token value, $Res Function(Token) _then) = _$TokenCopyWithImpl;
-@useResult
-$Res call({
- String token, DateTime? expiresAt
-});
 
-
+  @useResult
+  $Res call({
+    String token, DateTime? expiresAt
+  });
 
 
 }
+
 /// @nodoc
 class _$TokenCopyWithImpl<$Res>
     implements $TokenCopyWith<$Res> {
@@ -61,38 +64,67 @@ class _$TokenCopyWithImpl<$Res>
   final Token _self;
   final $Res Function(Token) _then;
 
-/// Create a copy of Token
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? token = null,Object? expiresAt = freezed,}) {
-  return _then(Token(
-token: null == token ? _self.token : token // ignore: cast_nullable_to_non_nullable
-as String,expiresAt: freezed == expiresAt ? _self.expiresAt : expiresAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
-  ));
-}
+  /// Create a copy of Token
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? token = null, Object? expiresAt = freezed,}) {
+    return _then(Token(
+      token: null == token ? _self.token : token // ignore: cast_nullable_to_non_nullable
+      as String, expiresAt: freezed == expiresAt ? _self.expiresAt : expiresAt // ignore: cast_nullable_to_non_nullable
+    as DateTime?,
+    ));
+  }
 
 }
 
 
 /// Adds pattern-matching-related methods to [Token].
 extension TokenPatterns on Token {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({required TResult orElse(),}){
+  @optionalTypeArgs TResult maybeMap
+
+  <
+
+  TResult
+
+  extends
+
+  Object?
+
+  >
+
+  (
+
+  {
+
+  required
+
+  TResult
+
+  orElse
+
+  (
+
+  )
+
+  ,
+}){
 final _that = this;
 switch (_that) {
 case _:
-  return orElse();
+return orElse();
 
 }
 }
@@ -109,14 +141,15 @@ case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(){
-final _that = this;
-switch (_that) {
-case _:
-  throw StateError('Unexpected subclass');
+@optionalTypeArgs
+TResult map<TResult extends Object?>() {
+  final _that = this;
+  switch (_that) {
+    case _:
+      throw StateError('Unexpected subclass');
+  }
+}
 
-}
-}
 /// A variant of `map` that fallback to returning `null`.
 ///
 /// It is equivalent to doing:
@@ -129,14 +162,15 @@ case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(){
-final _that = this;
-switch (_that) {
-case _:
-  return null;
+@optionalTypeArgs
+TResult? mapOrNull<TResult extends Object?>() {
+  final _that = this;
+  switch (_that) {
+    case _:
+      return null;
+  }
+}
 
-}
-}
 /// A variant of `when` that fallback to an `orElse` callback.
 ///
 /// It is equivalent to doing:
@@ -149,10 +183,16 @@ case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen
+<
+TResult extends Object?>(
+{
+required
+TResult
+orElse(),}) {final _that = this;
 switch (_that) {
 case _:
-  return orElse();
+return orElse();
 
 }
 }
@@ -172,7 +212,7 @@ case _:
 @optionalTypeArgs TResult when<TResult extends Object?>() {final _that = this;
 switch (_that) {
 case _:
-  throw StateError('Unexpected subclass');
+throw StateError('Unexpected subclass');
 
 }
 }
@@ -191,7 +231,7 @@ case _:
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>() {final _that = this;
 switch (_that) {
 case _:
-  return null;
+return null;
 
 }
 }

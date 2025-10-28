@@ -31,5 +31,5 @@
   "networkError": "Error de red",
   "unexpectedError": "Error inesperado",
   "authenticationError": "Error de autenticación",
-    "checkingAuth" : "Verificando autenticación..."
+  "checkingAuth": "Verificando autenticación..."
 }

@@ -37,7 +37,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       final user = await _loginService.getCurrentUser();
       emit(state.copyWith(status: AuthStatus.authenticated, token: token, user: user));
-
     } catch (e) {
       emit(
         state.copyWith(
@@ -58,7 +57,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final token = await _loginService.login(event.email, event.password);
       final user = await _loginService.getCurrentUser();
       emit(state.copyWith(status: AuthStatus.authenticated, token: token, user: user));
-
     } catch (e) {
       String message = 'UNEXPECTED_ERROR';
       final error = e.toString();
@@ -83,9 +81,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Future<void> _onLogout(
-      LoginLogout event,
-      Emitter<LoginState> emit,
-      ) async {
+    LoginLogout event,
+    Emitter<LoginState> emit,
+  ) async {
     emit(state.copyWith(status: AuthStatus.checking));
 
     try {
@@ -102,9 +100,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Future<void> _onClearError(
-      LoginClearError event,
-      Emitter<LoginState> emit,
-      ) async {
+    LoginClearError event,
+    Emitter<LoginState> emit,
+  ) async {
     emit(state.clearError());
   }
 }

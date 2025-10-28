@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -27,8 +28,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get requestFailed => 'La solicitud falló.';
 
   @override
-  String get pleaseCheckYourConnection =>
-      'Por favor, verifica tu conexión a internet.';
+  String get pleaseCheckYourConnection => 'Por favor, verifica tu conexión a internet.';
 
   @override
   String get transactions => 'Transacciones';
@@ -55,8 +55,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get password => 'Contraseña';
 
   @override
-  String get incorrectEmailOrPassword =>
-      'Correo electrónico o contraseña incorrectos';
+  String get incorrectEmailOrPassword => 'Correo electrónico o contraseña incorrectos';
 
   @override
   String get signIn => 'Iniciar sesión';

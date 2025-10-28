@@ -2,7 +2,6 @@ part of 'login_bloc.dart';
 
 abstract class LoginEvent {}
 
-
 class LoginCheckSession extends LoginEvent {}
 
 class LoginSubmit extends LoginEvent {

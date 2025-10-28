@@ -1,4 +1,3 @@
-import 'package:consts/constants/app_font_sizes.dart';
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,51 +79,52 @@ class _LoginPageState extends State<LoginPage> {
           );
           _loginButtonController.changeState('init');
           context.read<LoginBloc>().add(LoginClearError());
-
         },
         builder: (context, state) {
           final homeState = context.watch<HomeBloc>().state;
-          return SafeArea(child: SingleChildScrollView(
-          padding: AppSpacing.paddingXl,
-          child: Form(
-            key: _loginFormKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const LoginHeader(),
-                EmailField(
-                  controller: _emailController,
-                  enabled: !state.isChecking,
-                ),
-                Consts.spacing.gap.huge,
-                PasswordField(
-                  controller: _passwordController,
-                  enabled: !state.isChecking,
-                ),
-                Consts.spacing.gap.huge,
-                Center(
-                  child: AnimatedStateButton(
-                    controller: _loginButtonController,
-                    initColor: homeState.theme.primary,
-                    borderRadius: Consts.radius.base.md,
-                    compactSize: Consts.sizes.base.mega,
-                    height: Consts.sizes.base.mega,
-                    onPressed: () async => _login(context),
-                    initChild: Text(
-                      context.l10n.signIn,
-                      style: TextStyle(
-                        fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.bodySmall),
-                        fontWeight: FontWeight.w600,
-                        color: homeState.theme.text,
+          return SafeArea(
+            child: SingleChildScrollView(
+              padding: AppSpacing.paddingXl,
+              child: Form(
+                key: _loginFormKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const LoginHeader(),
+                    EmailField(
+                      controller: _emailController,
+                      enabled: !state.isChecking,
+                    ),
+                    Consts.spacing.gap.huge,
+                    PasswordField(
+                      controller: _passwordController,
+                      enabled: !state.isChecking,
+                    ),
+                    Consts.spacing.gap.huge,
+                    Center(
+                      child: AnimatedStateButton(
+                        controller: _loginButtonController,
+                        initColor: homeState.theme.primary,
+                        borderRadius: Consts.radius.base.md,
+                        compactSize: Consts.sizes.base.mega,
+                        height: Consts.sizes.base.mega,
+                        onPressed: () async => _login(context),
+                        initChild: Text(
+                          context.l10n.signIn,
+                          style: TextStyle(
+                            fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.bodySmall),
+                            fontWeight: FontWeight.w600,
+                            color: homeState.theme.text,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Consts.spacing.gap.huge,
+                  ],
                 ),
-                Consts.spacing.gap.huge,
-              ],
+              ),
             ),
-          ),
-        ),);
+          );
         },
       ),
     );

@@ -24,5 +24,4 @@ class Token with _$Token {
   }
 
   bool get isValid => token.isNotEmpty && !isExpired;
-
 }
