@@ -19,8 +19,8 @@ class EmptyInvoicesState extends StatelessWidget {
         children: [
           Icon(
             Icons.receipt_long_outlined,
-            size: Consts.sizes.base.massive,
-            color: theme.textMuted.withValues(alpha: Consts.ui.opacities.hover),
+            size: Consts.sizes.base.colossal,
+            color: theme.primary,
           ),
           Consts.spacing.gap.xxl,
           Text(
@@ -31,6 +31,27 @@ class EmptyInvoicesState extends StatelessWidget {
               ),
               color: theme.textMuted,
             ),
+          ),
+          Consts.spacing.gap.xl,
+          FilledButton(
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(theme.bgLight),
+              shape: WidgetStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: Consts.radius.containers.md,
+                ),
+              ),
+            ),
+            child: Text(
+              context.l10n.retry,
+              style: TextStyle(
+                fontSize: context.getResponsiveFontSize(
+                  smallest: Consts.fontSizes.device.mobile.body,
+                ),
+                color: theme.primary,
+              ),
+            ),
+            onPressed: () {},
           ),
         ],
       ),
