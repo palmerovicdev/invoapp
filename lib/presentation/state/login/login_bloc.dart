@@ -65,7 +65,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final user = await _loginService.getCurrentUser();
       emit(state.copyWith(status: AuthStatus.initial, token: token, user: user, errorMessage: null, isCheck: false));
       await locator.get<InvoiceService>().getInvoices(
-        page: 0,
+        page: 1,
         token: token.token,
       );
       emit(state.copyWith(status: AuthStatus.authenticated, token: token, user: user, errorMessage: null));

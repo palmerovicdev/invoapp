@@ -15,6 +15,10 @@ class HomeState extends Equatable {
     this.selectedInvoiceIndex = 0,
     this.loadingStatus = InvoiceLoadingStatus.initial,
     this.errorMessage,
+    this.page = 1,
+    this.issuedAtGteq,
+    this.issuedAtLteq,
+    this.filterState,
   });
 
   final app_theme.Theme theme;
@@ -23,6 +27,10 @@ class HomeState extends Equatable {
   final int selectedInvoiceIndex;
   final InvoiceLoadingStatus loadingStatus;
   final String? errorMessage;
+  final int page;
+  final DateTime? issuedAtGteq;
+  final DateTime? issuedAtLteq;
+  final InvoiceState? filterState;
 
   bool get isLoading => loadingStatus == InvoiceLoadingStatus.loading;
   bool get hasError => loadingStatus == InvoiceLoadingStatus.error;
@@ -36,6 +44,10 @@ class HomeState extends Equatable {
     selectedInvoiceIndex,
     loadingStatus,
     errorMessage,
+    page,
+    issuedAtGteq,
+    issuedAtLteq,
+    filterState,
   ];
 
   HomeState copyWith({
@@ -45,6 +57,10 @@ class HomeState extends Equatable {
     int? selectedInvoiceIndex,
     InvoiceLoadingStatus? loadingStatus,
     String? errorMessage,
+    int? page,
+    DateTime? issuedAtGteq,
+    DateTime? issuedAtLteq,
+    InvoiceState? filterState,
   }) {
     return HomeState(
       theme: theme ?? this.theme,
@@ -53,6 +69,10 @@ class HomeState extends Equatable {
       selectedInvoiceIndex: selectedInvoiceIndex ?? this.selectedInvoiceIndex,
       loadingStatus: loadingStatus ?? this.loadingStatus,
       errorMessage: errorMessage ?? this.errorMessage,
+      page: page ?? this.page,
+      issuedAtGteq: issuedAtGteq ?? this.issuedAtGteq,
+      issuedAtLteq: issuedAtLteq ?? this.issuedAtLteq,
+      filterState: filterState ?? this.filterState,
     );
   }
 }

@@ -1,7 +1,10 @@
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoapp/core/localization/app_locale.dart';
 import 'package:invoapp/core/theme/theme.dart' as app_theme;
+
+import '../../state/login/login_bloc.dart';
 
 void showLogoutDialog(BuildContext context, app_theme.Theme theme) {
   showDialog(
@@ -49,7 +52,7 @@ class LogoutDialog extends StatelessWidget {
                       backgroundColor: theme.bgLight,
                       foregroundColor: theme.primary,
                       padding: EdgeInsets.symmetric(
-                        vertical: Consts.spacing.padding.lg.vertical,
+                        vertical: Consts.spacing.padding.sm.vertical,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: Consts.radius.containers.lg,
@@ -71,8 +74,8 @@ class LogoutDialog extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
+                      context.read<LoginBloc>().add(LoginLogout());
                       Navigator.pop(context);
-                      // TODO: Implementar logout
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: theme.danger.withOpacity(
@@ -80,7 +83,7 @@ class LogoutDialog extends StatelessWidget {
                       ),
                       foregroundColor: theme.danger,
                       padding: EdgeInsets.symmetric(
-                        vertical: Consts.spacing.padding.lg.vertical,
+                        vertical: Consts.spacing.padding.sm.vertical,
                       ),
                       shape: Consts.radius.shapes.lg,
                     ),
