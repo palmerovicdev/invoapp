@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:invoapp/domain/entity/token.dart';
 
 import '../../../core/auth_status.dart';
-import '../../../domain/entity/User.dart';
+import '../../../domain/entity/user.dart';
 import '../../../service/login_service.dart';
 
 part 'login_event.dart';

@@ -1,6 +1,6 @@
 import '../data/repository/login_repository.dart';
-import '../domain/entity/User.dart';
 import '../domain/entity/token.dart';
+import '../domain/entity/user.dart';
 
 abstract class LoginService {
   Future<Token> login(String email, String password);

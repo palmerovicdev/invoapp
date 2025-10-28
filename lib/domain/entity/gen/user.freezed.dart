@@ -17,8 +17,6 @@ mixin _$User {
 
   String get email;
 
-  bool get isLoggedIn;
-
   DateTime? get lastLogin;
 
   /// Create a copy of User
@@ -31,16 +29,16 @@ mixin _$User {
   @override
   bool operator ==(Object other) {
     return identical(this, other) || (other.runtimeType == runtimeType && other is User && (identical(other.email, email) || other.email == email) &&
-        (identical(other.isLoggedIn, isLoggedIn) || other.isLoggedIn == isLoggedIn) && (identical(other.lastLogin, lastLogin) || other.lastLogin == lastLogin));
+        (identical(other.lastLogin, lastLogin) || other.lastLogin == lastLogin));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, email, isLoggedIn, lastLogin);
+  int get hashCode => Object.hash(runtimeType, email, lastLogin);
 
   @override
   String toString() {
-    return 'User(email: $email, isLoggedIn: $isLoggedIn, lastLogin: $lastLogin)';
+    return 'User(email: $email, lastLogin: $lastLogin)';
   }
 
 
@@ -52,7 +50,7 @@ abstract mixin class $UserCopyWith<$Res> {
 
   @useResult
   $Res call({
-    String email, bool isLoggedIn, DateTime? lastLogin
+    String email, DateTime? lastLogin
   });
 
 
@@ -70,11 +68,10 @@ class _$UserCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? email = null, Object? isLoggedIn = null, Object? lastLogin = freezed,}) {
+  $Res call({Object? email = null, Object? lastLogin = freezed,}) {
     return _then(User(
       email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-      as String, isLoggedIn: null == isLoggedIn ? _self.isLoggedIn : isLoggedIn // ignore: cast_nullable_to_non_nullable
-    as bool, lastLogin: freezed == lastLogin ? _self.lastLogin : lastLogin // ignore: cast_nullable_to_non_nullable
+      as String, lastLogin: freezed == lastLogin ? _self.lastLogin : lastLogin // ignore: cast_nullable_to_non_nullable
     as DateTime?,
     ));
   }

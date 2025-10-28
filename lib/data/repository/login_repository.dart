@@ -4,8 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:invoapp/core/env/env.dart';
 
-import '../../domain/entity/User.dart';
 import '../../domain/entity/token.dart';
+import '../../domain/entity/user.dart';
 
 abstract class LoginRepository {
   Future<Token> login(String email, String password);
@@ -71,7 +71,6 @@ class LoginRepositoryImpl implements LoginRepository {
 
       final user = User(
         email: email,
-        isLoggedIn: true,
         lastLogin: DateTime.now(),
       );
 
@@ -113,7 +112,6 @@ class LoginRepositoryImpl implements LoginRepository {
 
       return User(
         email: await _storage.read(key: _keyUserEmail) ?? '',
-        isLoggedIn: true,
         lastLogin: DateTime.now(),
       );
     } catch (e) {

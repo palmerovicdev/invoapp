@@ -8,14 +8,11 @@ part 'gen/user.g.dart';
 class User with _$User {
   User({
     required this.email,
-    @Default(false) this.isLoggedIn = false,
     this.lastLogin,
   });
 
   @override
   final String email;
-  @override
-  final bool isLoggedIn;
   @override
   final DateTime? lastLogin;
 
@@ -23,7 +20,6 @@ class User with _$User {
 
   static User mock() => User(
     email: 'user@homemock.com',
-    isLoggedIn: true,
     lastLogin: DateTime.now(),
   );
 }
