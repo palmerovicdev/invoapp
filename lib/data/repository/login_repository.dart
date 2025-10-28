@@ -12,7 +12,7 @@ abstract class LoginRepository {
 
   Future<void> logout();
 
-  Future<Token?> getCurrentToken();
+  Future<Token?> getCurrentToken({required String token});
 
   Future<User?> getCurrentUser();
 
@@ -77,7 +77,7 @@ class LoginRepositoryImpl implements LoginRepository {
 
       await saveUser(user);
 
-      return token;
+      return getCurrentToken(token: token.token);
     } catch (e) {
       throw Exception('SERVER_ERROR');
     }
@@ -89,10 +89,10 @@ class LoginRepositoryImpl implements LoginRepository {
   }
 
   @override
-  Future<Token?> getCurrentToken() async {
+  Future<Token> getCurrentToken({required String token}) async {
     try {
       final tokenStr = await _storage.read(key: _keyToken);
-      if (tokenStr == null) return null;
+      if (tokenStr == null) return Token(token: token);
 
       final tokenMap = Map<String, dynamic>.from({
         'token': tokenStr,
@@ -101,7 +101,7 @@ class LoginRepositoryImpl implements LoginRepository {
 
       return Token.fromJson(tokenMap);
     } catch (e) {
-      return null;
+      return Token(token: token);
     }
   }
 

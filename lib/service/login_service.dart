@@ -25,7 +25,7 @@ class LoginServiceImpl implements LoginService {
 
   @override
   Future<Token?> checkSession() async {
-    final token = await _repository.getCurrentToken();
+    final token = await _repository.getCurrentToken(token: '');
     final isValidToken = token != null && token.isValid;
 
     if (isValidToken) return token;

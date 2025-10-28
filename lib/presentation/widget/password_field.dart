@@ -39,10 +39,10 @@ class _PasswordFieldState extends State<PasswordField> {
         obscureText: _obscurePassword,
         obscuringCharacter: '₿',
         style: TextStyle(
-          color: _obscurePassword ? theme.primary : theme.text,
+          color: theme.primary,
           letterSpacing: _obscurePassword ? Consts.sizes.base.xxs : Consts.sizes.base.none,
         ),
-        cursorColor: theme.text,
+        cursorColor: theme.primary,
         decoration: InputDecoration(
           hintText: context.l10n.password,
           suffixIcon: IconButton(

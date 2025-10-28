@@ -30,8 +30,10 @@ class EmailField extends StatelessWidget {
         controller: controller,
         enabled: enabled,
         keyboardType: TextInputType.emailAddress,
-        style: TextStyle(color: theme.text),
-        cursorColor: theme.text,
+        style: TextStyle(
+          color: theme.primary,
+        ),
+        cursorColor: theme.primary,
         decoration: InputDecoration(
           hintText: context.l10n.email,
           filled: true,
