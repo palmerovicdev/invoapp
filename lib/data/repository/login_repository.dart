@@ -45,7 +45,7 @@ class LoginRepositoryImpl implements LoginRepository {
     }
 
     try {
-      final response = await _dio.get(
+      final response = await _dio.post(
         '',
         options: Options(
           headers: {
