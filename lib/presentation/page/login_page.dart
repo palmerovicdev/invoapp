@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:invoapp/core/localization/app_locale.dart';
 import 'package:invoapp/core/theme/theme.dart' as thm;
 
-import '../state/home/home_bloc.dart';
 import '../state/login/login_bloc.dart';
 import '../widget/email_field.dart';
 import '../widget/password_field.dart';
@@ -33,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
     _loginButtonController = AnimatedStateButtonController(
       states: {
         'success': ButtonState.success(color: theme.success),
-        'loading': ButtonState.loading(color: theme.primary),
+        'loading': ButtonState.loading(color: theme.primary, fg: theme.bgDark),
         'error': ButtonState.error(color: theme.danger),
       },
     );
@@ -67,14 +66,13 @@ class _LoginPageState extends State<LoginPage> {
           return isDifferentError || justAuthenticated;
         },
         listener: (context, state) {
-          final homeState = context.read<HomeBloc>().state;
           _loginButtonController.changeState('error');
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
                 _getErrorMessage(state.errorMessage, context),
                 style: TextStyle(
-                  color: theme.text,
+                  color: theme.bgDark,
                   fontWeight: FontWeight.w600,
                   fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.body),
                 ),
@@ -90,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
           final theme = thm.Theme.themes[thm.Theme.currentThemeIndex];
           return SafeArea(
             child: SingleChildScrollView(
-              padding: AppSpacing.paddingXl,
+              padding: Consts.spacing.padding.huge,
               child: Form(
                 key: _loginFormKey,
                 child: Column(
@@ -101,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _emailController,
                       enabled: !state.isChecking,
                     ),
-                    Consts.spacing.gap.huge,
+                    Consts.spacing.gap.lgx,
                     PasswordField(
                       controller: _passwordController,
                       enabled: !state.isChecking,
@@ -111,7 +109,8 @@ class _LoginPageState extends State<LoginPage> {
                       child: AnimatedStateButton(
                         controller: _loginButtonController,
                         initColor: theme.primary,
-                        borderRadius: Consts.radius.base.md,
+                        padding: Consts.spacing.padding.none,
+                        borderRadius: Consts.radius.base.huge,
                         compactSize: Consts.sizes.base.mega,
                         height: Consts.sizes.base.mega,
                         onPressed: () async => _login(context),
@@ -120,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(
                             fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.bodySmall),
                             fontWeight: FontWeight.w600,
-                            color: theme.text,
+                            color: theme.bgDark,
                           ),
                         ),
                       ),
@@ -137,7 +136,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _checkRedirect() {
-
     final uri = GoRouterState.of(context).uri;
     final isRedirect = uri.queryParameters['redirect'] == 'true';
 
@@ -150,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
         content: Text(
           context.l10n.loginRequired,
           style: TextStyle(
-            color: theme.text,
+            color: theme.bgDark,
             fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.body),
           ),
         ),

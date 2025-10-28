@@ -32,10 +32,10 @@ class HSLTheme {
         '--border-muted': HSLColor.fromAHSL(1.0, hue, _clamp01(chroma), 0.30),
         '--primary': HSLColor.fromAHSL(1.0, hue, _clamp01(chromaAction), 0.76),
         '--secondary': HSLColor.fromAHSL(1.0, hueSecondary, _clamp01(chromaAction), 0.76),
-        '--danger': HSLColor.fromAHSL(1.0, 30, _clamp01(chromaAlert), 0.70),
-        '--warning': HSLColor.fromAHSL(1.0, 100, _clamp01(chromaAlert), 0.70),
-        '--success': HSLColor.fromAHSL(1.0, 160, _clamp01(chromaAlert), 0.70),
-        '--info': HSLColor.fromAHSL(1.0, 260, _clamp01(chromaAlert), 0.70),
+        '--danger': HSLColor.fromAHSL(1.0, 7, 0.94, 0.66),
+        '--warning': HSLColor.fromAHSL(1.0, 53, 1, 0.24),
+        '--success': HSLColor.fromAHSL(1.0, 163, 1, 0.26),
+        '--info': HSLColor.fromAHSL(1.0, 217, 1, 0.70),
       };
     } else {
       return {
@@ -49,7 +49,7 @@ class HSLTheme {
         '--border-muted': HSLColor.fromAHSL(1.0, hue, _clamp01(chroma), 0.70),
         '--primary': HSLColor.fromAHSL(1.0, hue, _clamp01(chromaAction), 0.40),
         '--secondary': HSLColor.fromAHSL(1.0, hueSecondary, _clamp01(chromaAction), 0.40),
-        '--danger': HSLColor.fromAHSL(1.0, 30, _clamp01(chromaAlert), 0.50),
+        '--danger': HSLColor.fromAHSL(1.0, 340, _clamp01(chromaAlert), 0.50),
         '--warning': HSLColor.fromAHSL(1.0, 100, _clamp01(chromaAlert), 0.50),
         '--success': HSLColor.fromAHSL(1.0, 160, _clamp01(chromaAlert), 0.50),
         '--info': HSLColor.fromAHSL(1.0, 260, _clamp01(chromaAlert), 0.50),

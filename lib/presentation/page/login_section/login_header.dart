@@ -33,7 +33,7 @@ class LoginHeader extends StatelessWidget {
         Text(
           context.l10n.welcomeBack,
           style: TextStyle(
-            fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.bodySmall),
+            fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.paragraphTitle),
             fontWeight: FontWeight.bold,
             color: theme.text,
           ),
@@ -43,7 +43,7 @@ class LoginHeader extends StatelessWidget {
         Text(
           context.l10n.invoApp,
           style: TextStyle(
-            fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.body),
+            fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.bodyLarge),
             color: theme.textMuted,
           ),
           textAlign: TextAlign.center,

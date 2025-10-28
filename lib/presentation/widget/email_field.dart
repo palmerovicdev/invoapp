@@ -33,33 +33,31 @@ class EmailField extends StatelessWidget {
         style: TextStyle(color: theme.text),
         cursorColor: theme.text,
         decoration: InputDecoration(
-          labelText: context.l10n.email,
           hintText: context.l10n.email,
-          prefixIcon: Icon(
-            Icons.email_outlined,
-            color: theme.primary,
-          ),
           filled: true,
           fillColor: theme.bgLight,
+          errorStyle: TextStyle(color: theme.danger),
+          contentPadding: EdgeInsets.symmetric(
+            vertical: Consts.sizes.base.lgx,
+            horizontal: Consts.sizes.base.xl,
+          ),
           border: OutlineInputBorder(
-            borderRadius: Consts.radius.containers.xxl,
+            borderRadius: Consts.radius.containers.xxxl,
             borderSide: BorderSide.none,
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: Consts.radius.containers.xxl,
+            borderRadius: Consts.radius.containers.xxxl,
             borderSide: BorderSide.none,
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: Consts.radius.containers.xxl,
+            borderRadius: Consts.radius.containers.xxxl,
             borderSide: BorderSide.none,
           ),
           errorBorder: OutlineInputBorder(
-            borderRadius: Consts.radius.containers.xxl,
-            borderSide: BorderSide(color: theme.danger, width: Consts.sizes.base.xxs),
+            borderRadius: Consts.radius.containers.xxxl,
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderRadius: Consts.radius.containers.xxl,
-            borderSide: BorderSide(color: theme.danger, width: Consts.sizes.base.xxs),
+            borderRadius: Consts.radius.containers.xxxl,
           ),
           labelStyle: TextStyle(color: theme.textMuted),
           hintStyle: TextStyle(color: theme.textMuted),
