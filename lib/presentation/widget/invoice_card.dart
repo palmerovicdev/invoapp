@@ -16,11 +16,14 @@ class InvoiceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      padding: const EdgeInsets.all(24),
+      margin: EdgeInsets.symmetric(
+        horizontal: Consts.sizes.base.xl,
+        vertical: 8,
+      ),
+      padding: Consts.spacing.padding.xxl,
       decoration: BoxDecoration(
         color: theme.bgLight,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: Consts.radius.containers.xxl,
         border: Border.all(
           color: theme.borderMuted.withValues(alpha: 0.3),
           width: 1,
@@ -31,16 +34,17 @@ class InvoiceCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              // Logo del contacto
               Container(
-                width: 56,
-                height: 56,
+                width: Consts.sizes.base.ultra,
+                height: Consts.sizes.base.ultra,
                 decoration: BoxDecoration(
                   color: theme.bg,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: Consts.radius.containers.lg,
                   border: Border.all(
-                    color: theme.borderMuted.withValues(alpha: 0.2),
-                    width: 1,
+                    color: theme.borderMuted.withValues(
+                      alpha: Consts.ui.opacities.disabled,
+                    ),
+                    width: Consts.sizes.base.xxs,
                   ),
                 ),
                 child: Center(
@@ -49,14 +53,16 @@ class InvoiceCard extends StatelessWidget {
                         ? invoice.contact.name[0].toUpperCase()
                         : '?',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: context.getResponsiveFontSize(
+                        smallest: Consts.fontSizes.device.mobile.bodyLarge,
+                      ),
                       fontWeight: FontWeight.w600,
                       color: theme.text,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 16),
+              Consts.spacing.gapHorizontal.lg,
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,17 +71,19 @@ class InvoiceCard extends StatelessWidget {
                       invoice.contact.name,
                       style: TextStyle(
                         fontSize: context.getResponsiveFontSize(
-                smallest: Consts.fontSizes.device.mobile.body,
-              ),
+                          smallest: Consts.fontSizes.device.mobile.body,
+                        ),
                         fontWeight: FontWeight.w600,
                         color: theme.text,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    Consts.spacing.gap.xs,
                     Text(
                       'Invoice #${invoice.number}',
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: context.getResponsiveFontSize(
+                          smallest: Consts.fontSizes.device.mobile.bodySmall,
+                        ),
                         color: theme.textMuted,
                       ),
                     ),
@@ -92,7 +100,9 @@ class InvoiceCard extends StatelessWidget {
               Text(
                 'Total',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: context.getResponsiveFontSize(
+                    smallest: Consts.fontSizes.device.mobile.body,
+                  ),
                   fontWeight: FontWeight.w700,
                   color: theme.text,
                 ),
@@ -100,7 +110,9 @@ class InvoiceCard extends StatelessWidget {
               Text(
                 invoice.amount.formatted,
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: context.getResponsiveFontSize(
+                    smallest: Consts.fontSizes.device.mobile.bodyLarge,
+                  ),
                   fontWeight: FontWeight.w700,
                   color: theme.primary,
                 ),
@@ -110,13 +122,13 @@ class InvoiceCard extends StatelessWidget {
 
           Consts.spacing.gap.xxl,
 
-          _buildStateChip(),
+          _buildStateChip(context),
         ],
       ),
     );
   }
 
-  Widget _buildStateChip() {
+  Widget _buildStateChip(BuildContext context) {
     Color backgroundColor;
     Color textColor;
     String text;
@@ -150,16 +162,21 @@ class InvoiceCard extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: EdgeInsets.symmetric(
+        horizontal: Consts.spacing.base.lg,
+        vertical: Consts.spacing.base.sm,
+      ),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: Consts.radius.containers.md,
       ),
       child: Center(
         child: Text(
           text,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: context.getResponsiveFontSize(
+              smallest: Consts.fontSizes.device.mobile.bodySmall,
+            ),
             fontWeight: FontWeight.w600,
             color: textColor,
           ),

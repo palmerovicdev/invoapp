@@ -1,15 +1,14 @@
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:invoapp/core/localization/app_locale.dart';
-import 'package:invoapp/core/theme/theme.dart' as app_theme;
 import 'package:invoapp/domain/entity/invoice.dart';
+import 'package:invoapp/presentation/page/home_section/empty_invoices_state.dart';
+import 'package:invoapp/presentation/page/home_section/home_header.dart';
+import 'package:invoapp/presentation/page/home_section/list_header.dart';
 import 'package:invoapp/presentation/page/home_section/navigation_and_search.dart';
 import 'package:invoapp/presentation/state/home/home_bloc.dart';
 import 'package:invoapp/presentation/widget/invoice_card.dart';
 import 'package:invoapp/presentation/widget/invoice_list_item.dart';
-import 'package:invoapp/presentation/widget/language_button.dart';
-import 'package:invoapp/presentation/widget/menu_dropdown.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -145,33 +144,35 @@ class _HomePageState extends State<HomePage> {
     ];
   }
 
-  void _scrollToNext() {
+  void _scrollToNext(HomeState state) {
     final state = context.read<HomeBloc>().state;
     if (state.selectedInvoiceIndex < state.invoices.length - 1) {
       context.read<HomeBloc>().add(
         HomeSelectInvoice(state.selectedInvoiceIndex + 1),
       );
-      _animateToIndex(state.selectedInvoiceIndex + 1);
+      _animateToIndex(state.selectedInvoiceIndex + 1, state);
     }
   }
 
-  void _scrollToPrevious() {
+  void _scrollToPrevious(HomeState state) {
     final state = context.read<HomeBloc>().state;
     if (state.selectedInvoiceIndex > 0) {
       context.read<HomeBloc>().add(
         HomeSelectInvoice(state.selectedInvoiceIndex - 1),
       );
-      _animateToIndex(state.selectedInvoiceIndex - 1);
+      _animateToIndex(state.selectedInvoiceIndex - 1, state);
     }
   }
 
-  void _animateToIndex(int index) {
-    final itemHeight = 80.0;
+  void _animateToIndex(int index, HomeState state) {
+
+    final size = MediaQuery.of(context).size;
+    final itemHeight = Consts.sizes.base.huge;
     final targetOffset = index * itemHeight;
 
     _scrollController.animateTo(
       targetOffset,
-      duration: const Duration(milliseconds: 300),
+      duration: Consts.durations.base.sm,
       curve: Curves.easeInOut,
     );
   }
@@ -186,14 +187,17 @@ class _HomePageState extends State<HomePage> {
           body: SafeArea(
             child: Column(
               children: [
-                _buildHeader(context, state, theme),
+                HomeHeader(
+                  theme: theme,
+                  currentLanguageCode: state.locale.languageCode,
+                ),
                 Expanded(
                   child: state.invoices.isEmpty
-                      ? _buildEmptyState(context, theme)
+                      ? EmptyInvoicesState(theme: theme)
                       : Column(
                           children: [
                             Expanded(
-                              flex: 4,
+                              flex: 9,
                               child: PageView.builder(
                                 itemCount: state.invoices.length,
                                 onPageChanged: (index) {
@@ -209,24 +213,18 @@ class _HomePageState extends State<HomePage> {
                                 },
                               ),
                             ),
-
-                            SizedBox(
-                              height: 42,
+                            Expanded(
+                              flex: 2,
                               child: NavigationAndSearch(
                                 state: state,
-                                scrollToNext: _scrollToNext,
-                                scrollToPrevious: _scrollToPrevious,
+                                scrollToNext: () => _scrollToNext(state),
+                                scrollToPrevious: () => _scrollToPrevious(state),
                               ),
                             ),
-
-                            const SizedBox(height: 16),
-
-                            _buildListHeader(context, theme),
-
-                            const SizedBox(height: 8),
-
+                            ListHeader(theme: theme),
+                            Consts.spacing.gap.sm,
                             Expanded(
-                              flex: 5,
+                              flex: 12,
                               child: ListView.builder(
                                 controller: _scrollController,
                                 itemCount: state.invoices.length,
@@ -239,6 +237,7 @@ class _HomePageState extends State<HomePage> {
                                       context.read<HomeBloc>().add(
                                         HomeSelectInvoice(index),
                                       );
+                                      setState(() {});
                                     },
                                   );
                                 },
@@ -252,173 +251,6 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildHeader(
-    BuildContext context,
-    HomeState state,
-    app_theme.Theme theme,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          LanguageButton(
-            currentLanguageCode: state.locale.languageCode,
-            onToggle: () {
-              context.read<HomeBloc>().add(HomeToggleLocale());
-            },
-            theme: theme,
-          ),
-          MenuDropdown(
-            theme: theme,
-            onAboutTap: () {
-              // TODO: Implementar navegación a About
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(context.l10n.aboutApp),
-                  backgroundColor: theme.info,
-                ),
-              );
-            },
-            onThemeColorTap: () {
-              // TODO: Implementar selector de tema
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(context.l10n.themeColor),
-                  backgroundColor: theme.info,
-                ),
-              );
-            },
-            onLogoutTap: () {
-              _showLogoutDialog(context, theme);
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildListHeader(BuildContext context, app_theme.Theme theme) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            context.l10n.invoices,
-            style: TextStyle(
-              fontSize: context.getResponsiveFontSize(
-                smallest: Consts.fontSizes.device.mobile.body,
-              ),
-              fontWeight: FontWeight.w700,
-              color: theme.text,
-            ),
-          ),
-          Text(
-            'Last 4 days',
-            style: TextStyle(
-              fontSize: 14,
-              color: theme.textMuted,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEmptyState(BuildContext context, app_theme.Theme theme) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.receipt_long_outlined,
-            size: 80,
-            color: theme.textMuted.withValues(alpha: 0.5),
-          ),
-          Consts.spacing.gap.xxl,
-          Text(
-            context.l10n.youHaveNoInvoices,
-            style: TextStyle(
-              fontSize: context.getResponsiveFontSize(
-                smallest: Consts.fontSizes.device.mobile.body,
-              ),
-              color: theme.textMuted,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showLogoutDialog(BuildContext context, app_theme.Theme theme) {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => Dialog(
-        backgroundColor: theme.bg,
-        shape: Consts.radius.shapes.xxl,
-        child: Padding(
-          padding: Consts.spacing.padding.xxl,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                context.l10n.doYouWantToLogout,
-                style: TextStyle(
-                  fontSize: context.getResponsiveFontSize(
-                    smallest: Consts.fontSizes.device.mobile.body,
-                  ),
-                  fontWeight: FontWeight.w600,
-                  color: theme.primary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Consts.spacing.gap.xxl,
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () => Navigator.pop(dialogContext),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: theme.bgLight,
-                        foregroundColor: theme.primary,
-                        padding: EdgeInsets.symmetric(vertical: Consts.spacing.padding.lg.vertical),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: Consts.radius.containers.lg,
-                          side: BorderSide(
-                            color: theme.borderMuted.withOpacity(Consts.ui.opacities.disabled),
-                            width: 1,
-                          ),
-                        ),
-                      ),
-                      child: Text(context.l10n.cancel, style: TextStyle(color: theme.primary)),
-                    ),
-                  ),
-                  Consts.spacing.gap.md,
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(dialogContext);
-                        // TODO: Implementar logout
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: theme.danger.withOpacity(Consts.ui.opacities.disabled),
-                        foregroundColor: theme.danger,
-                        padding: EdgeInsets.symmetric(vertical: Consts.spacing.padding.lg.vertical),
-                        shape: Consts.radius.shapes.lg,
-                      ),
-                      child: Text(context.l10n.logout),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

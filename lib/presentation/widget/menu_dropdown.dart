@@ -1,3 +1,5 @@
+import 'package:consts/constants/app_font_sizes.dart';
+import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:invoapp/core/theme/theme.dart' as app_theme;
 import 'package:invoapp/core/localization/app_locale.dart';
@@ -35,17 +37,12 @@ class MenuDropdown extends StatelessWidget {
       icon: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: theme.bg.withValues(alpha: 0.5),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: theme.borderMuted.withValues(alpha: 0.3),
-            width: 1,
-          ),
+          borderRadius: Consts.radius.containers.md,
         ),
         child: Icon(
-          Icons.more_vert,
-          color: theme.text,
-          size: 20,
+          Icons.wallet,
+          color: theme.primary,
+          size: 32,
         ),
       ),
       color: theme.bgLight,
@@ -67,7 +64,9 @@ class MenuDropdown extends StatelessWidget {
                 context.l10n.aboutApp,
                 style: TextStyle(
                   color: theme.text,
-                  fontSize: 14,
+                  fontSize: context.getResponsiveFontSize(
+                smallest: Consts.fontSizes.device.mobile.bodySmall,
+              ),
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -84,7 +83,9 @@ class MenuDropdown extends StatelessWidget {
                 context.l10n.themeColor,
                 style: TextStyle(
                   color: theme.text,
-                  fontSize: 14,
+                  fontSize: context.getResponsiveFontSize(
+                smallest: Consts.fontSizes.device.mobile.bodySmall,
+              ),
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -102,7 +103,9 @@ class MenuDropdown extends StatelessWidget {
                 context.l10n.logout,
                 style: TextStyle(
                   color: theme.danger,
-                  fontSize: 14,
+                  fontSize: context.getResponsiveFontSize(
+                smallest: Consts.fontSizes.device.mobile.bodySmall,
+              ),
                   fontWeight: FontWeight.w500,
                 ),
               ),

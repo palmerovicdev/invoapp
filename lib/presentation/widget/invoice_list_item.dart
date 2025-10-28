@@ -1,7 +1,8 @@
+import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:invoapp/core/theme/theme.dart' as app_theme;
 import 'package:invoapp/domain/entity/invoice.dart';
-import 'package:intl/intl.dart';
 
 class InvoiceListItem extends StatelessWidget {
   final Invoice invoice;
@@ -22,94 +23,89 @@ class InvoiceListItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-        padding: const EdgeInsets.all(16),
+        margin: EdgeInsets.symmetric(
+          horizontal: Consts.spacing.base.lg,
+          vertical: Consts.spacing.base.xs,
+        ),
+        padding: Consts.spacing.padding.mdl,
         decoration: BoxDecoration(
-          color: isSelected ? theme.bgLight : theme.bg,
-          borderRadius: BorderRadius.circular(16),
+          color: isSelected ? theme.primary : theme.bg,
+          borderRadius: Consts.radius.containers.lg,
           border: Border.all(
-            color: isSelected
-                ? theme.primary.withValues(alpha: 0.5)
-                : theme.borderMuted.withValues(alpha: 0.2),
-            width: isSelected ? 2 : 1,
+            color: isSelected ? theme.secondary.withValues(alpha: 0.7) : theme.borderMuted.withValues(alpha: 0.3),
+            width: 1,
           ),
         ),
         child: Row(
           children: [
-            // Logo
             Container(
-              width: 48,
-              height: 48,
+              width: Consts.sizes.base.giant,
+              height: Consts.sizes.base.giant,
               decoration: BoxDecoration(
-                color: theme.bgLight,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: theme.borderMuted.withValues(alpha: 0.2),
-                  width: 1,
-                ),
+                color: isSelected ? theme.borderMuted : theme.bgLight,
+                borderRadius: Consts.radius.containers.circular,
               ),
               child: Center(
                 child: Text(
-                  invoice.contact.name.isNotEmpty
-                      ? invoice.contact.name[0].toUpperCase()
-                      : '?',
+                  invoice.contact.name.isNotEmpty ? invoice.contact.name[0].toUpperCase() : '?',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: context.getResponsiveFontSize(
+                      smallest: Consts.fontSizes.device.mobile.body,
+                    ),
                     fontWeight: FontWeight.w600,
                     color: theme.text,
                   ),
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            Consts.spacing.gapHorizontal.md,
 
-            // Información
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          invoice.contact.name,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: theme.text,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                  Text(
+                    invoice.contact.name,
+                    style: TextStyle(
+                      fontSize: context.getResponsiveFontSize(
+                        smallest: Consts.fontSizes.device.mobile.bodySmall,
                       ),
-                      const SizedBox(width: 8),
-                      _buildStateIcon(),
-                    ],
+                      fontWeight: FontWeight.w600,
+                      color: isSelected ? theme.bgDark : theme.text,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
+                  Consts.spacing.gap.xs,
                   Row(
                     children: [
                       Text(
                         '#${invoice.number}',
                         style: TextStyle(
-                          fontSize: 13,
-                          color: theme.textMuted,
+                          fontSize: context.getResponsiveFontSize(
+                            smallest: Consts.fontSizes.device.mobile.bodySmall,
+                          ),
+                          color: isSelected ? theme.bgDark : theme.textMuted,
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      Consts.spacing.gapHorizontal.sm,
                       Text(
                         '•',
                         style: TextStyle(
-                          fontSize: 13,
-                          color: theme.textMuted,
+                          fontSize: context.getResponsiveFontSize(
+                            smallest: Consts.fontSizes.device.mobile.bodySmall,
+                          ),
+                          color: isSelected ? theme.bgDark : theme.textMuted,
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      Consts.spacing.gapHorizontal.sm,
                       Text(
                         DateFormat('MMM dd').format(invoice.issuedAt),
                         style: TextStyle(
-                          fontSize: 13,
-                          color: theme.textMuted,
+                          fontSize: context.getResponsiveFontSize(
+                            smallest: Consts.fontSizes.device.mobile.bodySmall,
+                          ),
+                          color: isSelected ? theme.bgLight : theme.textMuted,
                         ),
                       ),
                     ],
@@ -118,14 +114,37 @@ class InvoiceListItem extends StatelessWidget {
               ),
             ),
 
-            // Monto
-            Text(
-              invoice.amount.formatted,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: theme.text,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  invoice.amount.formatted,
+                  style: TextStyle(
+                    fontSize: context.getResponsiveFontSize(
+                      smallest: Consts.fontSizes.device.mobile.bodySmall,
+                    ),
+                    fontWeight: FontWeight.w700,
+                    color: isSelected ? theme.bg : theme.text,
+                  ),
+                ),
+                Consts.spacing.gap.xs,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      invoice.state.name,
+                      style: TextStyle(
+                        fontSize: context.getResponsiveFontSize(
+                          smallest: 12,
+                        ),
+                        color: isSelected ? theme.bgDark : theme.textMuted,
+                      ),
+                    ),
+                    Consts.spacing.gapHorizontal.xs,
+                    _buildStateIcon(),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
@@ -162,7 +181,7 @@ class InvoiceListItem extends StatelessWidget {
 
     return Icon(
       icon,
-      size: 18,
+      size: Consts.sizes.icons.sm,
       color: color,
     );
   }
