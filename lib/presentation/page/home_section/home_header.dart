@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,34 +27,39 @@ class HomeHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          LanguageButton(
-            currentLanguageCode: currentLanguageCode,
-            onToggle: () {
-              context.read<HomeBloc>().add(HomeToggleLocale());
-            },
-            theme: theme,
+          ZoomIn(
+            child: LanguageButton(
+              currentLanguageCode: currentLanguageCode,
+              onToggle: () {
+                context.read<HomeBloc>().add(HomeToggleLocale());
+              },
+              theme: theme,
+            ),
           ),
-          MenuDropdown(
-            theme: theme,
-            onAboutTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(context.l10n.aboutApp),
-                  backgroundColor: theme.info,
-                ),
-              );
-            },
-            onThemeColorTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(context.l10n.themeColor),
-                  backgroundColor: theme.info,
-                ),
-              );
-            },
-            onLogoutTap: () {
-              showLogoutDialog(context, theme);
-            },
+          ZoomIn(
+            delay: Consts.durations.base.sm,
+            child: MenuDropdown(
+              theme: theme,
+              onAboutTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(context.l10n.aboutApp),
+                    backgroundColor: theme.info,
+                  ),
+                );
+              },
+              onThemeColorTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(context.l10n.themeColor),
+                    backgroundColor: theme.info,
+                  ),
+                );
+              },
+              onLogoutTap: () {
+                showLogoutDialog(context, theme);
+              },
+            ),
           ),
         ],
       ),

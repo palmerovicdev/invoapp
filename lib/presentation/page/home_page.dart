@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:invoapp/presentation/page/home_section/navigation_and_search.dar
 import 'package:invoapp/presentation/state/home/home_bloc.dart';
 import 'package:invoapp/presentation/widget/invoice_card.dart';
 import 'package:invoapp/presentation/widget/invoice_list_item.dart';
+import 'package:invoapp/presentation/widget/measure_side.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,6 +22,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
+  final Map<int, double> _itemHeights = {};
+  static const double _fallbackItemHeight = 72;
+
 
   @override
   void initState() {
@@ -145,33 +150,35 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _scrollToNext(HomeState state) {
-    final state = context.read<HomeBloc>().state;
-    if (state.selectedInvoiceIndex < state.invoices.length - 1) {
-      context.read<HomeBloc>().add(
-        HomeSelectInvoice(state.selectedInvoiceIndex + 1),
-      );
-      _animateToIndex(state.selectedInvoiceIndex + 1, state);
+    final s = context.read<HomeBloc>().state;
+    if (s.selectedInvoiceIndex < s.invoices.length - 1) {
+      final next = s.selectedInvoiceIndex + 1;
+      context.read<HomeBloc>().add(HomeSelectInvoice(next));
+      _animateToIndex(next, s);
     }
   }
 
   void _scrollToPrevious(HomeState state) {
-    final state = context.read<HomeBloc>().state;
-    if (state.selectedInvoiceIndex > 0) {
-      context.read<HomeBloc>().add(
-        HomeSelectInvoice(state.selectedInvoiceIndex - 1),
-      );
-      _animateToIndex(state.selectedInvoiceIndex - 1, state);
+    final s = context.read<HomeBloc>().state;
+    if (s.selectedInvoiceIndex > 0) {
+      final prev = s.selectedInvoiceIndex - 1;
+      context.read<HomeBloc>().add(HomeSelectInvoice(prev));
+      _animateToIndex(prev, s);
     }
   }
 
   void _animateToIndex(int index, HomeState state) {
 
-    final size = MediaQuery.of(context).size;
-    final itemHeight = Consts.sizes.base.huge;
-    final targetOffset = index * itemHeight;
+    double targetOffset = 0;
+    for (int i = 0; i < index; i++) {
+      targetOffset += _itemHeights[i] ?? _fallbackItemHeight;
+    }
 
     _scrollController.animateTo(
-      targetOffset,
+      targetOffset.clamp(
+        0.0,
+        _scrollController.position.maxScrollExtent,
+      ),
       duration: Consts.durations.base.sm,
       curve: Curves.easeInOut,
     );
@@ -197,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                       : Column(
                           children: [
                             Expanded(
-                              flex: 9,
+                              flex: 7,
                               child: PageView.builder(
                                 itemCount: state.invoices.length,
                                 onPageChanged: (index) {
@@ -229,16 +236,26 @@ class _HomePageState extends State<HomePage> {
                                 controller: _scrollController,
                                 itemCount: state.invoices.length,
                                 itemBuilder: (context, index) {
-                                  return InvoiceListItem(
-                                    invoice: state.invoices[index],
-                                    theme: theme,
-                                    isSelected: index == state.selectedInvoiceIndex,
-                                    onTap: () {
-                                      context.read<HomeBloc>().add(
-                                        HomeSelectInvoice(index),
-                                      );
-                                      setState(() {});
+                                  return MeasureSize(
+                                    onChange: (size) {
+                                      if (_itemHeights[index] != size.height) {
+                                        _itemHeights[index] = size.height;
+                                      }
                                     },
+                                    child: ZoomIn(
+                                      delay: Duration(milliseconds: 100 * index),
+                                      child: InvoiceListItem(
+                                        invoice: state.invoices[index],
+                                        theme: theme,
+                                        isSelected: index == state.selectedInvoiceIndex,
+                                        onTap: () {
+                                          context.read<HomeBloc>().add(
+                                            HomeSelectInvoice(index),
+                                          );
+                                          setState(() {});
+                                        },
+                                      ),
+                                    ),
                                   );
                                 },
                               ),

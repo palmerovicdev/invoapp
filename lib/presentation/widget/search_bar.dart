@@ -48,7 +48,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> with SingleTickerProv
       child: AnimatedBuilder(
         animation: _animationController,
         builder: (context, child) {
-          var width = (context.width - 60) * _animationController.value + 60;
+          var width = (context.width - 120) * _animationController.value + 120;
           var responsiveFontSize = context.getResponsiveFontSize(
             smallest: Consts.fontSizes.device.mobile.bodySmall,
           );
@@ -77,7 +77,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> with SingleTickerProv
                         filled: true,
                         fillColor: theme.bgLight,
                         contentPadding: EdgeInsets.only(left: Consts.spacing.base.xl),
-                        hintText: 'Buscar...',
+                        hintText: width > 130 ? 'Buscar...' : '',
                         hintStyle: TextStyle(color: theme.textMuted.withOpacity(0.6)),
                         border: OutlineInputBorder(
                           borderRadius: Consts.radius.containers.xxl,

@@ -26,7 +26,7 @@ class LanguageButton extends StatelessWidget {
         ),
         child: Icon(
           Icons.g_translate,
-          size: 24,
+          size: 28,
           color: theme.primary,
         ),
       ),

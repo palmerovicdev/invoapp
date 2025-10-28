@@ -22,11 +22,15 @@ class CircleButton extends StatelessWidget {
     return GestureDetector(
       onTap: enabled ? onTap : null,
       child: Container(
-        width: size + Consts.sizes.base.md,
-        height: size + Consts.sizes.base.md,
+        width: size + Consts.sizes.base.mdl,
+        height: size + Consts.sizes.base.mdl,
         decoration: BoxDecoration(
-          color: enabled ? theme.bgLight : theme.bgLight.withOpacity(Consts.ui.opacities.disabled),
+          color: enabled ? theme.bg : theme.bgLight.withOpacity(Consts.ui.opacities.disabled),
           shape: BoxShape.circle,
+          border: Border.all(
+            color: enabled ? theme.borderMuted : theme.borderMuted.withOpacity(Consts.ui.opacities.disabled),
+            width: 0.1,
+          ),
         ),
         child: Icon(
           icon,
