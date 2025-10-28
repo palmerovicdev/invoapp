@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:invoapp/core/localization/app_locale.dart';
@@ -9,44 +10,56 @@ class LoginHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = thm.Theme.themes[thm.Theme.currentThemeIndex];
+    final Duration delay = Consts.durations.base.xs;
     return Column(
       children: [
         Consts.spacing.gap.giant,
-        Center(
-          child: Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-              color: theme.bgLight,
-              borderRadius: AppRadius.borderXl,
-            ),
-            child: Center(
-              child: Icon(
-                Icons.currency_bitcoin_sharp,
-                size: Consts.ui.icons.huge,
-                color: theme.primary,
+        FadeInUp(
+          duration: Consts.durations.base.md,
+          child: Center(
+            child: Container(
+              width: 120,
+              height: 120,
+              decoration: BoxDecoration(
+                color: theme.bgLight,
+                borderRadius: AppRadius.borderXl,
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.currency_bitcoin_sharp,
+                  size: Consts.ui.icons.huge,
+                  color: theme.primary,
+                ),
               ),
             ),
           ),
         ),
         Consts.spacing.gap.giant,
-        Text(
-          context.l10n.welcomeBack,
-          style: TextStyle(
-            fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.paragraphTitle),
-            fontWeight: FontWeight.bold,
-            color: theme.text,
+        FadeInUp(
+          delay: delay,
+          duration: Consts.durations.base.md,
+          child: Column(
+            children: [
+              Text(
+                context.l10n.welcomeBack,
+                style: TextStyle(
+                  fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.paragraphTitle),
+                  fontWeight: FontWeight.bold,
+                  color: theme.text,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Consts.spacing.gap.md,
+              Text(
+                context.l10n.invoApp,
+                style: TextStyle(
+                  fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.bodyLarge),
+                  color: theme.textMuted,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
-          textAlign: TextAlign.center,
-        ),
-        Consts.spacing.gap.md,
-        Text(
-          context.l10n.invoApp,
-          style: TextStyle(
-            fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.bodyLarge),
-            color: theme.textMuted,
-          ),
-          textAlign: TextAlign.center,
         ),
         Consts.spacing.gap.giant,
       ],

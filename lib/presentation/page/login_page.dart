@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final Duration _delay = Consts.durations.base.xs;
   late final AnimatedStateButtonController _loginButtonController;
   bool _hasShownRedirectMessage = false;
 
@@ -95,31 +97,42 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const LoginHeader(),
-                    EmailField(
-                      controller: _emailController,
-                      enabled: !state.isChecking,
+                    FadeInUp(
+                      duration: Consts.durations.base.md,
+                      child: EmailField(
+                        controller: _emailController,
+                        enabled: !state.isChecking,
+                      ),
                     ),
                     Consts.spacing.gap.lgx,
-                    PasswordField(
-                      controller: _passwordController,
-                      enabled: !state.isChecking,
+                    FadeInUp(
+                      duration: Consts.durations.base.md,
+                      delay: _delay,
+                      child: PasswordField(
+                        controller: _passwordController,
+                        enabled: !state.isChecking,
+                      ),
                     ),
                     Consts.spacing.gap.huge,
-                    Center(
-                      child: AnimatedStateButton(
-                        controller: _loginButtonController,
-                        initColor: theme.primary,
-                        padding: Consts.spacing.padding.none,
-                        borderRadius: Consts.radius.base.huge,
-                        compactSize: Consts.sizes.base.mega,
-                        height: Consts.sizes.base.mega,
-                        onPressed: () async => _login(context),
-                        initChild: Text(
-                          context.l10n.signIn,
-                          style: TextStyle(
-                            fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.bodySmall),
-                            fontWeight: FontWeight.w600,
-                            color: theme.bgDark,
+                    FadeInUp(
+                      duration: Consts.durations.base.md,
+                      delay: _delay * 1.3,
+                      child: Center(
+                        child: AnimatedStateButton(
+                          controller: _loginButtonController,
+                          initColor: theme.primary,
+                          padding: Consts.spacing.padding.none,
+                          borderRadius: Consts.radius.base.huge,
+                          compactSize: Consts.sizes.base.mega,
+                          height: Consts.sizes.base.mega,
+                          onPressed: () async => _login(context),
+                          initChild: Text(
+                            context.l10n.signIn,
+                            style: TextStyle(
+                              fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.bodySmall),
+                              fontWeight: FontWeight.w600,
+                              color: theme.bgDark,
+                            ),
                           ),
                         ),
                       ),

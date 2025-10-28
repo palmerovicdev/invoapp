@@ -25,6 +25,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     emit(state.copyWith(status: AuthStatus.checking));
 
+    await Future.delayed(const Duration(seconds: 1));
     try {
       final token = await _loginService.checkSession();
 
