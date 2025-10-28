@@ -15,16 +15,16 @@ class HSLTheme {
 
   Map<String, HSLColor> resolvedHsl() {
     final hueSecondary = (hue + 180) % 360;
-    final chromaBg = (chroma * 0.5);
+    final chromaBg = 0.01;
     final chromaText = chroma < 0.1 ? chroma : 0.1;
-    final chromaAction = chroma > 0.1 ? chroma : 0.1;
+    final chromaAction = chroma;
     final chromaAlert = chroma > 0.05 ? chroma : 0.05;
 
     if (!isLight) {
       return {
-        '--bg-dark': HSLColor.fromAHSL(1.0, hue, _clamp01(chromaBg), 0.10),
-        '--bg': HSLColor.fromAHSL(1.0, hue, _clamp01(chromaBg), 0.15),
-        '--bg-light': HSLColor.fromAHSL(1.0, hue, _clamp01(chromaBg), 0.20),
+        '--bg-dark': HSLColor.fromAHSL(1.0, 243, 0.33, 0.03),
+        '--bg': HSLColor.fromAHSL(1.0, 211, 0.08, 0.1),
+        '--bg-light': HSLColor.fromAHSL(1.0, 237, 0.02, 0.16),
         '--text': HSLColor.fromAHSL(1.0, hue, _clamp01(chromaText), 0.96),
         '--text-muted': HSLColor.fromAHSL(1.0, hue, _clamp01(chromaText), 0.76),
         '--highlight': HSLColor.fromAHSL(1.0, hue, _clamp01(chroma), 0.50),
@@ -81,7 +81,7 @@ class Theme {
   static int currentThemeIndex = 0;
 
   static List<Theme> get themes => [
-    Theme.fromHSLTheme(HSLTheme(hue: 0, chroma: 0.05, isLight: false)),
+    Theme.fromHSLTheme(HSLTheme(hue: 58, chroma: 0.2, isLight: false)),
     Theme.fromHSLTheme(HSLTheme(hue: 210, chroma: 0.05, isLight: false)),
     Theme.fromHSLTheme(HSLTheme(hue: 120, chroma: 0.05, isLight: false)),
     Theme.fromHSLTheme(HSLTheme(hue: 0, chroma: 0.05, isLight: true)),
