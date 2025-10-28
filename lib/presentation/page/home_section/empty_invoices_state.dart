@@ -55,7 +55,9 @@ class EmptyInvoicesState extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              context.read<HomeBloc>().add(const HomeLoadInvoices());
+              context.read<HomeBloc>().add(
+                const HomeLoadInvoices(clearFilters: true),
+              );
             },
           ),
         ],

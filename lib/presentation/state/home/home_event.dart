@@ -24,6 +24,7 @@ class HomeLoadInvoices extends HomeEvent {
   final InvoiceState? state;
   final String? searchQuery;
   final int? page;
+  final bool clearFilters;
 
   const HomeLoadInvoices({
     this.issuedAtGteq,
@@ -31,6 +32,7 @@ class HomeLoadInvoices extends HomeEvent {
     this.state,
     this.searchQuery,
     this.page,
+    this.clearFilters = false,
   });
 
   @override
@@ -40,5 +42,6 @@ class HomeLoadInvoices extends HomeEvent {
     state,
     searchQuery,
     page,
+    clearFilters,
   ];
 }

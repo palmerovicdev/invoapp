@@ -5,9 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:invoapp/core/localization/app_locale.dart';
 import 'package:invoapp/core/theme/theme.dart' as app_theme;
 import 'package:invoapp/core/util/feedback.dart';
+import 'package:invoapp/domain/entity/invoice.dart';
 import 'package:invoapp/presentation/state/home/home_bloc.dart';
 
 import 'date_filter_dialog.dart';
+import 'state_filter_dropdown.dart';
 
 class ListHeader extends StatelessWidget {
   const ListHeader({
@@ -15,11 +17,13 @@ class ListHeader extends StatelessWidget {
     required this.theme,
     required this.startDate,
     required this.endDate,
+    this.filterState,
   });
 
   final app_theme.Theme theme;
   final DateTime? startDate;
   final DateTime? endDate;
+  final InvoiceState? filterState;
 
   String _getDateRangeText() {
     if (startDate == null && endDate == null) {
@@ -41,7 +45,7 @@ class ListHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasFilter = startDate != null || endDate != null;
+    final hasDateFilter = startDate != null || endDate != null;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Consts.sizes.base.xl),
@@ -58,76 +62,101 @@ class ListHeader extends StatelessWidget {
               color: theme.text,
             ),
           ),
-          GestureDetector(
-            onTap: () async {
-              click(null);
-              final result = await showDialog<Map<String, DateTime?>>(
-                context: context,
-                builder: (context) => DateFilterDialog(
-                  theme: theme,
-                  initialStartDate: startDate,
-                  initialEndDate: endDate,
-                ),
-              );
+          Consts.spacing.gapHorizontal.md,
+          Row(
+            children: [
+              StateFilterDropdown(
+                theme: theme,
+                currentState: filterState,
+                onStateSelected: (state, clear) {
+                  context.read<HomeBloc>().add(
+                    HomeLoadInvoices(
+                      state: state,
+                      page: 1,
+                      clearFilters: clear,
+                    ),
+                  );
+                },
+              ),
+              Consts.spacing.gapHorizontal.sm,
+              GestureDetector(
+                onTap: () async {
+                  click(null);
+                  final result = await showDialog<Map<String, DateTime?>>(
+                    context: context,
+                    builder: (context) => DateFilterDialog(
+                      theme: theme,
+                      initialStartDate: startDate,
+                      initialEndDate: endDate,
+                    ),
+                  );
 
-              if (result != null && context.mounted) {
-                final homeBloc = context.read<HomeBloc>();
-                homeBloc.add(
-                  HomeLoadInvoices(
-                    issuedAtGteq: result['startDate'],
-                    issuedAtLteq: result['endDate'],
-                    page: 1,
+                  if (result != null && context.mounted) {
+                    final homeBloc = context.read<HomeBloc>();
+                    homeBloc.add(
+                      HomeLoadInvoices(
+                        issuedAtGteq: result['startDate'],
+                        issuedAtLteq: result['endDate'],
+                        page: 1,
+                      ),
+                    );
+                  }
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Consts.spacing.base.sm,
+                    vertical: Consts.spacing.base.xxs,
                   ),
-                );
-              }
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: Consts.spacing.base.md,
-                vertical: Consts.spacing.base.xxs,
-              ),
-              decoration: BoxDecoration(
-                color: hasFilter ? theme.bg.withValues(alpha: 0.15) : theme.bg,
-                borderRadius: Consts.radius.containers.sm,
-                border: Border.all(
-                  color: hasFilter
-                      ? theme.primary.withValues(alpha: 0.4)
-                      : theme.borderMuted.withValues(
-                          alpha: Consts.ui.opacities.disabled,
+                  decoration: BoxDecoration(
+                    color: hasDateFilter
+                        ? theme.bg.withValues(alpha: 0.15)
+                        : theme.bg,
+                    borderRadius: Consts.radius.containers.sm,
+                    border: Border.all(
+                      color: hasDateFilter
+                          ? theme.primary.withValues(alpha: 0.4)
+                          : theme.borderMuted.withValues(
+                              alpha: Consts.ui.opacities.disabled,
+                            ),
+                      width: 1,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.calendar_today,
+                        size: Consts.sizes.icons.xs,
+                        color: hasDateFilter ? theme.primary : theme.textMuted,
+                      ),
+                      Consts.spacing.gapHorizontal.xs,
+                      Text(
+                        _getDateRangeText(),
+                        style: TextStyle(
+                          fontSize: context.getResponsiveFontSize(
+                            smallest: Consts.fontSizes.device.mobile.bodySmall,
+                          ),
+                          color: hasDateFilter
+                              ? theme.primary
+                              : theme.textMuted,
+                          fontWeight: hasDateFilter
+                              ? FontWeight.w600
+                              : FontWeight.w400,
                         ),
-                  width: 1,
+                      ),
+                      if (hasDateFilter) ...[
+                        Consts.spacing.gapHorizontal.xs,
+                        Icon(
+                          Icons.filter_alt,
+                          size: Consts.sizes.icons.xs,
+                          color: theme.primary,
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.calendar_today,
-                    size: Consts.sizes.icons.xs,
-                    color: hasFilter ? theme.primary : theme.textMuted,
-                  ),
-                  Consts.spacing.gapHorizontal.sm,
-                  Text(
-                    _getDateRangeText(),
-                    style: TextStyle(
-                      fontSize: context.getResponsiveFontSize(
-                        smallest: Consts.fontSizes.device.mobile.bodySmall,
-                      ),
-                      color: hasFilter ? theme.primary : theme.textMuted,
-                      fontWeight: hasFilter ? FontWeight.w600 : FontWeight.w400,
-                    ),
-                  ),
-                  if (hasFilter) ...[
-                    Consts.spacing.gapHorizontal.xs,
-                    Icon(
-                      Icons.filter_alt,
-                      size: Consts.sizes.icons.xs,
-                      color: theme.primary,
-                    ),
-                  ],
-                ],
-              ),
-            ),
+            ],
           ),
         ],
       ),

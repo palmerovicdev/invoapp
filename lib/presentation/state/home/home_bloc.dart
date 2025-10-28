@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +47,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     try {
       final token = _loginBloc.state.token?.token;
-
       if (token == null) {
         emit(
           state.copyWith(
@@ -58,11 +59,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       final invoices = await _invoiceService.getInvoices(
         token: token,
-        issuedAtGteq: event.issuedAtGteq,
-        issuedAtLteq: event.issuedAtLteq,
-        state: event.state,
+        issuedAtGteq: event.clearFilters
+            ? null
+            : (event.issuedAtGteq ?? state.issuedAtGteq),
+        issuedAtLteq: event.clearFilters
+            ? null
+            : (event.issuedAtLteq ?? state.issuedAtLteq),
+        state: event.clearFilters ? null : (event.state ?? state.filterState),
         searchQuery: event.searchQuery,
-        page: event.page,
+        page: event.page ?? state.page,
       );
 
       emit(
@@ -70,37 +75,38 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           invoices: invoices,
           loadingStatus: InvoiceLoadingStatus.loaded,
           selectedInvoiceIndex: 0,
-          page: event.page,
+          page: event.page ?? state.page,
           issuedAtGteq: event.issuedAtGteq,
           issuedAtLteq: event.issuedAtLteq,
           filterState: event.state,
+          clearIssuedAtGteq: event.clearFilters,
+          clearIssuedAtLteq: event.clearFilters,
+          clearFilterState: event.clearFilters,
+          clearErrorMessage: true,
         ),
       );
     } catch (e) {
-      String message = 'UNEXPECTED_ERROR';
-      final error = e.toString();
+      final errorMap = {
+        'UNAUTHORIZED': 'UNAUTHORIZED',
+        'FORBIDDEN': 'FORBIDDEN',
+        'NOT_FOUND': 'NOT_FOUND',
+        'SERVER_ERROR': 'SERVER_ERROR',
+        'NETWORK_ERROR': 'NETWORK_ERROR',
+      };
 
-      if (error.contains('UNAUTHORIZED')) {
-        message = 'UNAUTHORIZED';
-      } else if (error.contains('FORBIDDEN')) {
-        message = 'FORBIDDEN';
-      } else if (error.contains('NOT_FOUND')) {
-        message = 'NOT_FOUND';
-      } else if (error.contains('SERVER_ERROR')) {
-        message = 'SERVER_ERROR';
-      } else if (error.contains('NETWORK_ERROR')) {
-        message = 'NETWORK_ERROR';
-      }
+      final error = e.toString();
+      final message = errorMap.entries
+          .firstWhere(
+            (entry) => error.contains(entry.key),
+            orElse: () => const MapEntry('', 'UNEXPECTED_ERROR'),
+          )
+          .value;
 
       emit(
         state.copyWith(
           loadingStatus: InvoiceLoadingStatus.error,
           errorMessage: message,
           selectedInvoiceIndex: 0,
-          page: event.page,
-          issuedAtGteq: event.issuedAtGteq,
-          issuedAtLteq: event.issuedAtLteq,
-          filterState: event.state,
         ),
       );
     }

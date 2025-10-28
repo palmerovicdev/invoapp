@@ -61,6 +61,10 @@ class HomeState extends Equatable {
     DateTime? issuedAtGteq,
     DateTime? issuedAtLteq,
     InvoiceState? filterState,
+    bool clearIssuedAtGteq = false,
+    bool clearIssuedAtLteq = false,
+    bool clearFilterState = false,
+    bool clearErrorMessage = false,
   }) {
     return HomeState(
       theme: theme ?? this.theme,
@@ -68,11 +72,17 @@ class HomeState extends Equatable {
       invoices: invoices ?? this.invoices,
       selectedInvoiceIndex: selectedInvoiceIndex ?? this.selectedInvoiceIndex,
       loadingStatus: loadingStatus ?? this.loadingStatus,
-      errorMessage: errorMessage ?? this.errorMessage,
+      errorMessage: clearErrorMessage
+          ? null
+          : (errorMessage ?? this.errorMessage),
       page: page ?? this.page,
-      issuedAtGteq: issuedAtGteq ?? this.issuedAtGteq,
-      issuedAtLteq: issuedAtLteq ?? this.issuedAtLteq,
-      filterState: filterState ?? this.filterState,
+      issuedAtGteq: clearIssuedAtGteq
+          ? null
+          : (issuedAtGteq ?? this.issuedAtGteq),
+      issuedAtLteq: clearIssuedAtLteq
+          ? null
+          : (issuedAtLteq ?? this.issuedAtLteq),
+      filterState: clearFilterState ? null : (filterState ?? this.filterState),
     );
   }
 }

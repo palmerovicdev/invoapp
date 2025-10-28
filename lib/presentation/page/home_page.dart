@@ -116,6 +116,7 @@ class _HomePageState extends State<HomePage> {
                                 theme: theme,
                                 startDate: state.issuedAtGteq,
                                 endDate: state.issuedAtLteq,
+                                filterState: state.filterState,
                               ),
                               Consts.spacing.gap.sm,
                               Expanded(

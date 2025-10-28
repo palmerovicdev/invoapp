@@ -188,7 +188,8 @@ class _DateFilterDialogState extends State<DateFilterDialog> {
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {
-                      click(_clearDates);
+                      click(null);
+                      _clearDates();
                     },
                     style: OutlinedButton.styleFrom(
                       foregroundColor: widget.theme.textMuted,
