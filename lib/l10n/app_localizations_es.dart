@@ -173,4 +173,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get retryWithoutFilters => 'Reintentar sin filtros';
+
+  @override
+  String get next => 'Siguiente';
+
+  @override
+  String get previous => 'Anterior';
 }

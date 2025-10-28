@@ -55,23 +55,25 @@ class SplashPage extends StatelessWidget {
               ),
             ),
             Consts.spacing.gap.ultra,
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: Consts.sizes.base.xxl,
-              ),
-              child: AnimatedTextKit(
-                repeatForever: true,
-                animatedTexts: [
-                  TypewriterAnimatedText(
-                    isAuthentication ? context.l10n.checkingAuth : context.l10n.loading,
-                    textStyle: TextStyle(
-                      fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.paragraphTitle, largest: Consts.fontSizes.device.mobile.header),
-                      color: theme.textMuted,
-                      fontWeight: FontWeight.w700,
+            Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: Consts.sizes.base.xxl,
+                ),
+                child: AnimatedTextKit(
+                  repeatForever: true,
+                  animatedTexts: [
+                    TypewriterAnimatedText(
+                      isAuthentication ? context.l10n.checkingAuth : context.l10n.loading,
+                      textStyle: TextStyle(
+                        fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.paragraphTitle, largest: Consts.fontSizes.device.mobile.header),
+                        color: theme.textMuted,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      speed: const Duration(milliseconds: 100),
                     ),
-                    speed: const Duration(milliseconds: 100),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

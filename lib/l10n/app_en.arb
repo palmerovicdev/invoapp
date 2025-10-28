@@ -60,5 +60,7 @@
   "subtotal": "Subtotal",
   "tax": "Tax",
   "total": "Total",
-  "retryWithoutFilters": "Retry without filters"
+  "retryWithoutFilters": "Retry without filters",
+  "next": "Next",
+  "previous": "Previous"
 }

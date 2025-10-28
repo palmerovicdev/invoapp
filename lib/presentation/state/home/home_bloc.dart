@@ -70,6 +70,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           invoices: invoices,
           loadingStatus: InvoiceLoadingStatus.loaded,
           selectedInvoiceIndex: 0,
+          page: event.page,
+          issuedAtGteq: event.issuedAtGteq,
+          issuedAtLteq: event.issuedAtLteq,
+          filterState: event.state,
         ),
       );
     } catch (e) {
@@ -92,6 +96,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         state.copyWith(
           loadingStatus: InvoiceLoadingStatus.error,
           errorMessage: message,
+          selectedInvoiceIndex: 0,
+          page: event.page,
+          issuedAtGteq: event.issuedAtGteq,
+          issuedAtLteq: event.issuedAtLteq,
+          filterState: event.state,
         ),
       );
     }

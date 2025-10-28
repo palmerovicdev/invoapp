@@ -60,5 +60,7 @@
   "subtotal": "Subtotal",
   "tax": "Impuesto",
   "total": "Total",
-  "retryWithoutFilters": "Reintentar sin filtros"
+  "retryWithoutFilters": "Reintentar sin filtros",
+  "next": "Siguiente",
+  "previous": "Anterior"
 }

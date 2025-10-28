@@ -421,6 +421,18 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Reintentar sin filtros'**
   String get retryWithoutFilters;
+
+  /// No description provided for @next.
+  ///
+  /// In es, this message translates to:
+  /// **'Siguiente'**
+  String get next;
+
+  /// No description provided for @previous.
+  ///
+  /// In es, this message translates to:
+  /// **'Anterior'**
+  String get previous;
 }
 
 class _AppLocalizationsDelegate

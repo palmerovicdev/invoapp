@@ -6,6 +6,7 @@ import 'package:invoapp/core/util/feedback.dart';
 import 'package:invoapp/presentation/page/home_section/empty_invoices_state.dart';
 import 'package:invoapp/presentation/page/home_section/home_header.dart';
 import 'package:invoapp/presentation/page/home_section/list_header.dart';
+import 'package:invoapp/presentation/page/home_section/list_pagination.dart';
 import 'package:invoapp/presentation/page/home_section/navigation_and_search.dart';
 import 'package:invoapp/presentation/state/home/home_bloc.dart';
 import 'package:invoapp/presentation/widget/invoice_card.dart';
@@ -155,6 +156,15 @@ class _HomePageState extends State<HomePage> {
                                           );
                                         },
                                       ),
+                              ),
+                              Consts.spacing.gap.sm,
+                              Expanded(
+                                flex: 1,
+                                child: ListPagination(
+                                  state: state,
+                                  theme: theme,
+                                  searchController: _searchController,
+                                ),
                               ),
                             ],
                           ),
