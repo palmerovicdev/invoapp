@@ -1,10 +1,9 @@
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoapp/core/localization/app_locale.dart';
+import 'package:invoapp/core/theme/theme.dart' as thm;
 
 import '../../core/util/feedback.dart';
-import '../state/home/home_bloc.dart';
 
 class EmailField extends StatelessWidget {
   const EmailField({
@@ -18,30 +17,30 @@ class EmailField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeState = context.watch<HomeBloc>().state;
+    final theme = thm.Theme.themes[thm.Theme.currentThemeIndex];
     return Theme(
       data: Theme.of(context).copyWith(
         textSelectionTheme: TextSelectionThemeData(
-          cursorColor: homeState.theme.primary,
-          selectionColor: homeState.theme.primary.withOpacity(Consts.ui.opacities.hover),
-          selectionHandleColor: homeState.theme.primary,
+          cursorColor: theme.primary,
+          selectionColor: theme.primary.withOpacity(Consts.ui.opacities.hover),
+          selectionHandleColor: theme.primary,
         ),
       ),
       child: TextFormField(
         controller: controller,
         enabled: enabled,
         keyboardType: TextInputType.emailAddress,
-        style: TextStyle(color: homeState.theme.text),
-        cursorColor: homeState.theme.text,
+        style: TextStyle(color: theme.text),
+        cursorColor: theme.text,
         decoration: InputDecoration(
           labelText: context.l10n.email,
           hintText: context.l10n.email,
           prefixIcon: Icon(
             Icons.email_outlined,
-            color: homeState.theme.primary,
+            color: theme.primary,
           ),
           filled: true,
-          fillColor: homeState.theme.bgLight,
+          fillColor: theme.bgLight,
           border: OutlineInputBorder(
             borderRadius: Consts.radius.containers.xxl,
             borderSide: BorderSide.none,
@@ -56,14 +55,14 @@ class EmailField extends StatelessWidget {
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: Consts.radius.containers.xxl,
-            borderSide: BorderSide(color: homeState.theme.danger, width: Consts.sizes.base.xxs),
+            borderSide: BorderSide(color: theme.danger, width: Consts.sizes.base.xxs),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: Consts.radius.containers.xxl,
-            borderSide: BorderSide(color: homeState.theme.danger, width: Consts.sizes.base.xxs),
+            borderSide: BorderSide(color: theme.danger, width: Consts.sizes.base.xxs),
           ),
-          labelStyle: TextStyle(color: homeState.theme.textMuted),
-          hintStyle: TextStyle(color: homeState.theme.textMuted),
+          labelStyle: TextStyle(color: theme.textMuted),
+          hintStyle: TextStyle(color: theme.textMuted),
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {

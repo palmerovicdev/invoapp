@@ -53,7 +53,7 @@ class _BlocWrapper extends StatelessWidget {
           create: (context) => HomeBloc(),
         ),
         BlocProvider(
-          create: (context) => LoginBloc(loginService),
+          create: (context) => LoginBloc(loginService)..add(LoginCheckSession()),
         ),
       ],
       child: BlocListener<LoginBloc, LoginState>(

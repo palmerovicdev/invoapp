@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_motionly/widget/button/animated_state_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:invoapp/core/localization/app_locale.dart';
+import 'package:invoapp/core/theme/theme.dart' as thm;
 
 import '../state/home/home_bloc.dart';
 import '../state/login/login_bloc.dart';
@@ -28,17 +29,22 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    final theme = thm.Theme.themes[thm.Theme.currentThemeIndex];
+    _loginButtonController = AnimatedStateButtonController(
+      states: {
+        'success': ButtonState.success(color: theme.success),
+        'loading': ButtonState.loading(color: theme.primary),
+        'error': ButtonState.error(color: theme.danger),
+      },
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkRedirect();
     });
-    final homeState = context.watch<HomeBloc>().state;
-    _loginButtonController = AnimatedStateButtonController(
-      states: {
-        'success': ButtonState.success(color: homeState.theme.success),
-        'loading': ButtonState.loading(color: homeState.theme.primary),
-        'error': ButtonState.error(color: homeState.theme.danger),
-      },
-    );
   }
 
   @override
@@ -50,9 +56,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final homeState = context.watch<HomeBloc>().state;
+    final theme = thm.Theme.themes[thm.Theme.currentThemeIndex];
     return Scaffold(
-      backgroundColor: homeState.theme.bgDark,
+      backgroundColor: theme.bgDark,
       body: BlocConsumer<LoginBloc, LoginState>(
         buildWhen: (previous, current) => previous.isChecking != current.isChecking,
         listenWhen: (previous, current) {
@@ -68,12 +74,12 @@ class _LoginPageState extends State<LoginPage> {
               content: Text(
                 _getErrorMessage(state.errorMessage, context),
                 style: TextStyle(
-                  color: homeState.theme.text,
+                  color: theme.text,
                   fontWeight: FontWeight.w600,
                   fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.body),
                 ),
               ),
-              backgroundColor: homeState.theme.primary,
+              backgroundColor: theme.primary,
               duration: Consts.durations.base.giant,
             ),
           );
@@ -81,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
           context.read<LoginBloc>().add(LoginClearError());
         },
         builder: (context, state) {
-          final homeState = context.watch<HomeBloc>().state;
+          final theme = thm.Theme.themes[thm.Theme.currentThemeIndex];
           return SafeArea(
             child: SingleChildScrollView(
               padding: AppSpacing.paddingXl,
@@ -104,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                     Center(
                       child: AnimatedStateButton(
                         controller: _loginButtonController,
-                        initColor: homeState.theme.primary,
+                        initColor: theme.primary,
                         borderRadius: Consts.radius.base.md,
                         compactSize: Consts.sizes.base.mega,
                         height: Consts.sizes.base.mega,
@@ -114,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(
                             fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.bodySmall),
                             fontWeight: FontWeight.w600,
-                            color: homeState.theme.text,
+                            color: theme.text,
                           ),
                         ),
                       ),
@@ -131,23 +137,24 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _checkRedirect() {
+
     final uri = GoRouterState.of(context).uri;
     final isRedirect = uri.queryParameters['redirect'] == 'true';
 
     if (!isRedirect || _hasShownRedirectMessage) return;
 
-    final homeState = context.watch<HomeBloc>().state;
+    final theme = thm.Theme.themes[thm.Theme.currentThemeIndex];
     _hasShownRedirectMessage = true;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
           context.l10n.loginRequired,
           style: TextStyle(
-            color: homeState.theme.text,
+            color: theme.text,
             fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.body),
           ),
         ),
-        backgroundColor: homeState.theme.warning,
+        backgroundColor: theme.warning,
         duration: Consts.durations.base.giant,
       ),
     );

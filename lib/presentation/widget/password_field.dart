@@ -1,10 +1,9 @@
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoapp/core/localization/app_locale.dart';
+import 'package:invoapp/core/theme/theme.dart' as thm;
 
 import '../../core/util/feedback.dart';
-import '../state/home/home_bloc.dart';
 
 class PasswordField extends StatefulWidget {
   const PasswordField({
@@ -25,13 +24,13 @@ class _PasswordFieldState extends State<PasswordField> {
 
   @override
   Widget build(BuildContext context) {
-    final homeState = context.watch<HomeBloc>().state;
+    final theme = thm.Theme.themes[thm.Theme.currentThemeIndex];
     return Theme(
       data: Theme.of(context).copyWith(
         textSelectionTheme: TextSelectionThemeData(
-          cursorColor: homeState.theme.primary,
-          selectionColor: homeState.theme.primary.withOpacity(Consts.ui.opacities.hover),
-          selectionHandleColor: homeState.theme.primary,
+          cursorColor: theme.primary,
+          selectionColor: theme.primary.withOpacity(Consts.ui.opacities.hover),
+          selectionHandleColor: theme.primary,
         ),
       ),
       child: TextFormField(
@@ -40,17 +39,17 @@ class _PasswordFieldState extends State<PasswordField> {
         obscureText: _obscurePassword,
         obscuringCharacter: '₿',
         style: TextStyle(
-          color: _obscurePassword ? homeState.theme.primary : homeState.theme.text,
+          color: _obscurePassword ? theme.primary : theme.text,
           letterSpacing: _obscurePassword ? Consts.sizes.base.xxs : Consts.sizes.base.none,
         ),
-        cursorColor: homeState.theme.text,
+        cursorColor: theme.text,
         decoration: InputDecoration(
           labelText: context.l10n.password,
           hintText: context.l10n.password,
           suffixIcon: IconButton(
             icon: Icon(
               _obscurePassword ? Icons.circle_outlined : Icons.circle,
-              color: _obscurePassword ? homeState.theme.primary : homeState.theme.textMuted,
+              color: _obscurePassword ? theme.primary : theme.textMuted,
             ),
             onPressed: () {
               setState(() {
@@ -59,7 +58,7 @@ class _PasswordFieldState extends State<PasswordField> {
             },
           ),
           filled: true,
-          fillColor: homeState.theme.bgLight,
+          fillColor: theme.bgLight,
           border: OutlineInputBorder(
             borderRadius: Consts.radius.containers.xxl,
             borderSide: BorderSide.none,
@@ -74,16 +73,16 @@ class _PasswordFieldState extends State<PasswordField> {
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: Consts.radius.containers.xxl,
-            borderSide: BorderSide(color: homeState.theme.danger, width: Consts.sizes.base.xxs),
+            borderSide: BorderSide(color: theme.danger, width: Consts.sizes.base.xxs),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: Consts.radius.containers.xxl,
-            borderSide: BorderSide(color: homeState.theme.danger, width: Consts.sizes.base.xxs),
+            borderSide: BorderSide(color: theme.danger, width: Consts.sizes.base.xxs),
           ),
-          labelStyle: TextStyle(color: homeState.theme.textMuted),
-          hintStyle: TextStyle(color: homeState.theme.textMuted),
-          focusColor: homeState.theme.primary,
-          hoverColor: homeState.theme.primary,
+          labelStyle: TextStyle(color: theme.textMuted),
+          hintStyle: TextStyle(color: theme.textMuted),
+          focusColor: theme.primary,
+          hoverColor: theme.primary,
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {

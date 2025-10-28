@@ -1,10 +1,8 @@
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_motionly/widget/button/animated_state_button.dart';
 import 'package:invoapp/core/localization/app_locale.dart';
-
-import '../state/home/home_bloc.dart';
+import 'package:invoapp/core/theme/theme.dart' as thm;
 
 class LoginButton extends StatelessWidget {
   const LoginButton({
@@ -18,10 +16,10 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeState = context.watch<HomeBloc>().state;
+    final theme = thm.Theme.themes[thm.Theme.currentThemeIndex];
     return AnimatedStateButton(
       controller: controller,
-      initColor: homeState.theme.primary,
+      initColor: theme.primary,
       borderRadius: Consts.radius.base.md,
       compactSize: Consts.sizes.base.mega,
       width: Consts.sizes.base.mega,
@@ -32,7 +30,7 @@ class LoginButton extends StatelessWidget {
         style: TextStyle(
           fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.body),
           fontWeight: FontWeight.w600,
-          color: homeState.theme.text,
+          color: theme.text,
         ),
       ),
     );

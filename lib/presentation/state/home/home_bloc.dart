@@ -6,7 +6,7 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(HomeState(theme: Theme.themes[0])) {
+  HomeBloc() : super(HomeState(theme: Theme.themes[Theme.currentThemeIndex])) {
     on<HomeEvent>((event, emit) {});
   }
 }

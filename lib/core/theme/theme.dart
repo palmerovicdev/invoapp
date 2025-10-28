@@ -78,15 +78,16 @@ class Theme {
   final Color warning;
   final Color success;
   final Color info;
+  static int currentThemeIndex = 0;
 
-  static get themes => [
+  static List<Theme> get themes => [
     Theme.fromHSLTheme(HSLTheme(hue: 0, chroma: 0.05, isLight: false)),
     Theme.fromHSLTheme(HSLTheme(hue: 210, chroma: 0.05, isLight: false)),
     Theme.fromHSLTheme(HSLTheme(hue: 120, chroma: 0.05, isLight: false)),
     Theme.fromHSLTheme(HSLTheme(hue: 0, chroma: 0.05, isLight: true)),
   ];
 
-  const Theme({
+  Theme({
     required this.bgDark,
     required this.bg,
     required this.bgLight,

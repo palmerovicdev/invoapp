@@ -1,16 +1,14 @@
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoapp/core/localization/app_locale.dart';
-
-import '../../state/home/home_bloc.dart';
+import 'package:invoapp/core/theme/theme.dart' as thm;
 
 class LoginHeader extends StatelessWidget {
   const LoginHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final homeState = context.watch<HomeBloc>().state;
+    final theme = thm.Theme.themes[thm.Theme.currentThemeIndex];
     return Column(
       children: [
         Consts.spacing.gap.giant,
@@ -19,14 +17,14 @@ class LoginHeader extends StatelessWidget {
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: homeState.theme.bgLight,
+              color: theme.bgLight,
               borderRadius: AppRadius.borderXl,
             ),
             child: Center(
               child: Icon(
                 Icons.currency_bitcoin_sharp,
                 size: Consts.ui.icons.huge,
-                color: homeState.theme.primary,
+                color: theme.primary,
               ),
             ),
           ),
@@ -37,7 +35,7 @@ class LoginHeader extends StatelessWidget {
           style: TextStyle(
             fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.bodySmall),
             fontWeight: FontWeight.bold,
-            color: homeState.theme.text,
+            color: theme.text,
           ),
           textAlign: TextAlign.center,
         ),
@@ -46,7 +44,7 @@ class LoginHeader extends StatelessWidget {
           context.l10n.invoApp,
           style: TextStyle(
             fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.body),
-            color: homeState.theme.textMuted,
+            color: theme.textMuted,
           ),
           textAlign: TextAlign.center,
         ),
