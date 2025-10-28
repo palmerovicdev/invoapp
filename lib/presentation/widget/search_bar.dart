@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,9 +25,11 @@ class CustomSearchBar extends StatefulWidget {
   State<CustomSearchBar> createState() => _CustomSearchBarState();
 }
 
-class _CustomSearchBarState extends State<CustomSearchBar> with SingleTickerProviderStateMixin {
+class _CustomSearchBarState extends State<CustomSearchBar>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   final FocusNode _focusNode = FocusNode();
+  Timer? _debounceTimer;
 
   @override
   void initState() {
@@ -34,13 +38,36 @@ class _CustomSearchBarState extends State<CustomSearchBar> with SingleTickerProv
       vsync: this,
       duration: Consts.durations.base.md,
     )..forward();
+
+    // Listen to text changes with debounce
+    widget.searchController?.addListener(_onSearchChanged);
   }
 
   @override
   void dispose() {
+    _debounceTimer?.cancel();
+    widget.searchController?.removeListener(_onSearchChanged);
     _animationController.dispose();
     _focusNode.dispose();
     super.dispose();
+  }
+
+  void _onSearchChanged() {
+    // Cancel previous timer
+    _debounceTimer?.cancel();
+
+    // Create new timer
+    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+      if (mounted) {
+        final query = widget.searchController?.text ?? '';
+        context.read<HomeBloc>().add(
+          HomeLoadInvoices(
+            searchQuery: query.isEmpty ? null : query,
+            page: 1,
+          ),
+        );
+      }
+    });
   }
 
   @override
@@ -80,18 +107,24 @@ class _CustomSearchBarState extends State<CustomSearchBar> with SingleTickerProv
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: theme.bgLight,
-                        contentPadding: EdgeInsets.only(left: Consts.spacing.base.xl),
+                        contentPadding: EdgeInsets.only(
+                          left: Consts.spacing.base.xl,
+                        ),
                         hintText: width > 130 ? 'Buscar...' : '',
-                        hintStyle: TextStyle(color: theme.textMuted.withOpacity(0.6)),
+                        hintStyle: TextStyle(
+                          color: theme.textMuted.withOpacity(0.6),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: Consts.radius.containers.xxl,
                           borderSide: BorderSide.none,
                         ),
                       ),
                       onSubmitted: (value) {
+                        _debounceTimer?.cancel();
                         context.read<HomeBloc>().add(
                           HomeLoadInvoices(
-                            searchQuery: value,
+                            searchQuery: value.isEmpty ? null : value,
+                            page: 1,
                           ),
                         );
                       },
@@ -100,15 +133,27 @@ class _CustomSearchBarState extends State<CustomSearchBar> with SingleTickerProv
                   IconButton(
                     onPressed: () {
                       click(null);
+                      _debounceTimer?.cancel();
                       setState(() {
                         widget.searchController?.clear();
                       });
                       _focusNode.unfocus();
                       _animationController.reverse(from: 1).then((value) {
                         widget.onNotShow?.call();
+                        // Reset search when closing
+                        context.read<HomeBloc>().add(
+                          const HomeLoadInvoices(
+                            searchQuery: null,
+                            page: 1,
+                          ),
+                        );
                       });
                     },
-                    icon: Icon(Icons.close, color: theme.primary, size: Consts.sizes.icons.sm),
+                    icon: Icon(
+                      Icons.close,
+                      color: theme.primary,
+                      size: Consts.sizes.icons.sm,
+                    ),
                   ),
                 ],
               ),

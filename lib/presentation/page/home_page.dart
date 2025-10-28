@@ -50,7 +50,8 @@ class _HomePageState extends State<HomePage> {
     return BlocListener<HomeBloc, HomeState>(
       listener: (context, state) {
         if (_pageController.hasClients) {
-          final currentPage = (_pageController.page ?? _pageController.initialPage).round();
+          final currentPage =
+              (_pageController.page ?? _pageController.initialPage).round();
           if (currentPage != state.selectedInvoiceIndex) {
             _pageController.animateToPage(
               state.selectedInvoiceIndex,
@@ -80,7 +81,8 @@ class _HomePageState extends State<HomePage> {
                               Expanded(
                                 flex: 7,
                                 child: GestureDetector(
-                                  onHorizontalDragDown: (_) => _isPageChange = true,
+                                  onHorizontalDragDown: (_) =>
+                                      _isPageChange = true,
                                   child: PageView.builder(
                                     controller: _pageController,
                                     itemCount: state.invoices.length,
@@ -104,15 +106,23 @@ class _HomePageState extends State<HomePage> {
                                 flex: 2,
                                 child: NavigationAndSearch(
                                   state: state,
-                                  scrollToNext: () => click(() => _scrollToNext(state)),
-                                  scrollToPrevious: () => click(() => _scrollToPrevious(state)),
+                                  scrollToNext: () =>
+                                      click(() => _scrollToNext(state)),
+                                  scrollToPrevious: () =>
+                                      click(() => _scrollToPrevious(state)),
                                 ),
                               ),
-                              ListHeader(theme: theme),
+                              ListHeader(
+                                theme: theme,
+                                startDate: state.issuedAtGteq,
+                                endDate: state.issuedAtLteq,
+                              ),
                               Consts.spacing.gap.sm,
                               Expanded(
                                 flex: 12,
-                                child: state.loadingStatus == InvoiceLoadingStatus.loading
+                                child:
+                                    state.loadingStatus ==
+                                        InvoiceLoadingStatus.loading
                                     ? Center(
                                         child: ZoomIn(
                                           duration: Consts.durations.base.xl,
@@ -132,8 +142,10 @@ class _HomePageState extends State<HomePage> {
                                         itemBuilder: (context, index) {
                                           return MeasureSize(
                                             onChange: (size) {
-                                              if (_itemHeights[index] != size.height) {
-                                                _itemHeights[index] = size.height;
+                                              if (_itemHeights[index] !=
+                                                  size.height) {
+                                                _itemHeights[index] =
+                                                    size.height;
                                               }
                                             },
                                             child: ZoomIn(
@@ -143,7 +155,9 @@ class _HomePageState extends State<HomePage> {
                                               child: InvoiceListItem(
                                                 invoice: state.invoices[index],
                                                 theme: theme,
-                                                isSelected: index == state.selectedInvoiceIndex,
+                                                isSelected:
+                                                    index ==
+                                                    state.selectedInvoiceIndex,
                                                 onTap: () {
                                                   select(null);
                                                   _isPageChange = false;
