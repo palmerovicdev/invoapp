@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoapp/core/theme/theme.dart' as app_theme;
 import 'package:invoapp/core/util/extensions.dart';
+import 'package:invoapp/core/util/feedback.dart';
 
 import '../state/home/home_bloc.dart';
 
@@ -98,6 +99,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> with SingleTickerProv
                   ),
                   IconButton(
                     onPressed: () {
+                      click(null);
                       setState(() {
                         widget.searchController?.clear();
                       });

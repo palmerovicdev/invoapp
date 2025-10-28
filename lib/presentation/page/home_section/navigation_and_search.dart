@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:invoapp/core/util/feedback.dart';
 
 import '../../widget/circle_button.dart';
 import '../../widget/search_bar.dart';
@@ -73,9 +74,9 @@ class _NavigationAndSearchState extends State<NavigationAndSearch> with TickerPr
           CircleButton(
             icon: Icons.saved_search_sharp,
             size: Consts.sizes.base.xxxl,
-            onTap: () => setState(() {
+            onTap: () => click(()=>setState(() {
               _showSearch = true;
-            }),
+            })),
             enabled: true,
           ),
           Consts.spacing.gapHorizontal.lg,

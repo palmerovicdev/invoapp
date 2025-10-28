@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:invoapp/core/util/feedback.dart';
 import 'package:invoapp/presentation/page/home_section/empty_invoices_state.dart';
 import 'package:invoapp/presentation/page/home_section/home_header.dart';
 import 'package:invoapp/presentation/page/home_section/list_header.dart';
@@ -102,8 +103,8 @@ class _HomePageState extends State<HomePage> {
                                 flex: 2,
                                 child: NavigationAndSearch(
                                   state: state,
-                                  scrollToNext: () => _scrollToNext(state),
-                                  scrollToPrevious: () => _scrollToPrevious(state),
+                                  scrollToNext: () => click(()=>_scrollToNext(state)),
+                                  scrollToPrevious: () => click(()=>_scrollToPrevious(state)),
                                 ),
                               ),
                               ListHeader(theme: theme),
@@ -143,6 +144,7 @@ class _HomePageState extends State<HomePage> {
                                                 theme: theme,
                                                 isSelected: index == state.selectedInvoiceIndex,
                                                 onTap: () {
+                                                  select(null);
                                                   _isPageChange = false;
                                                   context.read<HomeBloc>().add(
                                                     HomeSelectInvoice(index),

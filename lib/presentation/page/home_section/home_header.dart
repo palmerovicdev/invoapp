@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoapp/core/localization/app_locale.dart';
 import 'package:invoapp/core/theme/theme.dart' as app_theme;
+import 'package:invoapp/core/util/feedback.dart';
 import 'package:invoapp/presentation/state/home/home_bloc.dart';
 import 'package:invoapp/presentation/widget/language_button.dart';
 import 'package:invoapp/presentation/widget/menu_dropdown.dart';
@@ -31,6 +32,7 @@ class HomeHeader extends StatelessWidget {
             child: LanguageButton(
               currentLanguageCode: currentLanguageCode,
               onToggle: () {
+                click(null);
                 context.read<HomeBloc>().add(HomeToggleLocale());
               },
               theme: theme,
@@ -41,6 +43,7 @@ class HomeHeader extends StatelessWidget {
             child: MenuDropdown(
               theme: theme,
               onAboutTap: () {
+                click(null);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(context.l10n.aboutApp),
