@@ -48,8 +48,7 @@ class _HomePageState extends State<HomePage> {
     return BlocListener<HomeBloc, HomeState>(
       listener: (context, state) {
         if (_pageController.hasClients) {
-          final currentPage =
-              (_pageController.page ?? _pageController.initialPage).round();
+          final currentPage = (_pageController.page ?? _pageController.initialPage).round();
           if (currentPage != state.selectedInvoiceIndex) {
             _pageController.animateToPage(
               state.selectedInvoiceIndex,
@@ -79,8 +78,7 @@ class _HomePageState extends State<HomePage> {
                               Expanded(
                                 flex: 7,
                                 child: GestureDetector(
-                                  onHorizontalDragDown: (_) =>
-                                      _isPageChange = true,
+                                  onHorizontalDragDown: (_) => _isPageChange = true,
                                   child: PageView.builder(
                                     controller: _pageController,
                                     itemCount: state.invoices.length,
@@ -105,46 +103,56 @@ class _HomePageState extends State<HomePage> {
                                 child: NavigationAndSearch(
                                   state: state,
                                   scrollToNext: () => _scrollToNext(state),
-                                  scrollToPrevious: () =>
-                                      _scrollToPrevious(state),
+                                  scrollToPrevious: () => _scrollToPrevious(state),
                                 ),
                               ),
                               ListHeader(theme: theme),
                               Consts.spacing.gap.sm,
                               Expanded(
                                 flex: 12,
-                                child: ListView.builder(
-                                  controller: _scrollController,
-                                  itemCount: state.invoices.length,
-                                  itemBuilder: (context, index) {
-                                    return MeasureSize(
-                                      onChange: (size) {
-                                        if (_itemHeights[index] !=
-                                            size.height) {
-                                          _itemHeights[index] = size.height;
-                                        }
-                                      },
-                                      child: ZoomIn(
-                                        delay: Duration(
-                                          milliseconds: 100 * index,
+                                child: state.loadingStatus == InvoiceLoadingStatus.loading
+                                    ? Center(
+                                        child: ZoomIn(
+                                          duration: Consts.durations.base.xl,
+                                          child: SizedBox(
+                                            height: Consts.sizes.base.colossal,
+                                            width: Consts.sizes.base.colossal,
+                                            child: CircularProgressIndicator(
+                                              color: theme.primary,
+                                              strokeWidth: Consts.sizes.base.sm,
+                                            ),
+                                          ),
                                         ),
-                                        child: InvoiceListItem(
-                                          invoice: state.invoices[index],
-                                          theme: theme,
-                                          isSelected:
-                                              index ==
-                                              state.selectedInvoiceIndex,
-                                          onTap: () {
-                                            _isPageChange = false;
-                                            context.read<HomeBloc>().add(
-                                              HomeSelectInvoice(index),
-                                            );
-                                          },
-                                        ),
+                                      )
+                                    : ListView.builder(
+                                        controller: _scrollController,
+                                        itemCount: state.invoices.length,
+                                        itemBuilder: (context, index) {
+                                          return MeasureSize(
+                                            onChange: (size) {
+                                              if (_itemHeights[index] != size.height) {
+                                                _itemHeights[index] = size.height;
+                                              }
+                                            },
+                                            child: ZoomIn(
+                                              delay: Duration(
+                                                milliseconds: 100 * index,
+                                              ),
+                                              child: InvoiceListItem(
+                                                invoice: state.invoices[index],
+                                                theme: theme,
+                                                isSelected: index == state.selectedInvoiceIndex,
+                                                onTap: () {
+                                                  _isPageChange = false;
+                                                  context.read<HomeBloc>().add(
+                                                    HomeSelectInvoice(index),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
-                                    );
-                                  },
-                                ),
                               ),
                             ],
                           ),

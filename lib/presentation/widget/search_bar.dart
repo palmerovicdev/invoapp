@@ -1,7 +1,10 @@
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoapp/core/theme/theme.dart' as app_theme;
 import 'package:invoapp/core/util/extensions.dart';
+
+import '../state/home/home_bloc.dart';
 
 class CustomSearchBar extends StatefulWidget {
   const CustomSearchBar({
@@ -85,7 +88,11 @@ class _CustomSearchBarState extends State<CustomSearchBar> with SingleTickerProv
                         ),
                       ),
                       onSubmitted: (value) {
-                        // TODO 10/28/25 palmerodev : implement submit
+                        context.read<HomeBloc>().add(
+                          HomeLoadInvoices(
+                            searchQuery: value,
+                          ),
+                        );
                       },
                     ),
                   ),

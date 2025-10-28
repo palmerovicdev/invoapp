@@ -1,7 +1,10 @@
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoapp/core/localization/app_locale.dart';
 import 'package:invoapp/core/theme/theme.dart' as app_theme;
+
+import '../../state/home/home_bloc.dart';
 
 class EmptyInvoicesState extends StatelessWidget {
   const EmptyInvoicesState({
@@ -43,7 +46,7 @@ class EmptyInvoicesState extends StatelessWidget {
               ),
             ),
             child: Text(
-              context.l10n.retry,
+              context.l10n.retryWithoutFilters,
               style: TextStyle(
                 fontSize: context.getResponsiveFontSize(
                   smallest: Consts.fontSizes.device.mobile.body,
@@ -51,7 +54,9 @@ class EmptyInvoicesState extends StatelessWidget {
                 color: theme.primary,
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              context.read<HomeBloc>().add(const HomeLoadInvoices());
+            },
           ),
         ],
       ),

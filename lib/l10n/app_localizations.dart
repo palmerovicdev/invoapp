@@ -415,6 +415,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Total'**
   String get total;
+
+  /// No description provided for @retryWithoutFilters.
+  ///
+  /// In es, this message translates to:
+  /// **'Reintentar sin filtros'**
+  String get retryWithoutFilters;
 }
 
 class _AppLocalizationsDelegate

@@ -59,5 +59,6 @@
   "reference": "Referencia",
   "subtotal": "Subtotal",
   "tax": "Impuesto",
-  "total": "Total"
+  "total": "Total",
+  "retryWithoutFilters": "Reintentar sin filtros"
 }
