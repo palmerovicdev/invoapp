@@ -29,10 +29,11 @@ class LoginRepositoryImpl implements LoginRepository {
   final String _keyToken = Env.keyToken;
   final String _keyUserEmail = Env.keyUserEmail;
   final String _loginUrl = Env.loginUrl;
+  final String _baseUrl = Env.baseUrl;
   late final Dio _dio;
 
   LoginRepositoryImpl(this._storage) {
-    _dio = Dio(BaseOptions(baseUrl: _loginUrl));
+    _dio = Dio(BaseOptions(baseUrl: '$_baseUrl$_loginUrl'));
   }
 
   @override
