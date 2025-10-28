@@ -98,7 +98,6 @@ class LoginRepositoryImpl implements LoginRepository {
         'token': tokenStr,
         'expiresAt': _getExpiryDate(tokenStr).toIso8601String(),
       });
-      clearAll(); //TODO 10/28/25 palmerodev : delete this
       return Token.fromJson(tokenMap);
     } catch (e) {
       return Token(token: token);

@@ -32,5 +32,32 @@
   "unexpectedError": "Error inesperado",
   "authenticationError": "Error de autenticación",
   "checkingAuth": "Verificando autenticación...",
-  "loading": "Cargando..."
+  "loading": "Cargando...",
+  "lastUpdated": "Última actualización",
+  "justNow": "Ahora mismo",
+  "lastDays": "Últimos {days} días",
+  "@lastDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "invoices": "Facturas",
+  "send": "Enviar",
+  "received": "Recibido",
+  "cancel": "Cancelar",
+  "search": "Buscar",
+  "noResults": "No se encontraron resultados",
+  "paid": "Pagado",
+  "awaitingPayment": "En espera de pago",
+  "overdue": "Vencido",
+  "draft": "Borrador",
+  "cancelled": "Cancelado",
+  "issued": "Emitida",
+  "due": "Vencimiento",
+  "reference": "Referencia",
+  "subtotal": "Subtotal",
+  "tax": "Impuesto",
+  "total": "Total"
 }

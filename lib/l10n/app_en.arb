@@ -32,5 +32,32 @@
   "unexpectedError": "Unexpected error",
   "authenticationError": "Authentication error",
   "checkingAuth": "Checking authentication...",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "lastUpdated": "Last updated",
+  "justNow": "Just now",
+  "lastDays": "Last {days} days",
+  "@lastDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "invoices": "Invoices",
+  "send": "Send",
+  "received": "Received",
+  "cancel": "Cancel",
+  "search": "Search",
+  "noResults": "No results found",
+  "paid": "Paid",
+  "awaitingPayment": "Awaiting Payment",
+  "overdue": "Overdue",
+  "draft": "Draft",
+  "cancelled": "Cancelled",
+  "issued": "Issued",
+  "due": "Due",
+  "reference": "Reference",
+  "subtotal": "Subtotal",
+  "tax": "Tax",
+  "total": "Total"
 }

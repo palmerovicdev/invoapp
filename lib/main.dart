@@ -20,29 +20,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _BlocWrapper(
-      child: MaterialApp.router(
-        title: 'InvoApp',
-        debugShowCheckedModeBanner: false,
-        routerConfig: router.router,
-        locale: Locale('en'),
-        theme: ThemeData(
-          useMaterial3: true,
-          appBarTheme: const AppBarTheme(
-            systemOverlayStyle: SystemUiOverlayStyle.light,
-          ),
-        ),
-        supportedLocales: const [
-          Locale('en'),
-          Locale('es'),
-        ],
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-      ),
+    return const _BlocWrapper(
+      child: SizedBox.shrink(),
     );
   }
 }
@@ -60,7 +39,8 @@ class _BlocWrapper extends StatelessWidget {
           create: (context) => HomeBloc(),
         ),
         BlocProvider(
-          create: (context) => LoginBloc(loginService)..add(LoginCheckSession()),
+          create: (context) =>
+              LoginBloc(loginService)..add(LoginCheckSession()),
         ),
       ],
       child: BlocListener<LoginBloc, LoginState>(
@@ -68,8 +48,31 @@ class _BlocWrapper extends StatelessWidget {
           router.authStateNotifier.value = state.status;
         },
         child: BlocBuilder<HomeBloc, HomeState>(
-          buildWhen: (previous, current) => previous.theme != current.theme,
-          builder: (_, _) => child,
+          buildWhen: (previous, current) =>
+              previous.theme != current.theme ||
+              previous.locale != current.locale,
+          builder: (context, homeState) => MaterialApp.router(
+            title: 'InvoApp',
+            debugShowCheckedModeBanner: false,
+            routerConfig: router.router,
+            locale: homeState.locale,
+            theme: ThemeData(
+              useMaterial3: true,
+              appBarTheme: const AppBarTheme(
+                systemOverlayStyle: SystemUiOverlayStyle.light,
+              ),
+            ),
+            supportedLocales: const [
+              Locale('en'),
+              Locale('es'),
+            ],
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+          ),
         ),
       ),
     );

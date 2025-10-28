@@ -1,0 +1,55 @@
+{
+  "id": 38,
+  "company_id": 25,
+  "number": "3",
+  "reference": "jhugugu",
+  "currency": null,
+  "issued_at": "2025-10-23T00:00:00.000Z",
+  "due_at": "2025-11-06T00:00:00.000Z",
+  "state": "awaiting_payment",
+  "tax_amount": {
+    "cents": 3075,
+    "currency": "NOK",
+    "formatted": "30.75 kr"
+  },
+  "amount_without_taxes": {
+    "cents": 12300,
+    "currency": "NOK",
+    "formatted": "123.00 kr"
+  },
+  "amount": {
+    "cents": 15375,
+    "currency": "NOK",
+    "formatted": "153.75 kr"
+  },
+  "amount_due": {
+    "cents": 15375,
+    "currency": "NOK",
+    "formatted": "153.75 kr"
+  },
+  "amount_paid": {
+    "cents": 0,
+    "currency": "NOK",
+    "formatted": "0.00 kr"
+  },
+  "humanized_amount": "153.75 kr",
+  "created_at": "2025-10-23T14:21:10.745Z",
+  "updated_at": "2025-10-23T14:21:31.176Z",
+  "send_at": null,
+  "description": null,
+  "contact": {
+    "id": 24,
+    "name": "Contact1",
+    "email": "contact@gmail.com",
+    "phone": "7863456789",
+    "website": "",
+    "acts_as_costumer": true,
+    "acts_as_supplier": false,
+    "company_number": "ewre",
+    "created_at": "2025-10-21T01:36:08.022Z",
+    "updated_at": "2025-10-27T22:13:14.160Z",
+    "logo": {
+      "url": "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBMdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--7e2e6870bf76d5f663d4bba4425f6987ddfe856e/tgl.png"
+    }
+  }
+}

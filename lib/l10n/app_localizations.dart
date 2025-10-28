@@ -295,6 +295,126 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Cargando...'**
   String get loading;
+
+  /// No description provided for @lastUpdated.
+  ///
+  /// In es, this message translates to:
+  /// **'Última actualización'**
+  String get lastUpdated;
+
+  /// No description provided for @justNow.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora mismo'**
+  String get justNow;
+
+  /// No description provided for @lastDays.
+  ///
+  /// In es, this message translates to:
+  /// **'Últimos {days} días'**
+  String lastDays(int days);
+
+  /// No description provided for @invoices.
+  ///
+  /// In es, this message translates to:
+  /// **'Facturas'**
+  String get invoices;
+
+  /// No description provided for @send.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar'**
+  String get send;
+
+  /// No description provided for @received.
+  ///
+  /// In es, this message translates to:
+  /// **'Recibido'**
+  String get received;
+
+  /// No description provided for @cancel.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelar'**
+  String get cancel;
+
+  /// No description provided for @search.
+  ///
+  /// In es, this message translates to:
+  /// **'Buscar'**
+  String get search;
+
+  /// No description provided for @noResults.
+  ///
+  /// In es, this message translates to:
+  /// **'No se encontraron resultados'**
+  String get noResults;
+
+  /// No description provided for @paid.
+  ///
+  /// In es, this message translates to:
+  /// **'Pagado'**
+  String get paid;
+
+  /// No description provided for @awaitingPayment.
+  ///
+  /// In es, this message translates to:
+  /// **'En espera de pago'**
+  String get awaitingPayment;
+
+  /// No description provided for @overdue.
+  ///
+  /// In es, this message translates to:
+  /// **'Vencido'**
+  String get overdue;
+
+  /// No description provided for @draft.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrador'**
+  String get draft;
+
+  /// No description provided for @cancelled.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelado'**
+  String get cancelled;
+
+  /// No description provided for @issued.
+  ///
+  /// In es, this message translates to:
+  /// **'Emitida'**
+  String get issued;
+
+  /// No description provided for @due.
+  ///
+  /// In es, this message translates to:
+  /// **'Vencimiento'**
+  String get due;
+
+  /// No description provided for @reference.
+  ///
+  /// In es, this message translates to:
+  /// **'Referencia'**
+  String get reference;
+
+  /// No description provided for @subtotal.
+  ///
+  /// In es, this message translates to:
+  /// **'Subtotal'**
+  String get subtotal;
+
+  /// No description provided for @tax.
+  ///
+  /// In es, this message translates to:
+  /// **'Impuesto'**
+  String get tax;
+
+  /// No description provided for @total.
+  ///
+  /// In es, this message translates to:
+  /// **'Total'**
+  String get total;
 }
 
 class _AppLocalizationsDelegate

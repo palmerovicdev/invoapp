@@ -107,4 +107,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loading => 'Loading...';
+
+  @override
+  String get lastUpdated => 'Last updated';
+
+  @override
+  String get justNow => 'Just now';
+
+  @override
+  String lastDays(int days) {
+    return 'Last $days days';
+  }
+
+  @override
+  String get invoices => 'Invoices';
+
+  @override
+  String get send => 'Send';
+
+  @override
+  String get received => 'Received';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get noResults => 'No results found';
+
+  @override
+  String get paid => 'Paid';
+
+  @override
+  String get awaitingPayment => 'Awaiting Payment';
+
+  @override
+  String get overdue => 'Overdue';
+
+  @override
+  String get draft => 'Draft';
+
+  @override
+  String get cancelled => 'Cancelled';
+
+  @override
+  String get issued => 'Issued';
+
+  @override
+  String get due => 'Due';
+
+  @override
+  String get reference => 'Reference';
+
+  @override
+  String get subtotal => 'Subtotal';
+
+  @override
+  String get tax => 'Tax';
+
+  @override
+  String get total => 'Total';
 }
