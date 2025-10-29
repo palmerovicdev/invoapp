@@ -66,6 +66,11 @@ Aplicación de **listado de facturas (Flutter)** — interfaz de ejemplo con nav
     <img src="https://github.com/palmerovicdev/invoapp/blob/main/blueprints/splash_screen.gif" alt="Splash screen" style="width:100%;height:auto;border-radius:8px;" />
     <figcaption style="text-align:left;margin-top:8px;color:#444;"><strong>splash_screen.gif</strong> — Pantalla de bienvenida (splash) y la animación de transición al inicio de la aplicación.</figcaption>
   </figure>
+
+  <figure style="max-width:900px;margin:0;">
+    <img src="https://github.com/palmerovicdev/invoapp/blob/main/blueprints/empty_state.gif" alt="Empty State" style="width:100%;height:auto;border-radius:8px;" />
+    <figcaption style="text-align:left;margin-top:8px;color:#444;"><strong>empty_state.gif</strong> — Pantalla de empty state y retry con limpieza de filtros.</figcaption>
+  </figure>
 </div>
 
 ---
