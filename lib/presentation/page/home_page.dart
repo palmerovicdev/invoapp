@@ -121,8 +121,14 @@ class _HomePageState extends State<HomePage> {
                                 flex: 2,
                                 child: NavigationAndSearch(
                                   state: state,
-                                  scrollToNext: () => click(() => _scrollToNext(state)),
-                                  scrollToPrevious: () => click(() => _scrollToPrevious(state)),
+                                  scrollToNext: () {
+                                    click(null);
+                                    _scrollToNext(state);
+                                  },
+                                  scrollToPrevious: () {
+                                    click(null);
+                                    _scrollToPrevious(state);
+                                  },
                                 ),
                               ),
                               ListHeader(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:invoapp/domain/entity/token.dart';
@@ -47,11 +49,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           user: user,
         ),
       );
-    } catch (e) {
+    } catch (e, st) {
+      log('Error en _onCheckSession: $e', stackTrace: st);
+
+      final message = _mapLoginErrorToMessage(e.toString());
+
       emit(
         state.copyWith(
           status: AuthStatus.error,
-          errorMessage: 'Failed to check session.',
+          errorMessage: message,
         ),
       );
     }
@@ -78,20 +84,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           clearError: true,
         ),
       );
-    } catch (e) {
-      final errorMap = {
-        'INVALID_CREDENTIALS': 'INVALID_CREDENTIALS',
-        'SERVER_ERROR': 'SERVER_ERROR',
-        'NETWORK_ERROR': 'NETWORK_ERROR',
-      };
+    } catch (e, st) {
+      log('Error en _onSubmit (login): $e', stackTrace: st);
 
-      final error = e.toString();
-      final message = errorMap.entries
-          .firstWhere(
-            (entry) => error.contains(entry.key),
-            orElse: () => const MapEntry('', 'UNEXPECTED_ERROR'),
-          )
-          .value;
+      final message = _mapLoginErrorToMessage(e.toString());
 
       emit(
         state.copyWith(
@@ -111,7 +107,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       await _loginService.logout();
       emit(const LoginState(status: AuthStatus.unauthenticated));
-    } catch (e) {
+    } catch (e, st) {
+      log('Error en _onLogout: $e', stackTrace: st);
       emit(
         state.copyWith(
           status: AuthStatus.error,
@@ -125,11 +122,21 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginClearError event,
     Emitter<LoginState> emit,
   ) async {
-    emit(
-      state.copyWith(
-        status: AuthStatus.unauthenticated,
-        clearError: true,
-      ),
+    emit(state.copyWith(clearError: true));
+  }
+
+  String _mapLoginErrorToMessage(String error) {
+    final errorMap = {
+      'INVALID_CREDENTIALS': 'Credenciales inválidas',
+      'SERVER_ERROR': 'Error del servidor',
+      'NETWORK_ERROR': 'Error de red',
+    };
+
+    final entry = errorMap.entries.firstWhere(
+      (e) => error.contains(e.key),
+      orElse: () => const MapEntry('', 'Error inesperado'),
     );
+
+    return entry.value;
   }
 }

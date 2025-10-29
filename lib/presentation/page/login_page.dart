@@ -64,8 +64,7 @@ class _LoginPageState extends State<LoginPage> {
         buildWhen: (previous, current) => previous.isChecking != current.isChecking,
         listenWhen: (previous, current) {
           bool isDifferentError = current.hasError && current.errorMessage != null && current.errorMessage != previous.errorMessage;
-          bool justAuthenticated = current.isAuthenticated && !previous.isAuthenticated;
-          return isDifferentError && justAuthenticated;
+          return isDifferentError;
         },
         listener: (context, state) {
           _loginButtonController.changeState('error');
