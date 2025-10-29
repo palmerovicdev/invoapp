@@ -178,4 +178,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get previous => 'Previous';
+
+  @override
+  String get filterByDate => 'Filter by Date';
+
+  @override
+  String get last7Days => 'Last 7 Days';
+
+  @override
+  String get last30Days => 'Last 30 Days';
+
+  @override
+  String get thisMonth => 'This Month';
+
+  @override
+  String get initDate => 'Start Date';
+
+  @override
+  String get endDate => 'End Date';
+
+  @override
+  String get clearFilters => 'Clear Filters';
+
+  @override
+  String get selectDate => 'Select Date';
+
+  @override
+  String get allDates => 'All Dates';
+
+  @override
+  String get from => 'From';
+
+  @override
+  String get to => 'To';
+
+  @override
+  String get all => 'All';
 }

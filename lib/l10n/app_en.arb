@@ -62,5 +62,17 @@
   "total": "Total",
   "retryWithoutFilters": "Retry without filters",
   "next": "Next",
-  "previous": "Previous"
+  "previous": "Previous",
+  "filterByDate": "Filter by Date",
+  "last7Days": "Last 7 Days",
+  "last30Days": "Last 30 Days",
+  "thisMonth": "This Month",
+  "initDate": "Start Date",
+  "endDate": "End Date",
+  "clearFilters": "Clear Filters",
+  "selectDate": "Select Date",
+  "allDates": "All Dates",
+  "from": "From",
+  "to": "To",
+  "all": "All"
 }

@@ -2,6 +2,7 @@ import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:invoapp/core/localization/app_locale.dart';
 import 'package:invoapp/core/theme/theme.dart' as app_theme;
 import 'package:invoapp/core/util/feedback.dart';
 import 'package:invoapp/presentation/state/home/home_bloc.dart';
@@ -136,7 +137,7 @@ class DateFilterDialog extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Filtrar por fecha',
+                      context.l10n.filterByDate,
                       style: TextStyle(
                         fontSize: context.getResponsiveFontSize(
                           smallest: Consts.fontSizes.device.mobile.body,
@@ -162,17 +163,17 @@ class DateFilterDialog extends StatelessWidget {
                   children: [
                     _buildQuickFilterChip(
                       context,
-                      'Últimos 7 días',
+                      context.l10n.last7Days,
                       () => _setLast7Days(context),
                     ),
                     _buildQuickFilterChip(
                       context,
-                      'Últimos 30 días',
+                      context.l10n.last30Days,
                       () => _setLast30Days(context),
                     ),
                     _buildQuickFilterChip(
                       context,
-                      'Este mes',
+                      context.l10n.thisMonth,
                       () => _setThisMonth(context),
                     ),
                   ],
@@ -180,14 +181,14 @@ class DateFilterDialog extends StatelessWidget {
                 Consts.spacing.gap.xl,
                 _buildDateSelector(
                   context,
-                  label: 'Fecha inicio',
+                  label: context.l10n.initDate,
                   date: state.issuedAtGteq,
                   onTap: () => _selectStartDate(context, state.issuedAtLteq),
                 ),
                 Consts.spacing.gap.md,
                 _buildDateSelector(
                   context,
-                  label: 'Fecha fin',
+                  label: context.l10n.endDate,
                   date: state.issuedAtLteq,
                   onTap: () => _selectEndDate(context, state.issuedAtGteq),
                 ),
@@ -215,7 +216,7 @@ class DateFilterDialog extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          'Limpiar filtro',
+                          context.l10n.clearFilters,
                           style: TextStyle(
                             fontSize: context.getResponsiveFontSize(
                               smallest: Consts.fontSizes.device.mobile.body,
@@ -242,7 +243,7 @@ class DateFilterDialog extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          'Cerrar',
+                          context.l10n.close,
                           style: TextStyle(
                             fontSize: context.getResponsiveFontSize(
                               smallest: Consts.fontSizes.device.mobile.body,
@@ -350,7 +351,7 @@ class DateFilterDialog extends StatelessWidget {
                 Text(
                   date != null
                       ? DateFormat('dd/MM/yyyy').format(date)
-                      : 'Seleccionar fecha',
+                      : context.l10n.selectDate,
                   style: TextStyle(
                     fontSize: context.getResponsiveFontSize(
                       smallest: Consts.fontSizes.device.mobile.bodySmall,

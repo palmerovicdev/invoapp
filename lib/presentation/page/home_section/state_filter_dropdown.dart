@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:invoapp/core/localization/app_locale.dart';
 import 'package:invoapp/core/theme/theme.dart' as app_theme;
 import 'package:invoapp/domain/entity/invoice.dart';
 
@@ -15,20 +18,20 @@ class StateFilterDropdown extends StatelessWidget {
   final InvoiceState? currentState;
   final Function(InvoiceState?) onStateSelected;
 
-  String _getStateLabel(InvoiceState? state) {
-    if (state == null) return 'Todos';
+  String _getStateLabel(InvoiceState? state, BuildContext context) {
+    if (state == null) return context.l10n.all;
 
     switch (state) {
       case InvoiceState.draft:
-        return 'Borrador';
+        return context.l10n.draft;
       case InvoiceState.awaitingPayment:
-        return 'En espera';
+        return context.l10n.awaitingPayment;
       case InvoiceState.paid:
-        return 'Pagado';
+        return context.l10n.paid;
       case InvoiceState.overdue:
-        return 'Vencido';
+        return context.l10n.overdue;
       case InvoiceState.cancelled:
-        return 'Cancelado';
+        return context.l10n.cancelled;
     }
   }
 
@@ -160,7 +163,7 @@ class StateFilterDropdown extends StatelessWidget {
                 ),
                 Consts.spacing.gapHorizontal.sm,
                 Text(
-                  _getStateLabel(state),
+                  _getStateLabel(state, context),
                   style: TextStyle(
                     color: isSelected ? color : theme.text,
                     fontSize: context.getResponsiveFontSize(

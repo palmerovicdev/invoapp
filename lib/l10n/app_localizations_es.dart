@@ -179,4 +179,40 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get previous => 'Anterior';
+
+  @override
+  String get filterByDate => 'Filtrar por fecha';
+
+  @override
+  String get last7Days => 'Últimos 7 días';
+
+  @override
+  String get last30Days => 'Últimos 30 días';
+
+  @override
+  String get thisMonth => 'Este mes';
+
+  @override
+  String get initDate => 'Fecha de inicio';
+
+  @override
+  String get endDate => 'Fecha de fin';
+
+  @override
+  String get clearFilters => 'Borrar filtros';
+
+  @override
+  String get selectDate => 'Seleccionar fecha';
+
+  @override
+  String get allDates => 'Todas las fechas';
+
+  @override
+  String get from => 'Desde';
+
+  @override
+  String get to => 'Hasta';
+
+  @override
+  String get all => 'Todos';
 }

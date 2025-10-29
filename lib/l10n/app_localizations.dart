@@ -433,6 +433,78 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Anterior'**
   String get previous;
+
+  /// No description provided for @filterByDate.
+  ///
+  /// In es, this message translates to:
+  /// **'Filtrar por fecha'**
+  String get filterByDate;
+
+  /// No description provided for @last7Days.
+  ///
+  /// In es, this message translates to:
+  /// **'Últimos 7 días'**
+  String get last7Days;
+
+  /// No description provided for @last30Days.
+  ///
+  /// In es, this message translates to:
+  /// **'Últimos 30 días'**
+  String get last30Days;
+
+  /// No description provided for @thisMonth.
+  ///
+  /// In es, this message translates to:
+  /// **'Este mes'**
+  String get thisMonth;
+
+  /// No description provided for @initDate.
+  ///
+  /// In es, this message translates to:
+  /// **'Fecha de inicio'**
+  String get initDate;
+
+  /// No description provided for @endDate.
+  ///
+  /// In es, this message translates to:
+  /// **'Fecha de fin'**
+  String get endDate;
+
+  /// No description provided for @clearFilters.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar filtros'**
+  String get clearFilters;
+
+  /// No description provided for @selectDate.
+  ///
+  /// In es, this message translates to:
+  /// **'Seleccionar fecha'**
+  String get selectDate;
+
+  /// No description provided for @allDates.
+  ///
+  /// In es, this message translates to:
+  /// **'Todas las fechas'**
+  String get allDates;
+
+  /// No description provided for @from.
+  ///
+  /// In es, this message translates to:
+  /// **'Desde'**
+  String get from;
+
+  /// No description provided for @to.
+  ///
+  /// In es, this message translates to:
+  /// **'Hasta'**
+  String get to;
+
+  /// No description provided for @all.
+  ///
+  /// In es, this message translates to:
+  /// **'Todos'**
+  String get all;
 }
 
 class _AppLocalizationsDelegate

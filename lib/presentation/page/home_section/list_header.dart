@@ -25,9 +25,9 @@ class ListHeader extends StatelessWidget {
   final DateTime? endDate;
   final InvoiceState? filterState;
 
-  String _getDateRangeText() {
+  String _getDateRangeText(BuildContext context) {
     if (startDate == null && endDate == null) {
-      return 'Todas las fechas';
+      return context.l10n.allDates;
     }
 
     if (startDate != null && endDate != null) {
@@ -37,10 +37,10 @@ class ListHeader extends StatelessWidget {
     }
 
     if (startDate != null) {
-      return 'Desde ${DateFormat('dd/MM/yy').format(startDate!)}';
+      return '${context.l10n.from} ${DateFormat('dd/MM/yy').format(startDate!)}';
     }
 
-    return 'Hasta ${DateFormat('dd/MM/yy').format(endDate!)}';
+    return '${context.l10n.to} ${DateFormat('dd/MM/yy').format(endDate!)}';
   }
 
   @override
@@ -116,7 +116,7 @@ class ListHeader extends StatelessWidget {
                       ),
                       Consts.spacing.gapHorizontal.xs,
                       Text(
-                        _getDateRangeText(),
+                        _getDateRangeText(context),
                         style: TextStyle(
                           fontSize: context.getResponsiveFontSize(
                             smallest: Consts.fontSizes.device.mobile.bodySmall,
