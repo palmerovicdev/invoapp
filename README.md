@@ -2,7 +2,7 @@
 
 Aplicación de listado de facturas (Flutter) — interfaz de ejemplo con navegación, búsqueda, filtros por fecha y paginación.
 
-![Pantalla principal](blueprints/Screenshot 2025-10-28 at 20.08.58.png)
+![Pantalla principal](https://github.com/palmerovicdev/invoapp/blob/main/blueprints/Screenshot%202025-10-28%20at%2020.08.58.png)
 
 Descripción
 ---------
@@ -21,23 +21,23 @@ Pantallas (carpeta `blueprints`):
 
 - Vista principal
 
-![Principal](blueprints/Screenshot 2025-10-28 at 20.08.58.png)
+![Principal](https://github.com/palmerovicdev/invoapp/blob/main/blueprints/Screenshot%202025-10-28%20at%2020.08.58.png)
 
 - Navegación y búsqueda
 
-![Navegación](blueprints/Screenshot 2025-10-28 at 20.08.42.png)
+![Navegación](https://github.com/palmerovicdev/invoapp/blob/main/blueprints/Screenshot%202025-10-28%20at%2020.08.42.png)
 
 - Lista de facturas
 
-![Lista](blueprints/Screenshot 2025-10-28 at 19.52.55.png)
+![Lista](https://github.com/palmerovicdev/invoapp/blob/main/blueprints/Screenshot%202025-10-28%20at%2019.52.55.png)
 
 - Filtro por fecha
 
-![Filtro](blueprints/Screenshot 2025-10-28 at 19.52.47.png)
+![Filtro](https://github.com/palmerovicdev/invoapp/blob/main/blueprints/Screenshot%202025-10-28%20at%2019.52.47.png)
 
 - Detalle / tarjeta
 
-![Detalle](blueprints/Screenshot 2025-10-28 at 19.52.36.png)
+![Detalle](https://github.com/palmerovicdev/invoapp/blob/main/blueprints/Screenshot%202025-10-28%20at%2019.52.36.png)
 
 Requisitos
 ---------
