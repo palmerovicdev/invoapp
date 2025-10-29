@@ -6,14 +6,12 @@ import 'package:invoapp/core/localization/app_locale.dart';
 class MenuDropdown extends StatelessWidget {
   final app_theme.Theme theme;
   final VoidCallback onAboutTap;
-  final VoidCallback onThemeColorTap;
   final VoidCallback onLogoutTap;
 
   const MenuDropdown({
     super.key,
     required this.theme,
     required this.onAboutTap,
-    required this.onThemeColorTap,
     required this.onLogoutTap,
   });
 
@@ -24,9 +22,6 @@ class MenuDropdown extends StatelessWidget {
         switch (value) {
           case 'about':
             onAboutTap();
-            break;
-          case 'theme':
-            onThemeColorTap();
             break;
           case 'logout':
             onLogoutTap();
@@ -61,25 +56,6 @@ class MenuDropdown extends StatelessWidget {
               const SizedBox(width: 12),
               Text(
                 context.l10n.aboutApp,
-                style: TextStyle(
-                  color: theme.text,
-                  fontSize: context.getResponsiveFontSize(
-                    smallest: Consts.fontSizes.device.mobile.bodySmall,
-                  ),
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-        PopupMenuItem<String>(
-          value: 'theme',
-          child: Row(
-            children: [
-              Icon(Icons.palette_outlined, color: theme.text, size: 20),
-              const SizedBox(width: 12),
-              Text(
-                context.l10n.themeColor,
                 style: TextStyle(
                   color: theme.text,
                   fontSize: context.getResponsiveFontSize(

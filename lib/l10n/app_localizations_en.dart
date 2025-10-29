@@ -214,4 +214,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get all => 'All';
+
+  @override
+  String get aboutAppDescription =>
+      'InvoApp is a simple and efficient invoicing application designed to help freelancers and small businesses manage their invoices with ease. With InvoApp, you can create, send, and track invoices in just a few clicks. Stay organized and get paid faster with InvoApp!';
 }

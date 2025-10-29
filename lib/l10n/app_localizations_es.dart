@@ -215,4 +215,8 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get all => 'Todos';
+
+  @override
+  String get aboutAppDescription =>
+      'InvoApp es una aplicación de facturación simple y eficiente diseñada para ayudar a freelancers y pequeñas empresas a gestionar sus facturas con facilidad. Con InvoApp, puedes crear, enviar y rastrear facturas en solo unos pocos clics. ¡Mantente organizado y recibe pagos más rápido con InvoApp!';
 }

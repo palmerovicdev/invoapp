@@ -505,6 +505,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Todos'**
   String get all;
+
+  /// No description provided for @aboutAppDescription.
+  ///
+  /// In es, this message translates to:
+  /// **'InvoApp es una aplicación de facturación simple y eficiente diseñada para ayudar a freelancers y pequeñas empresas a gestionar sus facturas con facilidad. Con InvoApp, puedes crear, enviar y rastrear facturas en solo unos pocos clics. ¡Mantente organizado y recibe pagos más rápido con InvoApp!'**
+  String get aboutAppDescription;
 }
 
 class _AppLocalizationsDelegate

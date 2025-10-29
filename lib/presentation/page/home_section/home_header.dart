@@ -44,19 +44,64 @@ class HomeHeader extends StatelessWidget {
               theme: theme,
               onAboutTap: () {
                 click(null);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(context.l10n.aboutApp),
-                    backgroundColor: theme.info,
-                  ),
-                );
-              },
-              onThemeColorTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(context.l10n.themeColor),
-                    backgroundColor: theme.info,
-                  ),
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      backgroundColor: theme.bg,
+                      title: Row(
+                        children: [
+                          Icon(
+                            Icons.currency_bitcoin_sharp,
+                            size: 48,
+                            color: theme.primary,
+                          ),
+                          Consts.spacing.gapHorizontal.md,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'InvoApp',
+                                style: TextStyle(color: theme.primary),
+                              ),
+                              Text(
+                                '1.0.0',
+                                style: TextStyle(
+                                  color: theme.primary,
+                                  fontSize: Consts.fontSizes.device.mobileCompact.bodySmall,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            context.l10n.aboutAppDescription,
+                            style: TextStyle(color: theme.primary),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        FilledButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: FilledButton.styleFrom(
+                            backgroundColor: theme.bgLight,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: Consts.radius.containers.md,
+                            ),
+                          ),
+                          child: Text(
+                            context.l10n.close,
+                            style: TextStyle(color: theme.primary),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 );
               },
               onLogoutTap: () {
