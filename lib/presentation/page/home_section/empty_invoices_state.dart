@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,45 +21,53 @@ class EmptyInvoicesState extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.receipt_long_outlined,
-            size: Consts.sizes.base.colossal,
-            color: theme.primary,
+          ZoomIn(
+            child: Icon(
+              Icons.receipt_long_outlined,
+              size: Consts.sizes.base.colossal,
+              color: theme.primary,
+            ),
           ),
           Consts.spacing.gap.xxl,
-          Text(
-            context.l10n.youHaveNoInvoices,
-            style: TextStyle(
-              fontSize: context.getResponsiveFontSize(
-                smallest: Consts.fontSizes.device.mobile.body,
-              ),
-              color: theme.textMuted,
-            ),
-          ),
-          Consts.spacing.gap.xl,
-          FilledButton(
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(theme.bgLight),
-              shape: WidgetStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: Consts.radius.containers.md,
-                ),
-              ),
-            ),
+          ZoomIn(
+            delay: Consts.durations.base.sm,
             child: Text(
-              context.l10n.retryWithoutFilters,
+              context.l10n.youHaveNoInvoices,
               style: TextStyle(
                 fontSize: context.getResponsiveFontSize(
                   smallest: Consts.fontSizes.device.mobile.body,
                 ),
-                color: theme.primary,
+                color: theme.textMuted,
               ),
             ),
-            onPressed: () {
-              context.read<HomeBloc>().add(
-                const HomeLoadInvoices(clearFilters: true),
-              );
-            },
+          ),
+          Consts.spacing.gap.xl,
+          ZoomIn(
+            delay: Consts.durations.base.smd,
+            child: FilledButton(
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all(theme.bgLight),
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: Consts.radius.containers.md,
+                  ),
+                ),
+              ),
+              child: Text(
+                context.l10n.retryWithoutFilters,
+                style: TextStyle(
+                  fontSize: context.getResponsiveFontSize(
+                    smallest: Consts.fontSizes.device.mobile.body,
+                  ),
+                  color: theme.primary,
+                ),
+              ),
+              onPressed: () {
+                context.read<HomeBloc>().add(
+                  const HomeLoadInvoices(clearFilters: true),
+                );
+              },
+            ),
           ),
         ],
       ),
