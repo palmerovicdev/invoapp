@@ -76,7 +76,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         state.copyWith(
           invoices: invoices,
           loadingStatus: InvoiceLoadingStatus.loaded,
-          selectedInvoiceIndex: 0,
+          selectedInvoiceIndex: state.selectedInvoiceIndex,
           page: event.page ?? state.page,
           issuedAtGteq: effectiveIssuedAtGteq,
           issuedAtLteq: effectiveIssuedAtLteq,
@@ -103,12 +103,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             orElse: () => const MapEntry('', 'UNEXPECTED_ERROR'),
           )
           .value;
+      final isStateFilterChange = event.page == 1 && event.clearFilters == false && event.issuedAtGteq == null && event.issuedAtLteq == null && event.searchQuery == null;
+      final effectiveIssuedAtGteq = event.clearDates || event.clearFilters ? null : (event.issuedAtGteq ?? state.issuedAtGteq);
+      final effectiveIssuedAtLteq = event.clearDates || event.clearFilters ? null : (event.issuedAtLteq ?? state.issuedAtLteq);
+      final effectiveState = event.clearState || event.clearFilters ? null : (isStateFilterChange ? event.state : (event.state ?? state.filterState));
 
       emit(
         state.copyWith(
           loadingStatus: InvoiceLoadingStatus.error,
           errorMessage: message,
-          selectedInvoiceIndex: 0,
+          selectedInvoiceIndex: state.selectedInvoiceIndex,
+          page: event.page ?? state.page,
+          issuedAtGteq: effectiveIssuedAtGteq,
+          issuedAtLteq: effectiveIssuedAtLteq,
+          filterState: effectiveState,
+          clearIssuedAtGteq: event.clearFilters || event.clearDates,
+          clearIssuedAtLteq: event.clearFilters || event.clearDates,
+          clearFilterState: event.clearFilters || (isStateFilterChange && event.state == null) || event.clearState,
+          clearErrorMessage: true,
         ),
       );
     }

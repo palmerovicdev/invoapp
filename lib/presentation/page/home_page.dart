@@ -50,11 +50,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocListener<HomeBloc, HomeState>(
       listener: (context, state) {
-        if (state.errorMessage != null && state.errorMessage != 'UNEXPECTED_ERROR') {
+        if (state.hasError && state.errorMessage != null) {
+          final message = _getErrorMessage(state.errorMessage, context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                _getErrorMessage(state.errorMessage, context),
+                message,
                 style: TextStyle(
                   color: state.theme.bgDark,
                   fontWeight: FontWeight.w600,
@@ -62,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               backgroundColor: state.theme.primary,
-              duration: Consts.durations.base.md,
+              duration: Consts.durations.base.xxxl,
             ),
           );
         }
@@ -225,19 +226,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   String _getErrorMessage(String? errorMessage, BuildContext context) {
-    if (errorMessage == null) return context.l10n.authenticationFailed;
+    if (errorMessage == null) return context.l10n.unexpectedError;
 
     switch (errorMessage) {
       case 'INVALID_CREDENTIALS':
         return context.l10n.invalidCredentials;
+      case 'UNAUTHORIZED':
+        return context.l10n.authenticationFailed;
+      case 'FORBIDDEN':
+        return context.l10n.requestFailed;
+      case 'NOT_FOUND':
+        return context.l10n.requestFailed;
       case 'SERVER_ERROR':
         return context.l10n.serverError;
       case 'NETWORK_ERROR':
-        return context.l10n.networkError;
+        return context.l10n.pleaseCheckYourConnection;
       case 'UNEXPECTED_ERROR':
         return context.l10n.unexpectedError;
       default:
-        return context.l10n.authenticationFailed;
+        return errorMessage;
     }
   }
 

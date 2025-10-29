@@ -81,7 +81,7 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
       return invoicesData.map((json) => Invoice.fromJson(json)).toList();
     } on DioException catch (e) {
       if (e.type == DioExceptionType.connectionTimeout ||
-          e.type == DioExceptionType.receiveTimeout) {
+          e.type == DioExceptionType.receiveTimeout || e.type == DioExceptionType.connectionError) {
         throw Exception('NETWORK_ERROR');
       } else if (e.response?.statusCode == 401) {
         throw Exception('UNAUTHORIZED');

@@ -74,7 +74,7 @@ class HomeState extends Equatable {
       invoices: invoices ?? this.invoices,
       selectedInvoiceIndex: selectedInvoiceIndex ?? this.selectedInvoiceIndex,
       loadingStatus: loadingStatus ?? this.loadingStatus,
-      errorMessage: clearErrorMessage ? null : (errorMessage ?? this.errorMessage),
+      errorMessage: errorMessage ?? this.errorMessage,
       page: page ?? this.page,
       issuedAtGteq: clearIssuedAtGteq ? null : (issuedAtGteq ?? this.issuedAtGteq),
       issuedAtLteq: clearIssuedAtLteq ? null : (issuedAtLteq ?? this.issuedAtLteq),
