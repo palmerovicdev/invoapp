@@ -42,6 +42,34 @@ Aplicación de **listado de facturas (Flutter)** — interfaz de ejemplo con nav
 
 ---
 
+<!-- GIFs section inserted as HTML as requested -->
+
+## 🎬 GIFs (demostraciones)
+
+<div style="display:flex;flex-direction:column;gap:24px;align-items:center;">
+  <figure style="max-width:900px;margin:0;">
+    <img src="https://github.com/palmerovicdev/invoapp/blob/main/blueprints/charge_components.gif" alt="Charge components" style="width:100%;height:auto;border-radius:8px;" />
+    <figcaption style="text-align:left;margin-top:8px;color:#444;"><strong>charge_components.gif</strong> — Animación de los componentes de cobro mostrando interacciones, estados y transiciones visuales.</figcaption>
+  </figure>
+
+  <figure style="max-width:900px;margin:0;">
+    <img src="https://github.com/palmerovicdev/invoapp/blob/main/blueprints/home_flow.gif" alt="Home flow" style="width:100%;height:auto;border-radius:8px;" />
+    <figcaption style="text-align:left;margin-top:8px;color:#444;"><strong>home_flow.gif</strong> — Flujo principal: navegación entre facturas, cambio de selección y transiciones del PageView.</figcaption>
+  </figure>
+
+  <figure style="max-width:900px;margin:0;">
+    <img src="https://github.com/palmerovicdev/invoapp/blob/main/blueprints/login_flow-1.gif" alt="Login flow" style="width:100%;height:auto;border-radius:8px;" />
+    <figcaption style="text-align:left;margin-top:8px;color:#444;"><strong>login_flow-1.gif</strong> — Flujo de inicio de sesión: entrada de credenciales, validación y manejo de errores.</figcaption>
+  </figure>
+
+  <figure style="max-width:900px;margin:0;">
+    <img src="https://github.com/palmerovicdev/invoapp/blob/main/blueprints/splash_screen.gif" alt="Splash screen" style="width:100%;height:auto;border-radius:8px;" />
+    <figcaption style="text-align:left;margin-top:8px;color:#444;"><strong>splash_screen.gif</strong> — Pantalla de bienvenida (splash) y la animación de transición al inicio de la aplicación.</figcaption>
+  </figure>
+</div>
+
+---
+
 ## ⚙️ Requisitos
 
 - Flutter 3.0+ (recomendado).  
