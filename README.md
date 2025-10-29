@@ -18,6 +18,7 @@ También incluye manejo de errores (como pérdida de conexión), pantallas de **
 
 ## ✨ Características destacadas
 
+- 🔂 **Traducción completa** a Inglés y Español, boton superior izquierdo de HomePage
 - 🔄 **PageView sincronizado** con lista inferior y selección de ítems.
 - 🔍 **Búsqueda con debounce** y limpieza de filtros.
 - 📅 **Filtro por fechas** con diálogo y acciones rápidas (últimos 7/30 días, mes actual).
