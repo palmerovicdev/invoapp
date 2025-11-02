@@ -24,9 +24,6 @@ class ErrorHandler {
     }
   }
 
-  /// Envoltorio común para llamadas Dio que devuelve Either<ErrorState, T>
-  /// - `api` debe ejecutar la request y retornar un Response
-  /// - `parse` recibe `response.data` y retorna T (haz parsing/DTO afuera si quieres)
   static Future<Either<ErrorState<T>, T>> callApi<T>({
     required Future<Response<dynamic>> Function() api,
     required Parser<T> parse,
@@ -60,27 +57,22 @@ class ErrorHandler {
     } on DioException catch (e, s) {
       log('DioException', error: e, stackTrace: s);
 
-      // Internet
       if (!await _isConnected()) {
         return left(DataNetworkError<T>(NetworkException.noInternetConnection));
       }
 
-      // Cancelación
       if (e.type == DioExceptionType.cancel) {
         return left(DataNetworkError<T>(NetworkException.cancelled));
       }
 
-      // Timeouts
       if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.sendTimeout || e.type == DioExceptionType.receiveTimeout) {
         return left(DataNetworkError<T>(NetworkException.timeOutError));
       }
 
-      // SSL
       if (e.type == DioExceptionType.badCertificate) {
         return left(DataNetworkError<T>(NetworkException.badCertificate));
       }
 
-      // HTTP no 2xx
       final status = e.response?.statusCode ?? 0;
       if (status != 0) {
         final httpErr = switch (status) {
