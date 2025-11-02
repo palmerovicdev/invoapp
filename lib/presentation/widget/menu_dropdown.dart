@@ -1,7 +1,7 @@
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:invoapp/core/theme/theme.dart' as app_theme;
 import 'package:invoapp/core/localization/app_locale.dart';
+import 'package:invoapp/core/theme/theme.dart' as app_theme;
 
 class MenuDropdown extends StatelessWidget {
   final app_theme.Theme theme;
@@ -29,19 +29,19 @@ class MenuDropdown extends StatelessWidget {
         }
       },
       icon: Container(
-        padding: const EdgeInsets.all(8),
+        padding: AppSpacing.paddingMds,
         decoration: BoxDecoration(
           borderRadius: Consts.radius.containers.md,
         ),
         child: Icon(
           Icons.wallet,
           color: theme.primary,
-          size: 32,
+          size: AppSizes.iconXl,
         ),
       ),
       color: theme.bgLight,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadius.borderLg,
         side: BorderSide(
           color: theme.borderMuted.withValues(alpha: 0.3),
           width: 1,
@@ -52,10 +52,14 @@ class MenuDropdown extends StatelessWidget {
           value: 'about',
           child: Row(
             children: [
-              Icon(Icons.info_outline, color: theme.text, size: 20),
-              const SizedBox(width: 12),
+              Icon(
+                Icons.info_outline,
+                color: theme.text,
+                size: Consts.sizes.icons.sm,
+              ),
+              Consts.spacing.gapHorizontal.sm,
               Text(
-                context.l10n.aboutApp,
+                context.i18n('aboutApp'),
                 style: TextStyle(
                   color: theme.text,
                   fontSize: context.getResponsiveFontSize(
@@ -67,15 +71,23 @@ class MenuDropdown extends StatelessWidget {
             ],
           ),
         ),
-        PopupMenuDivider(height: 1),
+        const PopupMenuDivider(
+          height: 1,
+          indent: 12,
+          endIndent: 12,
+        ),
         PopupMenuItem<String>(
           value: 'logout',
           child: Row(
             children: [
-              Icon(Icons.logout, color: theme.danger, size: 20),
-              const SizedBox(width: 12),
+              Icon(
+                Icons.logout,
+                color: theme.danger,
+                size: Consts.sizes.icons.sm,
+              ),
+              Consts.spacing.gapHorizontal.sm,
               Text(
-                context.l10n.logout,
+                context.i18n('logout'),
                 style: TextStyle(
                   color: theme.danger,
                   fontSize: context.getResponsiveFontSize(

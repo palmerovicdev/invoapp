@@ -8,6 +8,7 @@ import 'package:invoapp/domain/entity/invoice.dart';
 import 'package:invoapp/presentation/state/login/login_bloc.dart';
 import 'package:invoapp/service/invoice_service.dart';
 
+
 part 'home_event.dart';
 part 'home_state.dart';
 
@@ -28,12 +29,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   void _onToggleLocale(HomeToggleLocale event, Emitter<HomeState> emit) {
     final newLocale = state.locale.languageCode == 'en' ? const Locale('es') : const Locale('en');
-    emit(state.copyWith(locale: newLocale));
+    emit(state.copyWith(locale: newLocale, clearErrorMessage: true));
   }
 
   void _onSelectInvoice(HomeSelectInvoice event, Emitter<HomeState> emit) {
     if (event.index >= 0 && event.index < state.invoices.length) {
-      emit(state.copyWith(selectedInvoiceIndex: event.index));
+      emit(state.copyWith(selectedInvoiceIndex: event.index, clearErrorMessage: true));
     }
   }
 
@@ -43,86 +44,76 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     emit(state.copyWith(loadingStatus: InvoiceLoadingStatus.loading));
 
-    try {
-      final token = _loginBloc.state.token?.token;
-      if (token == null) {
-        emit(
-          state.copyWith(
-            loadingStatus: InvoiceLoadingStatus.error,
-            errorMessage: 'No authentication token available',
-          ),
-        );
-        return;
-      }
-
-      final isStateFilterChange = event.page == 1 && event.clearFilters == false && event.issuedAtGteq == null && event.issuedAtLteq == null && event.searchQuery == null;
-
-      final effectiveIssuedAtGteq = event.clearDates || event.clearFilters ? null : (event.issuedAtGteq ?? state.issuedAtGteq);
-      final effectiveIssuedAtLteq = event.clearDates || event.clearFilters ? null : (event.issuedAtLteq ?? state.issuedAtLteq);
-      final effectiveState = event.clearState || event.clearFilters ? null : (isStateFilterChange ? event.state : (event.state ?? state.filterState));
-      final effectiveSearchQuery = event.searchQuery;
-      final effectivePage = event.resetPage ? 1 : (event.page ?? state.page);
-
-      final invoices = await _invoiceService.getInvoices(
-        token: token,
-        issuedAtGteq: effectiveIssuedAtGteq,
-        issuedAtLteq: effectiveIssuedAtLteq,
-        state: effectiveState,
-        searchQuery: effectiveSearchQuery,
-        page: effectivePage,
-      );
-
-      emit(
-        state.copyWith(
-          invoices: invoices,
-          loadingStatus: InvoiceLoadingStatus.loaded,
-          selectedInvoiceIndex: state.selectedInvoiceIndex,
-          page: event.page ?? state.page,
-          issuedAtGteq: effectiveIssuedAtGteq,
-          issuedAtLteq: effectiveIssuedAtLteq,
-          filterState: effectiveState,
-          clearIssuedAtGteq: event.clearFilters || event.clearDates,
-          clearIssuedAtLteq: event.clearFilters || event.clearDates,
-          clearFilterState: event.clearFilters || (isStateFilterChange && event.state == null) || event.clearState,
-          clearErrorMessage: true,
-        ),
-      );
-    } catch (e) {
-      final errorMap = {
-        'UNAUTHORIZED': 'UNAUTHORIZED',
-        'FORBIDDEN': 'FORBIDDEN',
-        'NOT_FOUND': 'NOT_FOUND',
-        'SERVER_ERROR': 'SERVER_ERROR',
-        'NETWORK_ERROR': 'NETWORK_ERROR',
-      };
-
-      final error = e.toString();
-      final message = errorMap.entries
-          .firstWhere(
-            (entry) => error.contains(entry.key),
-            orElse: () => const MapEntry('', 'UNEXPECTED_ERROR'),
-          )
-          .value;
-      final isStateFilterChange = event.page == 1 && event.clearFilters == false && event.issuedAtGteq == null && event.issuedAtLteq == null && event.searchQuery == null;
-      final effectiveIssuedAtGteq = event.clearDates || event.clearFilters ? null : (event.issuedAtGteq ?? state.issuedAtGteq);
-      final effectiveIssuedAtLteq = event.clearDates || event.clearFilters ? null : (event.issuedAtLteq ?? state.issuedAtLteq);
-      final effectiveState = event.clearState || event.clearFilters ? null : (isStateFilterChange ? event.state : (event.state ?? state.filterState));
-
+    final token = _loginBloc.state.token?.token;
+    if (token == null) {
       emit(
         state.copyWith(
           loadingStatus: InvoiceLoadingStatus.error,
-          errorMessage: message,
-          selectedInvoiceIndex: state.selectedInvoiceIndex,
-          page: event.page ?? state.page,
-          issuedAtGteq: effectiveIssuedAtGteq,
-          issuedAtLteq: effectiveIssuedAtLteq,
-          filterState: effectiveState,
-          clearIssuedAtGteq: event.clearFilters || event.clearDates,
-          clearIssuedAtLteq: event.clearFilters || event.clearDates,
-          clearFilterState: event.clearFilters || (isStateFilterChange && event.state == null) || event.clearState,
-          clearErrorMessage: true,
+          errorMessage: 'No authentication token available',
         ),
       );
+      return;
     }
+
+    final isStateFilterChange = event.page == 1 && event.clearFilters == false && event.issuedAtGteq == null && event.issuedAtLteq == null && event.searchQuery == null;
+
+    final effectiveIssuedAtGteq = event.clearDates || event.clearFilters ? null : (event.issuedAtGteq ?? state.issuedAtGteq);
+    final effectiveIssuedAtLteq = event.clearDates || event.clearFilters ? null : (event.issuedAtLteq ?? state.issuedAtLteq);
+    final effectiveState = event.clearState || event.clearFilters ? null : (isStateFilterChange ? event.state : (event.state ?? state.filterState));
+    final effectiveSearchQuery = event.searchQuery;
+    final effectivePage = event.resetPage ? 1 : (event.page ?? state.page);
+
+    final invoices = await _invoiceService.getInvoices(
+      token: token,
+      issuedAtGteq: effectiveIssuedAtGteq,
+      issuedAtLteq: effectiveIssuedAtLteq,
+      state: effectiveState,
+      searchQuery: effectiveSearchQuery,
+      page: effectivePage,
+    );
+
+    invoices.fold(
+      (l) {
+        final message = l.getMessage(false);
+
+        final isStateFilterChange = event.page == 1 && event.clearFilters == false && event.issuedAtGteq == null && event.issuedAtLteq == null && event.searchQuery == null;
+        final effectiveIssuedAtGteq = event.clearDates || event.clearFilters ? null : (event.issuedAtGteq ?? state.issuedAtGteq);
+        final effectiveIssuedAtLteq = event.clearDates || event.clearFilters ? null : (event.issuedAtLteq ?? state.issuedAtLteq);
+        final effectiveState = event.clearState || event.clearFilters ? null : (isStateFilterChange ? event.state : (event.state ?? state.filterState));
+
+        emit(
+          state.copyWith(
+            loadingStatus: InvoiceLoadingStatus.error,
+            errorMessage: message,
+            selectedInvoiceIndex: 0,
+            page: 1,
+            issuedAtGteq: effectiveIssuedAtGteq,
+            issuedAtLteq: effectiveIssuedAtLteq,
+            filterState: effectiveState,
+            clearIssuedAtGteq: event.clearFilters || event.clearDates,
+            clearIssuedAtLteq: event.clearFilters || event.clearDates,
+            clearFilterState: event.clearFilters || (isStateFilterChange && event.state == null) || event.clearState,
+            clearErrorMessage: false,
+          ),
+        );
+      },
+      (r) {
+        emit(
+          state.copyWith(
+            invoices: r,
+            loadingStatus: InvoiceLoadingStatus.loaded,
+            selectedInvoiceIndex: state.selectedInvoiceIndex,
+            page: event.page ?? state.page,
+            issuedAtGteq: effectiveIssuedAtGteq,
+            issuedAtLteq: effectiveIssuedAtLteq,
+            filterState: effectiveState,
+            clearIssuedAtGteq: event.clearFilters || event.clearDates,
+            clearIssuedAtLteq: event.clearFilters || event.clearDates,
+            clearFilterState: event.clearFilters || (isStateFilterChange && event.state == null) || event.clearState,
+            clearErrorMessage: true,
+          ),
+        );
+      },
+    );
   }
 }

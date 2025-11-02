@@ -44,7 +44,7 @@ class _PasswordFieldState extends State<PasswordField> {
         ),
         cursorColor: theme.primary,
         decoration: InputDecoration(
-          hintText: context.l10n.password,
+          hintText: context.i18n('password'),
           suffixIcon: IconButton(
             icon: Icon(
               _obscurePassword ? Icons.circle_outlined : Icons.circle,
@@ -89,11 +89,11 @@ class _PasswordFieldState extends State<PasswordField> {
         validator: (value) {
           if (value == null || value.isEmpty) {
             error(null);
-            return context.l10n.passwordRequired;
+            return context.i18n('passwordRequired');
           }
           if (value.length < 6) {
             error(null);
-            return context.l10n.passwordTooShort;
+            return context.i18n('passwordTooShort');
           }
           return null;
         },

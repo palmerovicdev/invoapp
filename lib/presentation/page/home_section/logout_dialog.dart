@@ -32,7 +32,7 @@ class LogoutDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              context.l10n.doYouWantToLogout,
+              context.i18n('doYouWantToLogout'),
               style: TextStyle(
                 fontSize: context.getResponsiveFontSize(
                   smallest: Consts.fontSizes.device.mobile.body,
@@ -65,7 +65,7 @@ class LogoutDialog extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      context.l10n.cancel,
+                      context.i18n('cancel'),
                       style: TextStyle(color: theme.primary),
                     ),
                   ),
@@ -87,7 +87,7 @@ class LogoutDialog extends StatelessWidget {
                       ),
                       shape: Consts.radius.shapes.lg,
                     ),
-                    child: Text(context.l10n.logout),
+                    child: Text(context.i18n('logout')),
                   ),
                 ),
               ],

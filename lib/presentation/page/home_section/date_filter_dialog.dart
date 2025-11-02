@@ -38,9 +38,7 @@ class DateFilterDialog extends StatelessWidget {
       context.read<HomeBloc>().add(
         HomeLoadInvoices(
           issuedAtGteq: picked,
-          issuedAtLteq: currentEnd != null && currentEnd.isBefore(picked)
-              ? picked
-              : currentEnd,
+          issuedAtLteq: currentEnd != null && currentEnd.isBefore(picked) ? picked : currentEnd,
           page: 1,
         ),
       );
@@ -137,7 +135,7 @@ class DateFilterDialog extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      context.l10n.filterByDate,
+                      context.i18n('filterByDate'),
                       style: TextStyle(
                         fontSize: context.getResponsiveFontSize(
                           smallest: Consts.fontSizes.device.mobile.body,
@@ -163,17 +161,17 @@ class DateFilterDialog extends StatelessWidget {
                   children: [
                     _buildQuickFilterChip(
                       context,
-                      context.l10n.last7Days,
+                      context.i18n('last7Days'),
                       () => _setLast7Days(context),
                     ),
                     _buildQuickFilterChip(
                       context,
-                      context.l10n.last30Days,
+                      context.i18n('last30Days'),
                       () => _setLast30Days(context),
                     ),
                     _buildQuickFilterChip(
                       context,
-                      context.l10n.thisMonth,
+                      context.i18n('thisMonth'),
                       () => _setThisMonth(context),
                     ),
                   ],
@@ -181,14 +179,14 @@ class DateFilterDialog extends StatelessWidget {
                 Consts.spacing.gap.xl,
                 _buildDateSelector(
                   context,
-                  label: context.l10n.initDate,
+                  label: context.i18n('initDate'),
                   date: state.issuedAtGteq,
                   onTap: () => _selectStartDate(context, state.issuedAtLteq),
                 ),
                 Consts.spacing.gap.md,
                 _buildDateSelector(
                   context,
-                  label: context.l10n.endDate,
+                  label: context.i18n('endDate'),
                   date: state.issuedAtLteq,
                   onTap: () => _selectEndDate(context, state.issuedAtGteq),
                 ),
@@ -216,7 +214,7 @@ class DateFilterDialog extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          context.l10n.clearFilters,
+                          context.i18n('clearFilters'),
                           style: TextStyle(
                             fontSize: context.getResponsiveFontSize(
                               smallest: Consts.fontSizes.device.mobile.body,
@@ -243,7 +241,7 @@ class DateFilterDialog extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          context.l10n.close,
+                          context.i18n('close'),
                           style: TextStyle(
                             fontSize: context.getResponsiveFontSize(
                               smallest: Consts.fontSizes.device.mobile.body,
@@ -349,9 +347,7 @@ class DateFilterDialog extends StatelessWidget {
                 ),
                 Consts.spacing.gapHorizontal.md,
                 Text(
-                  date != null
-                      ? DateFormat('dd/MM/yyyy').format(date)
-                      : context.l10n.selectDate,
+                  date != null ? DateFormat('dd/MM/yyyy').format(date) : context.i18n('selectDate'),
                   style: TextStyle(
                     fontSize: context.getResponsiveFontSize(
                       smallest: Consts.fontSizes.device.mobile.bodySmall,

@@ -35,7 +35,7 @@ class EmailField extends StatelessWidget {
         ),
         cursorColor: theme.primary,
         decoration: InputDecoration(
-          hintText: context.l10n.email,
+          hintText: context.i18n('email'),
           filled: true,
           fillColor: theme.bgLight,
           errorStyle: TextStyle(color: theme.danger),
@@ -67,14 +67,14 @@ class EmailField extends StatelessWidget {
         validator: (value) {
           if (value == null || value.isEmpty) {
             error(null);
-            return context.l10n.emailRequired;
+            return context.i18n('emailRequired');
           }
           final emailRegex = RegExp(
             r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
           );
           if (!emailRegex.hasMatch(value.trim())) {
             error(null);
-            return context.l10n.emailInvalid;
+            return context.i18n('emailInvalid');
           }
           return null;
         },

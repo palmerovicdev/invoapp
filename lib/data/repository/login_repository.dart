@@ -1,14 +1,16 @@
 import 'dart:convert';
 
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:invoapp/core/env/env.dart';
+import 'package:invoapp/core/util/error_handler/error_handler.dart';
 
 import '../../domain/entity/token.dart';
 import '../../domain/entity/user.dart';
 
 abstract class LoginRepository {
-  Future<Token> login(String email, String password);
+  Future<Either<ErrorState, Token>> login(String email, String password);
 
   Future<void> logout();
 
@@ -37,15 +39,11 @@ class LoginRepositoryImpl implements LoginRepository {
   }
 
   @override
-  Future<Token> login(String email, String password) async {
+  Future<Either<ErrorState, Token>> login(String email, String password) async {
     await Future.delayed(const Duration(seconds: 2));
 
-    if (!email.contains('@') || !email.contains('.') || password.length < 6) {
-      throw Exception('INVALID_CREDENTIALS');
-    }
-
-    try {
-      final response = await _dio.post(
+    return await ErrorHandler.callApi(
+      api: () => _dio.post(
         '',
         options: Options(
           headers: {
@@ -58,29 +56,11 @@ class LoginRepositoryImpl implements LoginRepository {
             'password': password,
           },
         },
-      );
-
-      if (response.statusCode != 200) {
-        throw Exception('SERVER_ERROR');
-      }
-
-      final token = Token(
-        token: response.data['token'],
-      );
-
-      await saveToken(token);
-
-      final user = User(
-        email: email,
-        lastLogin: DateTime.now(),
-      );
-
-      await saveUser(user);
-
-      return getCurrentToken(token: token.token);
-    } catch (e) {
-      throw Exception('SERVER_ERROR');
-    }
+      ),
+      parse: (data) {
+        return Token(token: data['token'], expiresAt: _getExpiryDate(data['token']));
+      },
+    );
   }
 
   @override

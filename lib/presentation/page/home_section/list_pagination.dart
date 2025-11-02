@@ -48,7 +48,7 @@ class ListPagination extends StatelessWidget {
               ),
             ),
             child: Text(
-              context.l10n.previous,
+              context.i18n('previous'),
               style: TextStyle(
                 color: state.page > 1 ? theme.primary : theme.primary.withOpacity(Consts.ui.opacities.disabled),
               ),
@@ -80,7 +80,7 @@ class ListPagination extends StatelessWidget {
               ),
             ),
             child: Text(
-              context.l10n.next,
+              context.i18n('next'),
               style: TextStyle(
                 color: theme.primary,
               ),

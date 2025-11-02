@@ -1,5 +1,4 @@
 {
-  "@@locale": "en",
   "about": "About",
   "close": "Close",
   "retry": "Retry",
@@ -26,8 +25,6 @@
   "passwordTooShort": "Password is too short",
   "loginRequired": "Login is required",
   "authenticationFailed": "Authentication failed",
-  "invalidCredentials": "Invalid credentials",
-  "serverError": "Server error",
   "networkError": "Network error",
   "unexpectedError": "Unexpected error",
   "authenticationError": "Authentication error",
@@ -75,5 +72,21 @@
   "from": "From",
   "to": "To",
   "all": "All",
-  "aboutAppDescription": "InvoApp is a simple and efficient invoicing application designed to help freelancers and small businesses manage their invoices with ease. With InvoApp, you can create, send, and track invoices in just a few clicks. Stay organized and get paid faster with InvoApp!"
+  "aboutAppDescription": "InvoApp is a simple and efficient invoicing application designed to help freelancers and small businesses manage their invoices with ease. With InvoApp, you can create, send, and track invoices in just a few clicks. Stay organized and get paid faster with InvoApp!",
+  "noInternet": "No internet connection. Verify your network.",
+  "timeout": "Timeout timed out. Check your connection.",
+  "canceled": "Operation cancelled.",
+  "ssl": "SSL certificate issue.",
+  "network": "Network error. Check your connection.",
+  "unauthorized": "Unauthorized. Sign in again.",
+  "noPermission": "Access prohibited. You don't have permission.",
+  "notFound": "Resource not found.",
+  "conflict": "Conflicting request.",
+  "serverError": "Server error. Try again later.",
+  "invalidCredentials": "Invalid credentials.",
+  "tooManyrequests" : "Too many requests. Try again later.",
+  "notProcessable": "The request cannot be processed.",
+  "unknownError": "Unknown error. Try again.",
+  "errorParsingData": "Error when analyzing data.",
+  "clientError": "Customer error. Verify your application."
 }

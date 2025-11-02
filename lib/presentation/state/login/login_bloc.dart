@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:invoapp/data/repository/login_repository.dart';
 import 'package:invoapp/domain/entity/token.dart';
 import 'package:invoapp/service/invoice_service.dart';
 
@@ -69,33 +70,42 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     emit(state.copyWith(status: AuthStatus.checking));
 
-    try {
-      final token = await _loginService.login(event.email, event.password);
-      final user = await _loginService.getCurrentUser();
-      await locator.get<InvoiceService>().getInvoices(
-        page: 1,
-        token: token.token,
-      );
-      emit(
-        state.copyWith(
-          status: AuthStatus.authenticated,
-          token: token,
-          user: user,
-          clearError: true,
-        ),
-      );
-    } catch (e, st) {
-      log('Error en _onSubmit (login): $e', stackTrace: st);
+    final token = await _loginService.login(event.email, event.password);
+    token.fold(
+      (l) {
+        final message = l.getMessage(true);
 
-      final message = _mapLoginErrorToMessage(e.toString());
+        emit(
+          state.copyWith(
+            status: AuthStatus.error,
+            errorMessage: message,
+          ),
+        );
+      },
+      (r) async {
+        await locator.get<LoginRepository>().saveToken(r);
 
-      emit(
-        state.copyWith(
-          status: AuthStatus.error,
-          errorMessage: message,
-        ),
-      );
-    }
+        final user = User(
+          email: event.email,
+          lastLogin: DateTime.now(),
+        );
+
+        await locator.get<LoginRepository>().saveUser(user);
+
+        await locator.get<InvoiceService>().getInvoices(
+          page: 1,
+          token: r.token,
+        );
+        emit(
+          state.copyWith(
+            status: AuthStatus.authenticated,
+            token: r,
+            user: user,
+            clearError: true,
+          ),
+        );
+      },
+    );
   }
 
   Future<void> _onLogout(

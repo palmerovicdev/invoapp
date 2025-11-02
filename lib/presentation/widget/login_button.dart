@@ -26,7 +26,7 @@ class LoginButton extends StatelessWidget {
       height: Consts.sizes.base.mega,
       onPressed: () async => onPressed.call(),
       initChild: Text(
-        context.l10n.signIn,
+        context.i18n('signIn'),
         style: TextStyle(
           fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.body),
           fontWeight: FontWeight.w600,

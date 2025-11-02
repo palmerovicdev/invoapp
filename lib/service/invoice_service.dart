@@ -1,8 +1,11 @@
+import 'package:dartz/dartz.dart';
+import 'package:invoapp/core/util/error_handler/error_handler.dart';
+
 import '../data/repository/invoice_repository.dart';
 import '../domain/entity/invoice.dart';
 
 abstract class InvoiceService {
-  Future<List<Invoice>> getInvoices({
+  Future<Either<ErrorState, List<Invoice>>> getInvoices({
     String? token,
     DateTime? issuedAtGteq,
     DateTime? issuedAtLteq,
@@ -18,7 +21,7 @@ class InvoiceServiceImpl implements InvoiceService {
   InvoiceServiceImpl(this._repository);
 
   @override
-  Future<List<Invoice>> getInvoices({
+  Future<Either<ErrorState, List<Invoice>>> getInvoices({
     String? token,
     DateTime? issuedAtGteq,
     DateTime? issuedAtLteq,

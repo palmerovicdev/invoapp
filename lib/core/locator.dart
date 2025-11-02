@@ -30,4 +30,5 @@ Future<void> setUpLocator() async {
 }
 
 LoginService get loginService => locator.get<LoginService>();
+
 InvoiceService get invoiceService => locator.get<InvoiceService>();

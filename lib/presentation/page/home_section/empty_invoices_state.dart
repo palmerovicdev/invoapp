@@ -32,7 +32,7 @@ class EmptyInvoicesState extends StatelessWidget {
           ZoomIn(
             delay: Consts.durations.base.sm,
             child: Text(
-              context.l10n.youHaveNoInvoices,
+              context.i18n('youHaveNoInvoices'),
               style: TextStyle(
                 fontSize: context.getResponsiveFontSize(
                   smallest: Consts.fontSizes.device.mobile.body,
@@ -54,7 +54,7 @@ class EmptyInvoicesState extends StatelessWidget {
                 ),
               ),
               child: Text(
-                context.l10n.retryWithoutFilters,
+                context.i18n('retryWithoutFilters'),
                 style: TextStyle(
                   fontSize: context.getResponsiveFontSize(
                     smallest: Consts.fontSizes.device.mobile.body,

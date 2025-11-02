@@ -25,8 +25,7 @@ GoRouter createRouter() {
       final isLogin = state.matchedLocation == Routes.login.path;
       final isAuthenticated = authStatus == AuthStatus.authenticated;
       final isUnauthenticated = authStatus == AuthStatus.unauthenticated;
-      final isChecking =
-          authStatus == AuthStatus.checking || authStatus == AuthStatus.initial;
+      final isChecking = authStatus == AuthStatus.checking || authStatus == AuthStatus.initial;
 
       if (authStatus == AuthStatus.initial && !isSplash) {
         return Routes.splash.path;

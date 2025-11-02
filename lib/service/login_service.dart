@@ -1,9 +1,12 @@
+import 'package:dartz/dartz.dart';
+
+import '../core/util/error_handler/error_handler.dart';
 import '../data/repository/login_repository.dart';
 import '../domain/entity/token.dart';
 import '../domain/entity/user.dart';
 
 abstract class LoginService {
-  Future<Token> login(String email, String password);
+  Future<Either<ErrorState, Token>> login(String email, String password);
 
   Future<void> logout();
 
@@ -18,7 +21,9 @@ class LoginServiceImpl implements LoginService {
   LoginServiceImpl(this._repository);
 
   @override
-  Future<Token> login(String email, String password) async => await _repository.login(email, password);
+  Future<Either<ErrorState, Token>> login(String email, String password) async {
+    return await _repository.login(email, password);
+  }
 
   @override
   Future<void> logout() async => await _repository.logout();

@@ -17,8 +17,11 @@ class LoginState extends Equatable {
   List<Object?> get props => [status, errorMessage, user, token];
 
   bool get isAuthenticated => status == AuthStatus.authenticated;
+
   bool get isUnauthenticated => status == AuthStatus.unauthenticated;
+
   bool get isChecking => status == AuthStatus.checking;
+
   bool get hasError => status == AuthStatus.error;
 
   LoginState copyWith({

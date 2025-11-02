@@ -108,7 +108,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> with SingleTickerProv
                         contentPadding: EdgeInsets.only(
                           left: Consts.spacing.base.xl,
                         ),
-                        hintText: width > 130 ? context.l10n.search : '',
+                        hintText: width > 130 ? context.i18n('search') : '',
                         hintStyle: TextStyle(
                           color: theme.textMuted.withOpacity(0.6),
                         ),

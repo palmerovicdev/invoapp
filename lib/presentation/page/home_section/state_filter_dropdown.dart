@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:consts/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:invoapp/core/localization/app_locale.dart';
@@ -19,19 +17,19 @@ class StateFilterDropdown extends StatelessWidget {
   final Function(InvoiceState?) onStateSelected;
 
   String _getStateLabel(InvoiceState? state, BuildContext context) {
-    if (state == null) return context.l10n.all;
+    if (state == null) return context.i18n('all');
 
     switch (state) {
       case InvoiceState.draft:
-        return context.l10n.draft;
+        return context.i18n('draft');
       case InvoiceState.awaitingPayment:
-        return context.l10n.awaitingPayment;
+        return context.i18n('awaitingPayment');
       case InvoiceState.paid:
-        return context.l10n.paid;
+        return context.i18n('paid');
       case InvoiceState.overdue:
-        return context.l10n.overdue;
+        return context.i18n('overdue');
       case InvoiceState.cancelled:
-        return context.l10n.cancelled;
+        return context.i18n('cancelled');
     }
   }
 
@@ -93,7 +91,7 @@ class StateFilterDropdown extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: hasFilter ? _getStateColor(currentState!).withValues(alpha: 0.15) : theme.bg,
-          borderRadius: Consts.radius.containers.sm,
+          borderRadius: Consts.radius.containers.md,
           border: Border.all(
             color: hasFilter
                 ? _getStateColor(currentState!).withValues(alpha: 0.5)
@@ -127,7 +125,7 @@ class StateFilterDropdown extends StatelessWidget {
               ),
               Consts.spacing.gapHorizontal.sm,
               Text(
-                'Todos',
+                context.i18n('all'),
                 style: TextStyle(
                   color: theme.text,
                   fontSize: context.getResponsiveFontSize(
@@ -147,7 +145,11 @@ class StateFilterDropdown extends StatelessWidget {
             ],
           ),
         ),
-        const PopupMenuDivider(height: 1),
+        const PopupMenuDivider(
+          height: 1,
+          indent: 12,
+          endIndent: 12,
+        ),
         ...InvoiceState.values.map((state) {
           final isSelected = currentState == state;
           final color = _getStateColor(state);

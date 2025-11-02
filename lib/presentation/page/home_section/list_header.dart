@@ -27,7 +27,7 @@ class ListHeader extends StatelessWidget {
 
   String _getDateRangeText(BuildContext context) {
     if (startDate == null && endDate == null) {
-      return context.l10n.allDates;
+      return context.i18n('allDates');
     }
 
     if (startDate != null && endDate != null) {
@@ -37,10 +37,10 @@ class ListHeader extends StatelessWidget {
     }
 
     if (startDate != null) {
-      return '${context.l10n.from} ${DateFormat('dd/MM/yy').format(startDate!)}';
+      return '${context.i18n('from')} ${DateFormat('dd/MM/yy').format(startDate!)}';
     }
 
-    return '${context.l10n.to} ${DateFormat('dd/MM/yy').format(endDate!)}';
+    return '${context.i18n('to')} ${DateFormat('dd/MM/yy').format(endDate!)}';
   }
 
   @override
@@ -53,7 +53,7 @@ class ListHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            context.l10n.invoices,
+            context.i18n('invoices'),
             style: TextStyle(
               fontSize: context.getResponsiveFontSize(
                 smallest: Consts.fontSizes.device.mobile.body,
@@ -93,9 +93,7 @@ class ListHeader extends StatelessWidget {
                     vertical: Consts.spacing.base.xxs,
                   ),
                   decoration: BoxDecoration(
-                    color: hasDateFilter
-                        ? theme.bg.withValues(alpha: 0.15)
-                        : theme.bg,
+                    color: hasDateFilter ? theme.bg.withValues(alpha: 0.15) : theme.bg,
                     borderRadius: Consts.radius.containers.sm,
                     border: Border.all(
                       color: hasDateFilter
@@ -121,12 +119,8 @@ class ListHeader extends StatelessWidget {
                           fontSize: context.getResponsiveFontSize(
                             smallest: Consts.fontSizes.device.mobile.bodySmall,
                           ),
-                          color: hasDateFilter
-                              ? theme.primary
-                              : theme.textMuted,
-                          fontWeight: hasDateFilter
-                              ? FontWeight.w600
-                              : FontWeight.w400,
+                          color: hasDateFilter ? theme.primary : theme.textMuted,
+                          fontWeight: hasDateFilter ? FontWeight.w600 : FontWeight.w400,
                         ),
                       ),
                       if (hasDateFilter) ...[

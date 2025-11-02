@@ -41,7 +41,7 @@ class LoginHeader extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                context.l10n.welcomeBack,
+                context.i18n('welcomeBack'),
                 style: TextStyle(
                   fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.paragraphTitle),
                   fontWeight: FontWeight.bold,
@@ -51,7 +51,7 @@ class LoginHeader extends StatelessWidget {
               ),
               Consts.spacing.gap.md,
               Text(
-                context.l10n.invoApp,
+                context.i18n('invoApp'),
                 style: TextStyle(
                   fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.bodyLarge),
                   color: theme.textMuted,

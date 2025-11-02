@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                _getErrorMessage(state.errorMessage, context),
+                context.i18n(state.errorMessage ?? 'unexpectedError'),
                 style: TextStyle(
                   color: theme.bgDark,
                   fontWeight: FontWeight.w600,
@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: Consts.sizes.base.mega,
                           onPressed: () async => _login(context),
                           initChild: Text(
-                            context.l10n.signIn,
+                            context.i18n('signIn'),
                             style: TextStyle(
                               fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.bodySmall),
                               fontWeight: FontWeight.w600,
@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          context.l10n.loginRequired,
+          context.i18n('loginRequired'),
           style: TextStyle(
             color: theme.bgDark,
             fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.body),
@@ -177,22 +177,5 @@ class _LoginPageState extends State<LoginPage> {
     context.read<LoginBloc>().add(
       LoginSubmit(_emailController.text.trim(), _passwordController.text),
     );
-  }
-
-  String _getErrorMessage(String? errorMessage, BuildContext context) {
-    if (errorMessage == null) return context.l10n.authenticationFailed;
-
-    switch (errorMessage) {
-      case 'INVALID_CREDENTIALS':
-        return context.l10n.invalidCredentials;
-      case 'SERVER_ERROR':
-        return context.l10n.serverError;
-      case 'NETWORK_ERROR':
-        return context.l10n.networkError;
-      case 'UNEXPECTED_ERROR':
-        return context.l10n.unexpectedError;
-      default:
-        return context.l10n.authenticationFailed;
-    }
   }
 }

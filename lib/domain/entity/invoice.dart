@@ -61,9 +61,7 @@ class Invoice {
       humanizedAmount: json['humanized_amount'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
-      sendAt: json['send_at'] != null
-          ? DateTime.parse(json['send_at'] as String)
-          : null,
+      sendAt: json['send_at'] != null ? DateTime.parse(json['send_at'] as String) : null,
       description: json['description'] as String?,
       contact: Contact.fromJson(json['contact'] as Map<String, dynamic>),
     );

@@ -1,17 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../l10n/app_localizations.dart';
-
-class AppLocale {
-  static AppLocalizations of(BuildContext context) {
-    return AppLocalizations.of(context)!;
-  }
-
-  static String get currentLanguageCode {
-    return 'es';
-  }
-}
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 extension LocalizationExtension on BuildContext {
-  AppLocalizations get l10n => AppLocalizations.of(this)!;
+  String i18n(String key) {
+    return FlutterI18n.translate(this, key);
+  }
 }

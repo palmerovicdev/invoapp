@@ -1,26 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:invoapp/core/locator.dart';
 import 'package:invoapp/presentation/state/home/home_bloc.dart';
 import 'package:invoapp/presentation/state/login/login_bloc.dart';
 
 import 'core/route/router.dart' as router;
-import 'l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setUpLocator();
-  runApp(const MyApp());
+  final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
+    translationLoader: FileTranslationLoader(
+      basePath: 'assets/i18n',
+      fallbackFile: 'en',
+      useCountryCode: false,
+    ),
+  );
+
+  await flutterI18nDelegate.load(Locale('en'));
+  runApp(MyApp(delegate: flutterI18nDelegate));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final FlutterI18nDelegate delegate;
+
+  const MyApp({
+    super.key,
+    required this.delegate,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const _BlocWrapper(
+    return _BlocWrapper(
+      delegate: delegate,
       child: SizedBox.shrink(),
     );
   }
@@ -28,8 +43,12 @@ class MyApp extends StatelessWidget {
 
 class _BlocWrapper extends StatelessWidget {
   final Widget child;
+  final FlutterI18nDelegate delegate;
 
-  const _BlocWrapper({required this.child});
+  const _BlocWrapper({
+    required this.child,
+    required this.delegate,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +68,7 @@ class _BlocWrapper extends StatelessWidget {
                 router.authStateNotifier.value = state.status;
               },
               child: BlocBuilder<HomeBloc, HomeState>(
-                buildWhen: (previous, current) =>
-                    previous.theme != current.theme ||
-                    previous.locale != current.locale,
+                buildWhen: (previous, current) => previous.theme != current.theme || previous.locale != current.locale,
                 builder: (context, homeState) => MaterialApp.router(
                   title: 'InvoApp',
                   debugShowCheckedModeBanner: false,
@@ -67,8 +84,8 @@ class _BlocWrapper extends StatelessWidget {
                     Locale('en'),
                     Locale('es'),
                   ],
-                  localizationsDelegates: const [
-                    AppLocalizations.delegate,
+                  localizationsDelegates: [
+                    delegate,
                     GlobalMaterialLocalizations.delegate,
                     GlobalWidgetsLocalizations.delegate,
                     GlobalCupertinoLocalizations.delegate,

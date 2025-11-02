@@ -79,7 +79,7 @@ class HomeHeader extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            context.l10n.aboutAppDescription,
+                            context.i18n('aboutAppDescription'),
                             style: TextStyle(color: theme.primary),
                             textAlign: TextAlign.center,
                           ),
@@ -95,7 +95,7 @@ class HomeHeader extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            context.l10n.close,
+                            context.i18n('close'),
                             style: TextStyle(color: theme.primary),
                           ),
                         ),

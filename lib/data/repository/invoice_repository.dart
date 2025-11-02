@@ -1,10 +1,12 @@
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 import 'package:invoapp/core/env/env.dart';
+import 'package:invoapp/core/util/error_handler/error_handler.dart';
 import 'package:invoapp/domain/entity/invoice.dart';
 
 abstract class InvoiceRepository {
-  Future<List<Invoice>> getInvoices({
+  Future<Either<ErrorState, List<Invoice>>> getInvoices({
     String? token,
     DateTime? issuedAtGteq,
     DateTime? issuedAtLteq,
@@ -30,7 +32,7 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   }
 
   @override
-  Future<List<Invoice>> getInvoices({
+  Future<Either<ErrorState, List<Invoice>>> getInvoices({
     String? token,
     DateTime? issuedAtGteq,
     DateTime? issuedAtLteq,
@@ -38,31 +40,30 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
     String? searchQuery,
     int? page,
   }) async {
-    try {
-      final queryParams = <String, dynamic>{};
+    final queryParams = <String, dynamic>{};
 
-      if (issuedAtGteq != null) {
-        queryParams['q[issued_at_gteq]'] = DateFormat(
-          'yyyy-MM-dd',
-        ).format(issuedAtGteq);
-      }
-      if (issuedAtLteq != null) {
-        queryParams['q[issued_at_lteq]'] = DateFormat(
-          'yyyy-MM-dd',
-        ).format(issuedAtLteq);
-      }
-      if (state != null) {
-        queryParams['q[state_eq]'] = _getStateString(state);
-      }
-      if (searchQuery != null && searchQuery.isNotEmpty) {
-        queryParams['q[contact_name_or_number_or_reference_or_description_cont]'] =
-            searchQuery;
-      }
-      if (page != null) {
-        queryParams['page'] = page;
-      }
+    if (issuedAtGteq != null) {
+      queryParams['q[issued_at_gteq]'] = DateFormat(
+        'yyyy-MM-dd',
+      ).format(issuedAtGteq);
+    }
+    if (issuedAtLteq != null) {
+      queryParams['q[issued_at_lteq]'] = DateFormat(
+        'yyyy-MM-dd',
+      ).format(issuedAtLteq);
+    }
+    if (state != null) {
+      queryParams['q[state_eq]'] = _getStateString(state);
+    }
+    if (searchQuery != null && searchQuery.isNotEmpty) {
+      queryParams['q[contact_name_or_number_or_reference_or_description_cont]'] = searchQuery;
+    }
+    if (page != null) {
+      queryParams['page'] = page;
+    }
 
-      final response = await _dio.get(
+    return await ErrorHandler.callApi<List<Invoice>>(
+      api: () => _dio.get(
         '',
         queryParameters: queryParams,
         options: Options(
@@ -71,32 +72,9 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
             'Content-Type': 'application/json',
           },
         ),
-      );
-
-      if (response.statusCode != 200) {
-        throw Exception('SERVER_ERROR');
-      }
-
-      final List<dynamic> invoicesData = response.data['invoices'] ?? [];
-      return invoicesData.map((json) => Invoice.fromJson(json)).toList();
-    } on DioException catch (e) {
-      if (e.type == DioExceptionType.connectionTimeout ||
-          e.type == DioExceptionType.receiveTimeout || e.type == DioExceptionType.connectionError) {
-        throw Exception('NETWORK_ERROR');
-      } else if (e.response?.statusCode == 401) {
-        throw Exception('UNAUTHORIZED');
-      } else if (e.response?.statusCode == 403) {
-        throw Exception('FORBIDDEN');
-      } else if (e.response?.statusCode == 404) {
-        throw Exception('NOT_FOUND');
-      } else if (e.response?.statusCode != null &&
-          e.response!.statusCode! >= 500) {
-        throw Exception('SERVER_ERROR');
-      }
-      throw Exception('UNEXPECTED_ERROR');
-    } catch (e) {
-      throw Exception('UNEXPECTED_ERROR');
-    }
+      ),
+      parse: (data) => (data['invoices'] as List<dynamic>).map((json) => Invoice.fromJson(json)).toList(),
+    );
   }
 
   String _getStateString(InvoiceState state) {

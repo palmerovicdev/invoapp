@@ -38,7 +38,7 @@ class SplashPage extends StatelessWidget {
             ),
             Consts.spacing.gap.giant,
             Text(
-              context.l10n.invoApp,
+              context.i18n('invoApp'),
               style: TextStyle(
                 fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.paragraphTitle),
                 fontWeight: FontWeight.bold,
@@ -64,7 +64,7 @@ class SplashPage extends StatelessWidget {
                   repeatForever: true,
                   animatedTexts: [
                     TypewriterAnimatedText(
-                      isAuthentication ? context.l10n.checkingAuth : context.l10n.loading,
+                      isAuthentication ? context.i18n('checkingAuth') : context.i18n('loading'),
                       textAlign: TextAlign.center,
                       textStyle: TextStyle(
                         fontSize: context.getResponsiveFontSize(smallest: Consts.fontSizes.device.mobile.paragraphTitle, largest: Consts.fontSizes.device.mobile.header),

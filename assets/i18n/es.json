@@ -1,5 +1,4 @@
 {
-  "@@locale": "es",
   "about": "Acerca De",
   "close": "Cerrar",
   "retry": "Reintentar",
@@ -26,8 +25,6 @@
   "passwordTooShort": "La contraseña es demasiado corta",
   "loginRequired": "El inicio de sesión es obligatorio",
   "authenticationFailed": "Autenticación fallida",
-  "invalidCredentials": "Credenciales inválidas",
-  "serverError": "Error del servidor",
   "networkError": "Error de red",
   "unexpectedError": "Error inesperado",
   "authenticationError": "Error de autenticación",
@@ -75,5 +72,21 @@
   "from": "Desde",
   "to": "Hasta",
   "all": "Todos",
-  "aboutAppDescription": "InvoApp es una aplicación de facturación simple y eficiente diseñada para ayudar a freelancers y pequeñas empresas a gestionar sus facturas con facilidad. Con InvoApp, puedes crear, enviar y rastrear facturas en solo unos pocos clics. ¡Mantente organizado y recibe pagos más rápido con InvoApp!"
+  "aboutAppDescription": "InvoApp es una aplicación de facturación simple y eficiente diseñada para ayudar a freelancers y pequeñas empresas a gestionar sus facturas con facilidad. Con InvoApp, puedes crear, enviar y rastrear facturas en solo unos pocos clics. ¡Mantente organizado y recibe pagos más rápido con InvoApp!",
+  "noInternet": "Sin conexión a internet. Verifica tu red.",
+  "timeout": "Tiempo de espera agotado. Revisa tu conexión.",
+  "canceled": "Operación cancelada.",
+  "ssl": "Problema con el certificado SSL.",
+  "network": "Error de red. Verifica tu conexión.",
+  "unauthorized": "No autorizado. Inicia sesión nuevamente.",
+  "noPermission": "Acceso prohibido. No tienes permiso.",
+  "notFound": "Recurso no encontrado.",
+  "conflict": "Solicitud en conflicto.",
+  "serverError": "Error del servidor. Intenta más tarde.",
+  "invalidCredentials": "Credenciales inválidas.",
+  "tooManyrequests": "Demasiadas solicitudes. Intenta más tarde.",
+  "notProcessable": "No se puede procesar la solicitud.",
+  "unknownError": "Error desconocido. Intenta nuevamente.",
+  "errorParsingData": "Error al analizar datos.",
+  "clientError": "Error del cliente. Verifica tu solicitud."
 }

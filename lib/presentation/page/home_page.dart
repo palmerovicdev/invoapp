@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
     return BlocListener<HomeBloc, HomeState>(
       listener: (context, state) {
         if (state.hasError && state.errorMessage != null) {
-          final message = _getErrorMessage(state.errorMessage, context);
+          final message = context.i18n(state.errorMessage ?? 'unexpectedError');
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
@@ -222,29 +222,6 @@ class _HomePageState extends State<HomePage> {
       final prev = s.selectedInvoiceIndex - 1;
       context.read<HomeBloc>().add(HomeSelectInvoice(prev));
       _animateToIndex(prev, s);
-    }
-  }
-
-  String _getErrorMessage(String? errorMessage, BuildContext context) {
-    if (errorMessage == null) return context.l10n.unexpectedError;
-
-    switch (errorMessage) {
-      case 'INVALID_CREDENTIALS':
-        return context.l10n.invalidCredentials;
-      case 'UNAUTHORIZED':
-        return context.l10n.authenticationFailed;
-      case 'FORBIDDEN':
-        return context.l10n.requestFailed;
-      case 'NOT_FOUND':
-        return context.l10n.requestFailed;
-      case 'SERVER_ERROR':
-        return context.l10n.serverError;
-      case 'NETWORK_ERROR':
-        return context.l10n.pleaseCheckYourConnection;
-      case 'UNEXPECTED_ERROR':
-        return context.l10n.unexpectedError;
-      default:
-        return errorMessage;
     }
   }
 

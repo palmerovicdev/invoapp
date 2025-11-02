@@ -59,7 +59,7 @@ class InvoiceCard extends StatelessWidget {
                 ),
               ),
               Consts.spacing.gap.sm,
-      
+
               Text(
                 invoice.amount.formatted,
                 style: TextStyle(
@@ -70,9 +70,9 @@ class InvoiceCard extends StatelessWidget {
                   color: theme.bgDark,
                 ),
               ),
-      
+
               Consts.spacing.gap.sm,
-      
+
               Center(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
